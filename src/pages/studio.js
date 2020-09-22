@@ -1,13 +1,28 @@
 import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const Studio = () => (
-  <Layout>
-    <SEO title="The Studio" description="About the Organic Gold studio." />
-    <h1>The Studio</h1>
-  </Layout>
-)
+const Studio = () => {
+  const navImage = useStaticQuery(graphql`
+    query {
+      placeholderImage: file(relativePath: { eq: "mandarin.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 3000) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+
+  return (
+    <Layout navImage={navImage} fadeColor={"#F0843B"}>
+      <SEO title="The Studio" description="About the Organic Gold studio." />
+      <h1 className="h-one" style={{ height: "500px" }}>The Studio</h1>
+    </Layout>
+  )
+}
 
 export default Studio

@@ -1,12 +1,12 @@
 import React from "react"
 import Img from "gatsby-image"
 
-const Image = ({ data, style = {} }) => {
+const Image = ({ data, classes }) => {
   if (!data?.placeholderImage?.childImageSharp?.fluid) {
     return <div>Picture not found</div>
   }
 
-  return <Img style={style} fluid={data.placeholderImage.childImageSharp.fluid} />
+  return <Img className={classes} fluid={data.placeholderImage.childImageSharp.fluid} />
 }
 
 export default Image

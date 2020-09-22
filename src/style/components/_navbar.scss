@@ -1,0 +1,36 @@
+.navbar-container {
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+}
+
+.link-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  z-index: 1;
+  width: 620px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: $header-font;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: .02em;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  border-radius: 15px;
+  margin-left: -310px;
+  a {
+    font-family: $header-font;
+    color: white;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.nav-image {
+  height: 475px;
+}

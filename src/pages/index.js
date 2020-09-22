@@ -18,9 +18,9 @@ const IndexPage = () => {
   `)
 
   return (
-    <Layout navImage={navImage}>
+    <Layout navImage={navImage} fadeColor={"#FC9D81"}>
       <SEO title="Home" />
-      <h1 style={{ height: "1000px" }}>Home</h1>
+      <h1 className="h-one" style={{ height: "500px" }}>Home</h1>
     </Layout>
   )
 }

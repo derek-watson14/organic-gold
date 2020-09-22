@@ -1,8 +1,8 @@
 import React from "react"
 
 const Footer = () => (
-  <footer>
-    <h1>Footer</h1>
+  <footer className="footer-container">
+    <h1 className="h-one">Footer</h1>
   </footer>
 )
 
