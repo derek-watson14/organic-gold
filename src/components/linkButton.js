@@ -1,11 +1,9 @@
 import React from 'react'
 import { Link } from "gatsby"
 
-const LinkButton = ({ text, location }) {
+const LinkButton = ({ text, to }) => {
   return (
-    <div>
-
-    </div>
+    <Link to={to} className="link-button">{text.toUpperCase()}</Link>
   )
 }
 

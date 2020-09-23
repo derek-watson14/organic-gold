@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import LinkButton from "../components/linkButton"
 
 const IndexPage = () => {
   const navImage = useStaticQuery(graphql`
@@ -20,7 +21,18 @@ const IndexPage = () => {
   return (
     <Layout navImage={navImage} fadeColor={"#FC9D81"}>
       <SEO title="Home" />
-      <h1 className="h-one" style={{ height: "500px" }}>Home</h1>
+      <section className="page-container horz-center">
+        <div className="home-header-container">
+          <div className="home-header-bg"></div>
+          <h1 className="title-font home-header">What is Organic Gold?</h1>
+        </div>
+        <p className="home-text">Organic Gold is a musical project produced by Jonny Cole. Part studio, part band, part label, Organic Gold is a melting pot of collaborators and style. Jonny has spent over a decade touring, teaching, playing and recording professionally. Organic Gold is home base for genre-bending rock & roll.</p>
+        <div className="button-container-home">
+          <LinkButton text="the band" to="/band" />
+          <LinkButton text="the studio" to="/studio" />
+          <LinkButton text="contact jonny" to="/contact" />
+        </div>
+      </section>
     </Layout>
   )
 }

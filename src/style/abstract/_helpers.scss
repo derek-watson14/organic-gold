@@ -7,6 +7,30 @@
   }
 }
 
-.h-one {
+.title-font {
+  font-family: $title-font;
+}
+
+.header-font {
   font-family: $header-font;
+}
+
+.text-font {
+  font-family: $text-font;
+}
+
+.page-container {
+  margin: 7% 10% 7% 10%;
+}
+
+.vert-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.horz-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

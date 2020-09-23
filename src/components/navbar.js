@@ -14,7 +14,6 @@ const parallax = (scrollY) => {
 
 const Navbar = ({ navImage }) => {
   const scrollY = useWindowScroll(60);
-
   return (
     <div className="navbar-container">
       <nav className="link-container">
