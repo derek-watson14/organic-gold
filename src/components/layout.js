@@ -1,13 +1,16 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import Footer from "./footer"
 import Navbar from "./navbar"
+import FullPageNav from "./fullPageNav"
 import '../style/main.scss';
 
 const Layout = ({ children, navImage, fadeColor }) => {
+  const [navMenuOpen, setNavMenuOpen] = useState(false);
+
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -20,8 +23,9 @@ const Layout = ({ children, navImage, fadeColor }) => {
 
   return (
     <>
+      <FullPageNav navMenuOpen={navMenuOpen} setNavMenuOpen={setNavMenuOpen} />
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} fadeColor={fadeColor} />
-      <Navbar navImage={navImage} />
+      <Navbar navImage={navImage} navMenuOpen={navMenuOpen} setNavMenuOpen={setNavMenuOpen} />
       <main>{children}</main>
       <Footer />
     </>

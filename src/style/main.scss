@@ -1,7 +1,7 @@
 // Abstract
 @import './abstract/variables';
-@import './abstract/helpers';
 @import './abstract/mixins';
+@import './abstract/helpers';
 
 // Base
 @import './base/base';
@@ -19,7 +19,7 @@
 // Components
 @import './components/layout';
 @import './components/header';
-@import './components/navbar';
+@import './components/navigation';
 @import './components/footer';
 @import './components/image';
 @import './components/linkButton';

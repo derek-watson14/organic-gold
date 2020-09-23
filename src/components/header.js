@@ -1,12 +1,15 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+
 
 import Image from "../components/image"
 
 const headerFade = (fadeColor) => {
   return {
     height: "41px",
-    background: `linear-gradient(#E34077, ${fadeColor})`,
+    background: `linear-gradient(#CA4874, ${fadeColor})`,
     borderBottom: `4px ${fadeColor} solid`,
   }
 }
@@ -14,7 +17,7 @@ const headerFade = (fadeColor) => {
 const Header = ({ fadeColor }) => {
   const data = useStaticQuery(graphql`
     query {
-      placeholderImage: file(relativePath: { eq: "banner-wider.png" }) {
+      placeholderImage: file(relativePath: { eq: "banner-wide.png" }) {
         childImageSharp {
           fluid(maxWidth: 3000) {
             ...GatsbyImageSharpFluid

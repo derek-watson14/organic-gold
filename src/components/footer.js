@@ -13,9 +13,15 @@ const Footer = () => (
       <p>(206) 555-5555</p>
       <p>j.cole@test.com</p>
       <div className="icon-container">
-        <FontAwesomeIcon icon={faFacebookSquare} size="2x" className="social-icon" />
-        <FontAwesomeIcon icon={faInstagram} size="2x" className="social-icon" />
-        <FontAwesomeIcon icon={faBandcamp} size="2x" className="social-icon" />
+        <a href="hhttps://www.facebook.com/OrganicGoldMusic" rel="noreferrer" target="_blank">
+          <FontAwesomeIcon icon={faFacebookSquare} size="2x" className="social-icon" />
+        </a>
+        <a href="https://www.instagram.com/organicgoldmusic/" rel="noreferrer" target="_blank">
+          <FontAwesomeIcon icon={faInstagram} size="2x" className="social-icon" />
+        </a>
+        <a href="https://organicgold.bandcamp.com/" rel="noreferrer" target="_blank">
+          <FontAwesomeIcon icon={faBandcamp} size="2x" className="social-icon" />
+        </a>
       </div>
       <p>&copy; Organic Gold {new Date().getFullYear()}</p>
     </div>
@@ -23,12 +29,12 @@ const Footer = () => (
     <div className="footer-navigate">
       <h3 className="header-font">Navigate</h3>
       <div className="footer-link-container text-font">
-        <Link to="/">Home ></Link>
-        <Link to="/band">The Band ></Link>
-        <Link to="/studio">The Studio ></Link>
-        <Link to="/av">A/V ></Link>
-        <Link to="/shows">Shows ></Link>
-        <Link to="/contact">Contact ></Link>
+        <Link to="/">Home &gt;</Link>
+        <Link to="/band">The Band &gt;</Link>
+        <Link to="/studio">The Studio &gt;</Link>
+        <Link to="/av">A/V &gt;</Link>
+        <Link to="/shows">Shows &gt;</Link>
+        <Link to="/contact">Contact &gt;</Link>
       </div>
     </div>
   </footer>

@@ -1,16 +1,23 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { useInView } from "react-intersection-observer"
+import { useSpring, animated } from "react-spring"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import LinkButton from "../components/linkButton"
 
 const IndexPage = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  })
+
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "dog.jpg" }) {
         childImageSharp {
-          fluid(maxWidth: 3000) {
+          fluid(maxWidth: 1900) {
             ...GatsbyImageSharpFluid
           }
         }
@@ -21,7 +28,15 @@ const IndexPage = () => {
   return (
     <Layout navImage={navImage} fadeColor={"#FC9D81"}>
       <SEO title="Home" />
-      <section className="page-container horz-center">
+      <animated.section
+        className="container horz-center"
+        ref={ref}
+        style={useSpring({
+          delay: 350,
+          transform: inView ? "translateY(0)" : "translateY(20px)",
+          opacity: inView ? 1 : 0,
+        })}
+      >
         <div className="home-header-container">
           <div className="home-header-bg"></div>
           <h1 className="title-font home-header">What is Organic Gold?</h1>
@@ -32,7 +47,7 @@ const IndexPage = () => {
           <LinkButton text="the studio" to="/studio" />
           <LinkButton text="contact jonny" to="/contact" />
         </div>
-      </section>
+      </animated.section>
     </Layout>
   )
 }

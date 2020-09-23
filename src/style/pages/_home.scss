@@ -1,31 +1,30 @@
 .home-header-container {
   position: relative;
-  margin-bottom: 50px;
-  width: 400px;
+  margin: 125px 0 75px 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
   .home-header-bg {
-    background: linear-gradient(to top right, #FC9D81, #E34077);
+    background: linear-gradient(to top right, #FC9D81, #CA4874);
     height: 35px;
     width: 320px;
-    transform: rotate(-3deg) translate(24px, 8px) skew(-7deg)
+    transform: rotate(-3deg) translate(0px, 8px) skew(-7deg)
   }
   .home-header {
     font-weight: normal;
     font-size: 2.5em;
     position: absolute;
     top: 0%;
-    left: 18%;
+    left: 50%;
     margin: 0;
+    margin-left: -152px;
   }
 }
 
-
-
 .home-text {
-  width: 80%;
+  width: 90%;
   font-family: $text-font;
   text-align: center;
   margin-bottom: 75px;
@@ -40,7 +39,10 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  margin-bottom: 125px;
+  @include respond(phone) {
+    width: 90%;
+  }
   a {
     margin-bottom: 25px;
   }

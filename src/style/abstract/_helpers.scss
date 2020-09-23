@@ -19,8 +19,11 @@
   font-family: $text-font;
 }
 
-.page-container {
-  margin: 7% 10% 7% 10%;
+.container {
+  padding: 0 10% 0 10%;
+  @include respond(phone) {
+    padding: 0;
+  }
 }
 
 .vert-center {
