@@ -50,13 +50,13 @@
 // Nav Button
 .menu-btn-container {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 45px;
+  right: 45px;
   z-index: 2;
   background: linear-gradient(to top right, #FC9D81, #CA4874);
   box-sizing: border-box;
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   padding: 5px;
   border-radius: 50%;
   box-shadow: 0px 0px 20px -1px rgba(0, 0, 0, 0.9);
@@ -91,7 +91,7 @@
 
 .full-page-nav {
   position: fixed;
-  width: 80%;
+  width: 75%;
   height: 100%;
   z-index: 4;
   background-color: white;
@@ -105,12 +105,12 @@
   align-items: center;
   position: absolute;
   z-index: 4;
-  bottom: 40px;
-  right: 40px;
+  bottom: 45px;
+  right: 45px;
   background: $footer-black;
   box-sizing: border-box;
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   padding: 5px;
   border-radius: 50%;
   box-shadow: 0px 0px 20px -1px rgba(0, 0, 0, 0.9);

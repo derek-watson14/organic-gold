@@ -35,7 +35,7 @@ const Band = () => {
           <BandImage classes="band-image" />
           <div className="band-content-container">
             <div className="band-text-container">
-              <ColorTitle text="The Band" marginBottom="30px" />
+              <ColorTitle text="The Band" marginBottom="50px" />
               <p>
                 Organic Gold is a rotating bill of musicians. Founded in 2017 by Jonny Cole and Matt _____, original songs were written and recorded on Bainbridge Island. In 2018 Organic Gold merged with Four Common Sailing Knots and a new era of songwriting and performance emerged with Morgan Taggart on drums, Stephanie ___ on keys, Matt ___ on lead guitar and vocals, and Jonny Cole on bass.
               </p>

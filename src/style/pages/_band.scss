@@ -26,20 +26,25 @@
 .band-content-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-bottom: 60px;
   flex: 1;
   .band-text-container {
     margin-bottom: 30px;
+    width: 90%;
     p {
       font-family: $text-font;
-      font-size: 16px;
-      line-height: 1.4em;
+      font-size: 17px;
+      letter-spacing: .01em;
+      line-height: 1.67em;
+      font-weight: bold;
     }
   }
   .button-container-band {
     width: 100%;
     display: flex;
     flex-direction: row;
+    width: 90%;
     a {
       margin-right: 15px;
     }
