@@ -9,7 +9,7 @@ const Studio = () => {
     query {
       placeholderImage: file(relativePath: { eq: "mandarin.jpg" }) {
         childImageSharp {
-          fluid(maxWidth: 3000) {
+          fluid(maxWidth: 1200, quality: 100) {
             ...GatsbyImageSharpFluid
           }
         }

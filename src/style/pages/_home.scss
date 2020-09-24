@@ -1,28 +1,3 @@
-.home-header-container {
-  position: relative;
-  margin: 125px 0 75px 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .home-header-bg {
-    background: linear-gradient(to top right, #FC9D81, #CA4874);
-    height: 35px;
-    width: 320px;
-    transform: rotate(-3deg) translate(0px, 8px) skew(-7deg)
-  }
-  .home-header {
-    font-weight: normal;
-    font-size: 2.5em;
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    margin: 0;
-    margin-left: -152px;
-  }
-}
-
 .home-text {
   width: 90%;
   font-family: $text-font;

@@ -3,8 +3,10 @@
   height: 350px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 110px;
   @include respond(phone) {
     height: 200px;
+    margin-bottom: 75px;
   }
 }
 
@@ -39,7 +41,10 @@
 }
 
 .nav-image {
-  height: 475px;
+  height: 500px;
+  @include respond(phone) {
+    height: 275px;
+  }
 }
 
 // Nav Button
@@ -126,7 +131,7 @@
     margin-right: auto;
     text-decoration: none;
     background: $footer-black;
-    color: white;
+    color: #dddddd;
     font-family: $header-font;
     font-weight: 300;
     padding: 12px 22px;
@@ -134,6 +139,7 @@
     width: inherit;
     &:hover {
       cursor: pointer;
+      color: #ffffff;
     }
   }
 }
