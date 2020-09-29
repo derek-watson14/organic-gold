@@ -10,8 +10,8 @@ const Footer = () => (
       <h3 className="header-font">Stay Connected</h3>
       <p>Jonny Cole</p>
       <p>Organic Gold</p>
-      <p>(206) 555-5555</p>
-      <p>j.cole@test.com</p>
+      <p>(360) 516-9967</p>
+      <p>joncron@yahoo.com</p>
       <div className="icon-container">
         <a href="hhttps://www.facebook.com/OrganicGoldMusic" rel="noreferrer" target="_blank">
           <FontAwesomeIcon icon={faFacebookSquare} size="2x" className="social-icon" />
