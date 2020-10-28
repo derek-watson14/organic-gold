@@ -16,8 +16,6 @@ const StudioImage = ({ classes }) => {
     }
   `)
 
-  console.log(studioImage)
-
   if (!studioImage?.placeholderImage?.childImageSharp?.fluid) {
     return <div>Picture not found</div>
   }

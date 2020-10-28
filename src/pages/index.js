@@ -1,12 +1,26 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
+import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import LinkButton from "../components/linkButton"
 import ColorTitle from "../components/colorTitle"
 
 const IndexPage = () => {
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    const query = '*[_type == "pages" && pageName == "home"]';
+    const params = {};
+
+    client.fetch(query, params).then(data => {
+      setContent(data[0]);
+    })
+  }, [])
+
+  const getData = (key, alt = "") => content ? content[key] : alt;
+
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "dog.jpg" }) {
@@ -21,14 +35,14 @@ const IndexPage = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#FC9D81"}>
-      <SEO title="Home" />
+      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <section className="container horz-center">
-        <ColorTitle text="What is Organic Gold?" marginBottom="75px" />
-        <p className="home-text">Organic Gold is a musical project produced by Jonny Cole. Part studio, part band, part label, Organic Gold is a melting pot of collaborators and style. Jonny has spent over a decade touring, teaching, playing and recording professionally. Organic Gold is home base for genre-bending rock & roll.</p>
+        <ColorTitle text={getData("pageHeader")} marginBottom="75px" />
+        {getData("textContent", []).map((paragraph, i) => {
+          return <p key={i} className="home-text">{paragraph}</p>
+        })}
         <div className="button-container-home">
-          <LinkButton text="the band" to="/band" />
-          <LinkButton text="the studio" to="/studio" />
-          <LinkButton text="contact jonny" to="/contact" />
+          {getData("buttonLinks", []).map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
         </div>
       </section>
     </Layout >

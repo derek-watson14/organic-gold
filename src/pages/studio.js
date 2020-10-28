@@ -1,10 +1,26 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
+import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import ColorTitle from "../components/colorTitle"
+
 
 const Studio = () => {
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    const query = '*[_type == "pages" && pageName == "studio"]';
+    const params = {};
+
+    client.fetch(query, params).then(data => {
+      setContent(data[0]);
+    })
+  }, [])
+
+  const getData = (key, alt = "") => content ? content[key] : alt;
+
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "mandarin.jpg" }) {
@@ -19,8 +35,8 @@ const Studio = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#F0843B"}>
-      <SEO title="The Studio" description="About the Organic Gold studio." />
-      <h1 className="h-one" style={{ height: "500px" }}>The Studio</h1>
+      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
     </Layout>
   )
 }

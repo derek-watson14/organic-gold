@@ -16,8 +16,6 @@ const BandImage = ({ classes }) => {
     }
   `)
 
-  console.log(bandImage)
-
   if (!bandImage?.placeholderImage?.childImageSharp?.fluid) {
     return <div>Picture not found</div>
   }

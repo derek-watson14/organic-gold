@@ -1,11 +1,26 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
+import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import ColorTitle from "../components/colorTitle"
 
 
 const AV = () => {
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    const query = '*[_type == "pages" && pageName == "av"]';
+    const params = {};
+
+    client.fetch(query, params).then(data => {
+      setContent(data[0]);
+    })
+  }, [])
+
+  const getData = (key, alt = "") => content ? content[key] : alt;
+
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "jonny.jpg" }) {
@@ -20,8 +35,8 @@ const AV = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#F8E100"}>
-      <SEO title="A/V" description="A selection of music recorded by Organic Gold." />
-      <h1 className="h-one" style={{ height: "500px" }}>AV</h1>
+      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
     </Layout>
   )
 }

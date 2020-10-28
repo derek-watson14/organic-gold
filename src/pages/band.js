@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { useInView } from "react-intersection-observer"
 import { useSpring, animated } from "react-spring"
 
+import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import BandImage from "../components/imgs/bandImage"
@@ -10,6 +11,20 @@ import LinkButton from "../components/linkButton"
 import ColorTitle from "../components/colorTitle"
 
 const Band = () => {
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    const query = '*[_type == "pages" && pageName == "band"]';
+    const params = {};
+
+    client.fetch(query, params).then(data => {
+      setContent(data[0]);
+      console.log(data[0])
+    })
+  }, [])
+
+  const getData = (key, alt = "") => content ? content[key] : alt;
+
   const [ref, inView] = useInView({
     threshold: 0.3,
     triggerOnce: true,
@@ -29,19 +44,14 @@ const Band = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#722A42"}>
-      <SEO title="The Band" description="About the Organic Gold band." />
+      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
         <div className="inner-container-band">
           <BandImage classes="band-image" />
           <div className="band-content-container">
             <div className="band-text-container">
-              <ColorTitle text="The Band" marginBottom="50px" />
-              <p>
-                Organic Gold is a rotating bill of musicians. Founded in 2017 by Jonny Cole and Matt _____, original songs were written and recorded on Bainbridge Island. In 2018 Organic Gold merged with Four Common Sailing Knots and a new era of songwriting and performance emerged with Morgan Taggart on drums, Stephanie ___ on keys, Matt ___ on lead guitar and vocals, and Jonny Cole on bass.
-              </p>
-              <p>
-                Now Jonny Cole is working with The Black Chevys to introduce a new sound to the Organic Gold cannon.
-              </p>
+              <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
+              {getData("textContent", []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </div>
             <animated.div
               className="button-container-band"
@@ -52,8 +62,7 @@ const Band = () => {
                 opacity: inView ? 1 : 0,
               })}
             >
-              <LinkButton text="shows" to="/shows" />
-              <LinkButton text="a/v" to="/av" />
+              {getData("buttonLinks", []).map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
             </animated.div>
           </div>
         </div>
