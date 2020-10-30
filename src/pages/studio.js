@@ -6,6 +6,7 @@ import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
+import LinkButton from "../components/linkButton"
 
 const builder = imageUrlBuilder(client);
 
@@ -48,19 +49,33 @@ const Studio = () => {
     <Layout navImage={navImage} fadeColor={"#F0843B"}>
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
-        <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
-        <img style={{width: "100%", margin: 0 }} src={getData("pageImageUrl")} />
+        <div className="studioContent">
+          <div className="studioTextContent">
+            <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
+            <div className="studioParagraphs">
+              {getData("textContent", []).map((paragraph, i) => {
+                return <p key={i}>{paragraph}</p>
+              })}
+            </div>
+            {getData("buttonLinks", []).map((btn, i) => {
+              return <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />
+            })}
+          </div>
+          <div className="studioImageContainer">
+            <img style={{width: "100%", margin: 0 }} src={getData("pageImageUrl")} />
+          </div>
+        </div>
       </div>
       <div className="container listsContainer">
         <h2 className="header-font">{getData("subheader")}</h2>
         <div className="equipmentLists">
-          {getData("lists", []).map(item => {
+          {getData("lists", []).map((item, index) => {
             return (
-            <div className="equipmentSection">
+            <div className="equipmentSection" key={index}>
               <h3>{item.listName}</h3>
               <ul>
-                {item.listItem.map(subitem => {
-                  return <li>{subitem}</li>
+                {item.listItem.map((subitem, index) => {
+                  return <li key={index}>{subitem}</li>
                 })}
               </ul>
             </div>
