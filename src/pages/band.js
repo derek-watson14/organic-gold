@@ -3,10 +3,9 @@ import { useStaticQuery, graphql } from "gatsby"
 import { useInView } from "react-intersection-observer"
 import { useSpring, animated } from "react-spring"
 
-import client from "../sanity/client"
+import client, { urlFor } from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import BandImage from "../components/imgs/bandImage"
 import LinkButton from "../components/linkButton"
 import ColorTitle from "../components/colorTitle"
 
@@ -18,8 +17,10 @@ const Band = () => {
     const params = {};
 
     client.fetch(query, params).then(data => {
-      setContent(data[0]);
-      console.log(data[0])
+      setContent({
+        ...data[0],
+        pageImageUrl: urlFor(data[0].pageImage).url(),
+      });
     })
   }, [])
 
@@ -46,15 +47,19 @@ const Band = () => {
     <Layout navImage={navImage} fadeColor={"#722A42"}>
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
-        <div className="inner-container-band">
-          <BandImage classes="band-image" />
-          <div className="band-content-container">
-            <div className="band-text-container">
+        <div className="band-content">
+
+          <div className="band-content--image">
+            <img src={getData("pageImageUrl")} />
+          </div>
+
+          <div className="band-content--text">
+            <div className="band-text--text">
               <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
               {getData("textContent", []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </div>
             <animated.div
-              className="button-container-band"
+              className="band-text--buttons"
               ref={ref}
               style={useSpring({
                 delay: 350,

@@ -1,4 +1,4 @@
-.studioContent {
+.studio-content {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 50px;
@@ -9,21 +9,28 @@
     line-height: 1.67em;
     font-weight: bold;
   }
-  .studioTextContent {
+  .studio-content--text {
     margin-right: 15px;
     margin-bottom: 30px;
     flex: 1;
+    @include respond(phone) {
+      padding: 0 5px;
+    }
   }
-  .studioImageContainer {
+  .studio-content--image {
     flex: 1;
     min-width: 475px;
+    img {
+      width: 100%;
+      margin: 0;
+    }
   }
-  .studioParagraphs {
+  .studio-paragraphs {
     margin-bottom: 30px;
   }
 }
 
-.listsContainer {
+.lists-container {
   background: linear-gradient(to top right, #FC9D81, #CA4874);
   color: $footer-black;
   padding-top: 20px;
@@ -34,7 +41,7 @@
   }
 }
 
-.equipmentLists {
+.equipment-lists {
   min-height: 300px;
   display: flex;
   flex-wrap: wrap;
@@ -50,7 +57,7 @@
   p {
     font-family: $text-font;
   }
-  .equipmentSection {
+  .equipment-section {
     flex: 1;
     min-width: 250px;
     margin-bottom: 10px;

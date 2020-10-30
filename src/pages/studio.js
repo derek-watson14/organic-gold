@@ -36,16 +36,15 @@ const Studio = () => {
     }
   `)
 
-  console.log(content)
-
   return (
     <Layout navImage={navImage} fadeColor={"#F0843B"}>
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
-        <div className="studioContent">
-          <div className="studioTextContent">
+
+        <div className="studio-content">
+          <div className="studio-content--text">
             <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
-            <div className="studioParagraphs">
+            <div className="studio-paragraphs">
               {getData("textContent", []).map((paragraph, i) => {
                 return <p key={i}>{paragraph}</p>
               })}
@@ -54,17 +53,19 @@ const Studio = () => {
               return <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />
             })}
           </div>
-          <div className="studioImageContainer">
-            <img style={{width: "100%", margin: 0 }} src={getData("pageImageUrl")} />
+
+          <div className="studio-content--image">
+            <img src={getData("pageImageUrl")} />
           </div>
         </div>
       </div>
-      <div className="container listsContainer">
+    
+      <div className="container lists-container">
         <h2 className="header-font">{getData("subheader")}</h2>
-        <div className="equipmentLists">
+        <div className="equipment-lists">
           {getData("lists", []).map((item, index) => {
             return (
-            <div className="equipmentSection" key={index}>
+            <div className="equipment-section" key={index}>
               <h3>{item.listName}</h3>
               <ul>
                 {item.listItem.map((subitem, index) => {
