@@ -13,17 +13,12 @@
     flex: 1;
     margin-right: 15px;
     min-width: 440px;
-
     display: flex;
     align-items: center;
     justify-content: center;
     img {
       width: 100%;
-      max-width: 625px;
       margin: 0;
-      @include respond(phone) {
-        max-width: 700px;
-      }
     }
     @include respond(tab-port) {
       order: 2;
