@@ -1,0 +1,38 @@
+.listsContainer {
+  background: linear-gradient(to top right, #FC9D81, #CA4874);
+  color: $footer-black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  @include respond(phone) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+.equipmentLists {
+  min-height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  h3 {
+    font-family: $header-font;
+  }
+  p {
+    font-family: $text-font;
+  }
+  .equipmentSection {
+    flex: 1;
+    min-width: 250px;
+    ul, li {
+      list-style-type: none;
+      list-style-position:inside;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
