@@ -1,6 +1,6 @@
 import React from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBandcamp, faFacebookSquare, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faBandcamp, faFacebookSquare, faInstagram, faSoundcloud } from '@fortawesome/free-brands-svg-icons'
 import { Link } from "gatsby"
 
 
@@ -13,14 +13,17 @@ const Footer = () => (
       <p>(360) 516-9967</p>
       <p>joncron@yahoo.com</p>
       <div className="icon-container">
-        <a href="hhttps://www.facebook.com/OrganicGoldMusic" rel="noreferrer" target="_blank">
+        <a href="hhttps://www.facebook.com/OrganicGoldMusic" rel="noreferrer" target="_blank" title="Facebook">
           <FontAwesomeIcon icon={faFacebookSquare} size="2x" className="social-icon" />
         </a>
-        <a href="https://www.instagram.com/organicgoldmusic/" rel="noreferrer" target="_blank">
+        <a href="https://www.instagram.com/organicgoldmusic/" rel="noreferrer" target="_blank" title="Instagram">
           <FontAwesomeIcon icon={faInstagram} size="2x" className="social-icon" />
         </a>
-        <a href="https://organicgold.bandcamp.com/" rel="noreferrer" target="_blank">
+        <a href="https://organicgold.bandcamp.com/" rel="noreferrer" target="_blank" title="Bandcamp">
           <FontAwesomeIcon icon={faBandcamp} size="2x" className="social-icon" />
+        </a>
+        <a href="https://soundcloud.com/user-66808316" rel="noreferrer" target="_blank" title="SoundCloud">
+          <FontAwesomeIcon icon={faSoundcloud} size="2x" className="social-icon" />
         </a>
       </div>
       <p>&copy; Organic Gold {new Date().getFullYear()}</p>
