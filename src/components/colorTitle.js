@@ -2,10 +2,13 @@ import React from "react"
 
 const ColorTitle = ({ text, marginBottom }) => {
   let backgroundWidth;
-  if (text.length < 10) {
-    backgroundWidth = text.length * 16.5;
+  let chars = text.length;
+  if (chars < 10) {
+    backgroundWidth = chars * 16.5;
+  } else if (chars >= 10 && chars <= 20) {
+    backgroundWidth = chars * 15.75;
   } else {
-    backgroundWidth = text.length * 15;
+    backgroundWidth = chars * 15;
   }
 
   const containerStyle = {

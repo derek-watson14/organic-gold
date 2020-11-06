@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-import client from "../sanity/client"
+import client, { urlFor } from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
+import ShowCard from "../components/showCard"
 
 
 const Shows = () => {
   const [content, setContent] = useState(null);
+  const [shows, setShows] = useState([]);
 
   useEffect(() => {
-    const query = '*[_type == "pages" && pageName == "shows"]';
+    const today = new Date;
+    const contentQuery = '*[_type == "pages" && pageName == "shows"]';
+    const showQuery = '*[_type == "shows"]';
     const params = {};
 
-    client.fetch(query, params).then(data => {
+    client.fetch(contentQuery, params).then(data => {
       setContent(data[0]);
+    })
+
+    console.log(today)
+    client.fetch(showQuery, params).then(data => {
+      console.log(data);
+      setShows(data);
     })
   }, [])
 
@@ -36,7 +46,10 @@ const Shows = () => {
   return (
     <Layout navImage={navImage} fadeColor={"#1879AE"}>
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
-      <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
+      <div className="container">
+        <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
+        {shows.map((show, i) => <ShowCard key={i} showData={show} imageUrl={urlFor(show.image)} />)}
+      </div>
     </Layout>
   )
 }

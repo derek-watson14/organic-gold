@@ -1,0 +1,12 @@
+.showContainer {
+  width: 400px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  box-shadow: $box-shadow;
+  border-radius: 6px;
+  h1, h3, p {
+    margin: 0;
+  }
+}
