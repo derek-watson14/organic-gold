@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { formatISO } from 'date-fns'
 
 import client, { urlFor } from "../sanity/client"
 import Layout from "../components/layout"
@@ -13,17 +14,16 @@ const Shows = () => {
   const [shows, setShows] = useState([]);
 
   useEffect(() => {
-    const today = new Date;
+    const today = formatISO(new Date(), { representation: 'date' });
     const contentQuery = '*[_type == "pages" && pageName == "shows"]';
-    const showQuery = '*[_type == "shows"]';
-    const params = {};
+    const showQuery = `*[_type == "shows" && showDate >= $today]`;
+    const showParams = { today };
 
-    client.fetch(contentQuery, params).then(data => {
+    client.fetch(contentQuery, {}).then(data => {
       setContent(data[0]);
     })
 
-    console.log(today)
-    client.fetch(showQuery, params).then(data => {
+    client.fetch(showQuery, showParams).then(data => {
       console.log(data);
       setShows(data);
     })
@@ -43,12 +43,18 @@ const Shows = () => {
     }
   `)
 
+  const showCards = shows.map((show, i) => {
+    return <ShowCard key={i} showData={show} imageUrl={urlFor(show.image).url()} />
+  });
+
   return (
     <Layout navImage={navImage} fadeColor={"#1879AE"}>
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
-        <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
-        {shows.map((show, i) => <ShowCard key={i} showData={show} imageUrl={urlFor(show.image)} />)}
+        <ColorTitle text={getData("pageHeader")} marginBottom="100px" />
+        <div className="show-card-container">
+          {showCards}
+        </div>
       </div>
     </Layout>
   )

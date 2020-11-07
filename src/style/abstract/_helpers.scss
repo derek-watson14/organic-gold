@@ -19,6 +19,18 @@
   font-family: $text-font;
 }
 
+.fw-200 {
+  font-weight: 200;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
 .container {
   padding: 0 6% 0 6%;
   @include respond(phone) {

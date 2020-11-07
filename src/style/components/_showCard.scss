@@ -1,12 +1,51 @@
-.showContainer {
-  width: 400px;
-  height: 150px;
+.show-container {
   display: flex;
-  flex-direction: column;
-  padding: 5px;
+  max-width: 600px;
+  margin: 0 7px 20px 5px;
+  padding: 7px;
   box-shadow: $box-shadow;
   border-radius: 6px;
-  h1, h3, p {
-    margin: 0;
+  @include respond(phone) {
+    flex-wrap: wrap;
+  }
+  .card-divider {
+    width: 100%;
+    margin: 2px 0 2px 0;
+    display: none;
+    @include respond(phone) {
+      display: block;
+      margin: 5px 0 5px 0;
+    }
+  }
+  .show-image {
+    max-width: 195px;
+    border-radius: 6px;
+    margin-right: 8px;
+    object-fit: contain;
+  }
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    h1, h2, h3, h4, p {
+      margin: 0;
+    }
+    .show-title {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      font-family: $title-font;
+      margin-bottom: 5px;
+      span {
+        font-family: $header-font;
+        font-weight: 400;
+        font-size: 0.8rem;
+        vertical-align: bottom;
+        margin-right: 10px;
+        margin-top: 8px;
+      }
+    }
+    .who-where {
+      margin-bottom: 5px;
+    }
   }
 }
