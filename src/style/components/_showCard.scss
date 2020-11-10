@@ -49,3 +49,14 @@
     }
   }
 }
+
+.hover-flip {
+  transition: 200ms;
+  &:hover {
+    color: white;
+    background-color: $footer-black;
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
