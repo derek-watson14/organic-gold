@@ -31,8 +31,6 @@ const Shows = () => {
 
   const getData = (key, alt = "") => content ? content[key] : alt;
 
-  console.log(urlFor(undefined).url());
-
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "mountain.jpg" }) {

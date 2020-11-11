@@ -18,7 +18,7 @@
     }
   }
   .show-image {
-    max-width: 195px;
+    max-width: 225px;
     border-radius: 6px;
     margin-right: 8px;
     object-fit: contain;
@@ -34,15 +34,7 @@
       width: 100%;
       justify-content: space-between;
       font-family: $title-font;
-      margin-bottom: 5px;
-      span {
-        font-family: $header-font;
-        font-weight: 400;
-        font-size: 0.8rem;
-        vertical-align: bottom;
-        margin-right: 10px;
-        margin-top: 8px;
-      }
+      margin-bottom: 3px;
     }
     .who-where {
       margin-bottom: 5px;
@@ -60,3 +52,20 @@
     padding-right: 2px;
   }
 }
+
+.show-date {
+  font-family: $header-font;
+  font-weight: 600;
+  font-size: 0.85rem;
+  vertical-align: bottom;
+  margin-bottom: 9px;
+}
+
+.venue-address {
+  font-family: $header-font;
+  font-weight: 400;
+  font-size: 0.85rem;
+  margin-left: 58.5px;
+  margin-bottom: 9px;
+}
+
