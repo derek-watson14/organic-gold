@@ -16,7 +16,7 @@ const Shows = () => {
   useEffect(() => {
     const today = formatISO(new Date(), { representation: 'date' });
     const contentQuery = '*[_type == "pages" && pageName == "shows"]';
-    const showQuery = `*[_type == "shows" && showDate >= $today]`;
+    const showQuery = `*[_type == "shows" && showDate >= $today] | order(showDate asc)`;
     const showParams = { today };
 
     client.fetch(contentQuery, {}).then(data => {
@@ -24,7 +24,6 @@ const Shows = () => {
     })
 
     client.fetch(showQuery, showParams).then(data => {
-      console.log(data);
       setShows(data);
     })
   }, [])
@@ -43,6 +42,8 @@ const Shows = () => {
     }
   `)
 
+  const globalPandemic = true;
+
   const showCards = shows.map((show, i) => {
     return <ShowCard key={i} showData={show} imageUrl={urlFor(show.image).url()} />
   });
@@ -52,9 +53,15 @@ const Shows = () => {
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
         <ColorTitle text={getData("pageHeader")} marginBottom="100px" />
-        <div className="show-card-container">
-          {showCards}
-        </div>
+        {
+          globalPandemic 
+            ? (
+              <div className="message-container">
+                <h2 className="header-font">{getData("subheader")}</h2>
+              </div>
+            )
+            : <div className="show-card-container">{showCards}</div>
+        }
       </div>
     </Layout>
   )

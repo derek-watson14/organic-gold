@@ -5,7 +5,7 @@ import defaultShowImage from '../images/live-music.jpg'
 
 const Show = ({showData, imageUrl}) => {
   const {name, about, showDate, showTime, venue, bands} = showData;
-  const date = format(new Date(showDate), "MMMM do");
+  const date = format(new Date(showDate), "MMMM do y");
   const venueDisplay = venue.link 
     ? <a href={venue.link} target="_blank" rel="noopener noreferrer" className="hover-flip plain-link">{venue.name}</a>
     : venue.name;
