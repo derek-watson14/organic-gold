@@ -37,6 +37,7 @@ const AV = () => {
     <Layout navImage={navImage} fadeColor={"#F8E100"}>
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/0trv6YOkWck" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </Layout>
   )
 }

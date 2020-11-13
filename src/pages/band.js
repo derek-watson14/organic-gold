@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import { useInView } from "react-intersection-observer"
-import { useSpring, animated } from "react-spring"
 
 import client, { urlFor } from "../sanity/client"
 import Layout from "../components/layout"
@@ -25,11 +23,6 @@ const Band = () => {
   }, [])
 
   const getData = (key, alt = "") => content ? content[key] : alt;
-
-  const [ref, inView] = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  })
 
   const navImage = useStaticQuery(graphql`
     query {
@@ -58,17 +51,9 @@ const Band = () => {
               <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
               {getData("textContent", []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </div>
-            <animated.div
-              className="band-text--buttons"
-              ref={ref}
-              style={useSpring({
-                delay: 350,
-                transform: inView ? "translateY(0)" : "translateY(20px)",
-                opacity: inView ? 1 : 0,
-              })}
-            >
+            <div className="band-text--buttons">
               {getData("buttonLinks", []).map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
-            </animated.div>
+            </div>
           </div>
         </div>
       </div>

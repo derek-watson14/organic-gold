@@ -54,7 +54,7 @@ const Shows = () => {
       <div className="container">
         <ColorTitle text={getData("pageHeader")} marginBottom="100px" />
         {
-          globalPandemic 
+          globalPandemic || shows.length === 0
             ? (
               <div className="message-container">
                 <h2 className="header-font">{getData("subheader")}</h2>

@@ -11,28 +11,29 @@
   }
   .band-content--image {
     flex: 1;
-    margin-right: 15px;
-    min-width: 440px;
+    padding: 10px;
+    min-width: 425px;
     display: flex;
     align-items: center;
     justify-content: center;
     img {
       width: 100%;
+      max-width: 600px;
       margin: 0;
+      box-shadow: $box-shadow;
     }
-    @include respond(tab-port) {
+    @include respond(936px) {
       order: 2;
     }
     @include respond(phone) {
-      margin-right: 0;
+      min-width: 370px;
     }
   }
   .band-content--text {
     margin-bottom: 30px;
     flex: 1;
-    @include respond(phone) {
-      padding: 0 5px;
-    }
+    padding: 10px;
+    width: 100%;
     .band-text--buttons {
       width: 100%;
       display: flex;

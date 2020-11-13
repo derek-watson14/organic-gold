@@ -43,4 +43,8 @@ ORDER: Base + Typography > Generar Layout + Grid > Page Layout > Components
       @content;
     } //1800px +
   }
+
+  @media (max-width: $breakpoint) {
+    @content;
+  }
 }
