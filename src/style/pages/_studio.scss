@@ -10,19 +10,25 @@
     font-weight: bold;
   }
   .studio-content--text {
-    margin-right: 15px;
+    padding: 10px;
     margin-bottom: 30px;
     flex: 1;
-    @include respond(phone) {
-      padding: 0 5px;
-    }
+    width: 100%;
   }
   .studio-content--image {
     flex: 1;
-    min-width: 475px;
+    padding: 10px;
+    min-width: 425px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     img {
       width: 100%;
+      max-width: 600px;
       margin: 0;
+    }
+    @include respond(phone) {
+      min-width: 370px;
     }
   }
   .studio-paragraphs {

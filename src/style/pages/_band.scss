@@ -20,7 +20,6 @@
       width: 100%;
       max-width: 600px;
       margin: 0;
-      box-shadow: $box-shadow;
     }
     @include respond(936px) {
       order: 2;
