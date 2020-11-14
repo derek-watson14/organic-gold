@@ -1,12 +1,16 @@
 .home-text {
-  width: 90%;
   font-family: $text-font;
   text-align: center;
   margin-bottom: 75px;
+  width: 80%;
   font-size: 17px;
   letter-spacing: .01em;
   line-height: 1.67em;
   font-weight: bold;
+  @include respond(phone) {
+    width: 100%;
+    padding: 0 10px;
+  }
 }
 
 .button-container-home {
@@ -15,8 +19,11 @@
   justify-content: space-around;
   flex-wrap: wrap;
   margin-bottom: 125px;
+  @include respond(tab-port) {
+    width: 100%;
+  }
   @include respond(phone) {
-    width: 90%;
+    width: 100%;
   }
   a {
     margin-bottom: 25px;
