@@ -84,6 +84,9 @@
   background-color: white;
   border-color: $button-black;
   color: $button-black;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   &:hover {
     color: white;
     background-color: $button-black;
