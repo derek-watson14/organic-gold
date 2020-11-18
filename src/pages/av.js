@@ -16,7 +16,6 @@ const AV = () => {
     const params = {};
 
     client.fetch(query, params).then(data => {
-      console.log(data[0])
       setContent(data[0]);
     })
   }, [])
@@ -45,21 +44,20 @@ const AV = () => {
         </div>
         <div className="av-media-container">
           <div className="media-item-container">
-            <h3 className="media-header">Organic Gold on YouTube</h3>
+            <h3 className="media-header">{getData("lists") ? getData("lists")[0].items[0] : ""}</h3>
             <iframe 
               className="av-youtube-player" 
-              src="https://www.youtube.com/embed/0trv6YOkWck" 
+              src={getData("lists") ? getData("lists")[0].items[1] : ""}
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen 
             />
           </div>
           <div className="media-item-container">
-            <h3 className="media-header">Organic Gold on SoundCloud</h3>
+            <h3 className="media-header">{getData("lists") ? getData("lists")[1].items[0] : ""}</h3>
             <ReactPlayer
-              // https://www.npmjs.com/package/react-instagram-embed
               className="av-soundcloud-playlist"
-              url="https://soundcloud.com/user-66808316"
+              url={getData("lists") ? getData("lists")[1].items[1] : ""}
               width={"100%"}
               height={425}
             />

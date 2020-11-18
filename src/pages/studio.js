@@ -64,13 +64,13 @@ const Studio = () => {
         <h2 className="header-font">{getData("subheader")}</h2>
         <div className="equipment-lists">
           {getData("lists", [])
-            .filter(list => list.listName !== "Previous Projects")
+            .filter(list => list.name !== "Previous Projects")
             .map((list, index) => {
               return (
                 <div className="equipment-section" key={index}>
-                  <h3>{list.listName}</h3>
+                  <h3>{list.name}</h3>
                   <ul>
-                    {list.listItem.map((item, index) => {
+                    {list.items.map((item, index) => {
                       return <li key={index}>{item}</li>
                     })}
                   </ul>
@@ -86,9 +86,9 @@ const Studio = () => {
             .map((item, i) => <h2 key={i} className="projects-header">{item.listName.toUpperCase()}</h2>)
           }
           {getData("lists", [])
-            .filter(list => list.listName === "Previous Projects")
+            .filter(list => list.name === "Previous Projects")
             .map((list) => {
-              return list.listItem.map((song, i) => {
+              return list.items.map((song, i) => {
                 const src = `https://w.soundcloud.com/player/?url=${song}&color=1B1C1D&show_artwork=true&liking=false&sharing=false&show_user=true`;
                 return <iframe key={i} className="soundcloud-player" scrolling="no" frameBorder="no" allow="autoplay" src={src}></iframe>;
               })

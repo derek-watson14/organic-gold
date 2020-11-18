@@ -42,8 +42,6 @@ const Shows = () => {
     }
   `)
 
-  const globalPandemic = true;
-
   const showCards = shows.map((show, i) => {
     return <ShowCard key={i} showData={show} imageUrl={urlFor(show.image).url()} />
   });
@@ -53,14 +51,13 @@ const Shows = () => {
       <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
       <div className="container">
         <ColorTitle text={getData("pageHeader")} marginBottom="100px" />
-        {
-          globalPandemic || shows.length === 0
-            ? (
-              <div className="message-container">
-                <h2 className="header-font">{getData("subheader")}</h2>
-              </div>
-            )
-            : <div className="show-card-container">{showCards}</div>
+        {shows.length === 0
+          ? (
+            <div className="message-container">
+              <h2 className="header-font">{getData("subheader")}</h2>
+            </div>
+          )
+          : <div className="show-card-container">{showCards}</div>
         }
       </div>
     </Layout>
