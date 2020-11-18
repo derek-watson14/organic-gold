@@ -1,12 +1,49 @@
-.av-media-container {
+.av-text-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  height: 300px;
-  margin-bottom: 50px;
-
+  flex-direction: column;
+  align-items: flex-start;
+  .av-p {
+    margin: 15px 0 0 0;
+    font-size: 1.1em;
+  }
+  @include respond(phone) {
+    padding: 0px 10px 0px 10px;
+  }
 }
 
-.av-youtube-player {
-  width: 500px;
+
+.av-media-container {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "youtube" "soundcloud";
+  column-gap: 20px;
+  row-gap: 0px;
+  margin: 30px 0 60px 0;
+  .av-youtube-player {
+    height: 425px;
+    grid-area: "youtube";
+    width: 100%;
+  }
+  .av-soundcloud-playlist {
+    grid-area: "soundcloud";
+  }
+  @include respond(1200px) {
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 0px;
+    row-gap: 25px;
+    grid-template-areas: 
+      "youtube" 
+      "soundcloud";
+  }
+  @include respond(phone) {
+    padding: 0px 10px 0px 10px;
+  }
+}
+
+.media-header {
+  font-family: $header-font;
+  margin: 5px 0 10px 0;
 }
