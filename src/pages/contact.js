@@ -63,13 +63,6 @@ const Contact = () => {
       buttonText: "SENDING..."
     })
 
-    console.log(
-      process.env.GATSBY_CONTACT_USER,
-      process.env.GATSBY_CONTACT_PASSWORD,
-      process.env.GATSBY_SMTP_HOST,
-      process.env.GATSBY_SMTP_PORT,
-    );
-
     axios.post('/api/sendmail', {
       first: formData.first,
       last: formData.last,

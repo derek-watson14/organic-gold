@@ -11,7 +11,10 @@ exports.handler = function(event, context, callback) {
       auth: {
         user: data.user,
         pass: data.password,
-      }
+      },
+      tls: { 
+        secureProtocol: "TLSv1_method" 
+      },
     });
 
     transporter.sendMail({
