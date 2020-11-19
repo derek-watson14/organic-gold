@@ -62,9 +62,14 @@ const Contact = () => {
       ...formData,
       buttonText: "SENDING..."
     })
-    console.log(process.env.GATSBY_GMAIL_PASSWORD);
+
     console.log(process.env.GATSBY_GMAIL_USERNAME);
-    axios.post('api/sendmail', formData)
+
+    axios.post('api/sendmail', {
+      ...formData,
+      user: process.env.GATSBY_GMAIL_USERNAME,
+      password: process.env.GATSBY_GMAIL_PASSWORD,
+    })
       .then(res => {
         if (res.data.result !== "success") {
           setFormData({
