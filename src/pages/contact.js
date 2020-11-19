@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import axios from "axios"
 
 import client from "../sanity/client"
 import Layout from "../components/layout"
@@ -9,6 +10,15 @@ import ColorTitle from "../components/colorTitle"
 
 const Contact = () => {
   const [content, setContent] = useState(null);
+  const [formData, setFormData] = useState({
+    first: "", 
+    last: "", 
+    email: "", 
+    message: "", 
+    buttonText: "SUBMIT",
+    sent: false,
+    err: "",
+  })
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "contact"]';
@@ -34,9 +44,64 @@ const Contact = () => {
     }
   `)
 
+  const resetForm = () => {
+    setFormData({
+        first: '',
+        last: '',
+        email: '',
+        message: '',
+        sent: false,
+        buttonText: 'SUBMIT',
+        err: ''
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("This form is not yet hooked up. Check back soon!");
+    setFormData({
+      ...formData,
+      buttonText: "SENDING..."
+    })
+    console.log(process.env.GMAIL_PASSWORD);
+    console.log(process.env.GMAIL_USERNAME);
+    axios.post('api/sendmail', formData)
+      .then(res => {
+        if (res.data.result !== "success") {
+          setFormData({
+            ...formData,
+            buttonText: "FAILED TO SEND",
+            sent: false,
+            err: "fail"
+          })
+          setTimeout(() => {
+            resetForm();
+          }, 6000)
+        } else {
+          setFormData({
+            ...formData,
+            sent: true,
+            buttonText: 'SENT',
+            err: 'success'
+          })
+          setTimeout(() => {
+              resetForm();
+          }, 6000)
+        }
+      }).catch( (err) => {
+        setFormData({
+          ...formData,
+          buttonText: 'FAILED TO SEND',
+          err: 'fail'
+        })
+      })
+  }
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
   }
 
   return (
@@ -60,27 +125,52 @@ const Contact = () => {
             <form onSubmit={handleSubmit}>
               <fieldset className="name-fields">
                 <label>
-                  <input className="field-element" type="text" name="name" />
+                  <input 
+                    className="field-element" 
+                    type="text" 
+                    name="first"
+                    value={formData.first}
+                    onChange={handleChange} 
+                  />
                   First Name
                 </label>
                 <label>
-                  <input className="field-element" type="text" name="name" />
+                  <input 
+                    className="field-element" 
+                    type="text" 
+                    name="last" 
+                    value={formData.last}
+                    onChange={handleChange} 
+                  />
                   Last Name
                 </label>
               </fieldset>
               <fieldset className="single-field">
                 <label>
-                  <input className="field-element" type="text" name="name" rows="5" />
+                  <input 
+                    className="field-element" 
+                    type="text" 
+                    name="email" 
+                    value={formData.email}
+                    onChange={handleChange} 
+                  />
                   Email Address*
                 </label>
               </fieldset>
               <fieldset className="single-field">
                 <label>
-                  <textarea className="field-element" type="text" name="name" rows="4" />
+                  <textarea 
+                    className="field-element" 
+                    type="text" 
+                    name="message" 
+                    rows="4" 
+                    value={formData.message}
+                    onChange={handleChange} 
+                  />
                   Message*
                 </label>
               </fieldset>
-              <input className="submit-btn" type="submit" value="SUBMIT" />
+              <input className="submit-btn" type="submit" value={formData.buttonText} />
             </form>
           </div>
         </div>
