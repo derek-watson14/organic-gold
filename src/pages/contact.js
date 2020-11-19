@@ -14,6 +14,7 @@ const Contact = () => {
     first: "", 
     last: "", 
     email: "", 
+    subject: "",
     message: "", 
     buttonText: "SUBMIT",
     sent: false,
@@ -67,6 +68,7 @@ const Contact = () => {
       first: formData.first,
       last: formData.last,
       email: formData.email,
+      subject: formData.subject,
       message: formData.message,
       user: process.env.GATSBY_CONTACT_USER,
       password: process.env.GATSBY_CONTACT_PASSWORD,
@@ -140,7 +142,7 @@ const Contact = () => {
                     value={formData.first}
                     onChange={handleChange} 
                   />
-                  First Name
+                  {getData("forms") ? getData("forms")[0].fieldLabels[0] : ""}
                 </label>
                 <label>
                   <input 
@@ -150,7 +152,7 @@ const Contact = () => {
                     value={formData.last}
                     onChange={handleChange} 
                   />
-                  Last Name
+                  {getData("forms") ? getData("forms")[0].fieldLabels[1] : ""}
                 </label>
               </fieldset>
               <fieldset className="single-field">
@@ -162,7 +164,20 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange} 
                   />
-                  Email Address*
+                  {getData("forms") ? getData("forms")[0].fieldLabels[2] : ""}*
+                </label>
+              </fieldset>
+              <br />
+              <fieldset className="single-field">
+                <label>
+                  <input 
+                    className="field-element" 
+                    type="text" 
+                    name="subject" 
+                    value={formData.subject}
+                    onChange={handleChange} 
+                  />
+                  {getData("forms") ? getData("forms")[0].fieldLabels[3] : ""}
                 </label>
               </fieldset>
               <fieldset className="single-field">
@@ -175,7 +190,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange} 
                   />
-                  Message*
+                  {getData("forms") ? getData("forms")[0].fieldLabels[4] : ""}*
                 </label>
               </fieldset>
               <input className="submit-btn" type="submit" value={formData.buttonText} />
