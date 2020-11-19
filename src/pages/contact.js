@@ -65,7 +65,7 @@ const Contact = () => {
 
     console.log(process.env.GATSBY_GMAIL_USERNAME);
 
-    axios.post('api/sendmail', {
+    axios.post('/api/sendmail', {
       ...formData,
       user: process.env.GATSBY_GMAIL_USERNAME,
       password: process.env.GATSBY_GMAIL_PASSWORD,
