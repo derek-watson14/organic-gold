@@ -5,7 +5,8 @@ exports.handler = function(event, context, callback) {
     let data = JSON.parse(event.body)
 
     let transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: data.host,
+      port: data.port,
       auth: {
         user: data.user,
         pass: data.password,
