@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 exports.handler = function(event, context, callback) {
 
     let data = JSON.parse(event.body)
+    console.log(data);
 
     let transporter = nodemailer.createTransport({
       host: data.host,
