@@ -16,9 +16,9 @@ exports.handler = function(event, context, callback) {
       secure: false,
       ignoreTLS: false,
       requireTLS: true,
-      tls: {
-        minVersion: 'TLSv1',
-      }
+      // tls: {
+      //   minVersion: 'TLSv1',
+      // }
     },
   });
 
