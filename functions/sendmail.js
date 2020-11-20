@@ -13,14 +13,14 @@ exports.handler = function(event, context, callback) {
       user: data.user,
       pass: data.password,
     },
-    // tls: { 
-    //   secure: false,
-    //   ignoreTLS: false,
-    //   requireTLS: true,
-    //   tls: {
-    //     minVersion: 'TLSv1',
-    //   }
-    // },
+    tls: { 
+      secure: false,
+      ignoreTLS: false,
+      requireTLS: true,
+      tls: {
+        minVersion: 'TLSv1',
+      }
+    },
   });
 
   transporter.sendMail({
