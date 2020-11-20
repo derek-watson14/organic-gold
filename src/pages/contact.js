@@ -20,7 +20,7 @@ const defaultValues = {
 const Contact = () => {
   const [content, setContent] = useState(null);
   const [buttonText, setButtonText] = useState("SUBMIT");
-  const { register, handleSubmit, errors, watch, reset } = useForm(defaultValues);
+  const { register, handleSubmit, errors, reset } = useForm(defaultValues);
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "contact"]';
@@ -58,15 +58,21 @@ const Contact = () => {
           setButtonText("FAILED TO SEND");
           setTimeout(() => {
             reset();
+            setButtonText("SUBMIT");
           }, 6000)
         } else {
           setButtonText("SENT");
           setTimeout(() => {
             reset();
+            setButtonText("SUBMIT");
           }, 6000)
         }
-      }).catch( (err) => {
+      }).catch((err) => {
         setButtonText("FAILED TO SEND");
+        setTimeout(() => {
+          reset();
+          setButtonText("SUBMIT");
+        }, 6000)
       })
   }
 
