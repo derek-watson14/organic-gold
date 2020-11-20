@@ -38,7 +38,7 @@
   }
 }
 
-.name-fields {
+.two-fields {
   border: none;
   padding: 0;
   width: 100%;
@@ -61,6 +61,10 @@
   }
 }
 
+.form-divider {
+  height: 20px;
+}
+
 .field-element {
   width: 100%;
   padding: 12px;
@@ -73,6 +77,18 @@
   line-height: normal;
   box-sizing: border-box;
   border-radius: 2px;
+}
+
+.field-element.field-error {
+  outline: 1px auto #bd2f2f;
+}
+
+.error-message {
+  color: #bd2f2f;
+  line-height: 0.7em;
+  min-height: 0.7em;
+  margin: 0.25em 0;
+  font-size: 0.8em;
 }
 
 .submit-btn {
@@ -93,3 +109,12 @@
     cursor: pointer;
   }
 }
+
+/* 
+  First: 255 max
+  Last: 255 max
+  Subject: 255 max
+  Email: required, valid email pattern
+  Mobile: 10 char, numbers
+  Message: required, 2500 max
+*/

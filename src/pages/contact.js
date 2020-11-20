@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import axios from "axios"
+import { useForm } from "react-hook-form"
 
 import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
 
+const defaultValues = {
+  first: "",
+  last: "",
+  email: "",
+  mobile: "", 
+  subject: "",
+  message: "",
+};
 
 const Contact = () => {
   const [content, setContent] = useState(null);
-  const [formData, setFormData] = useState({
-    first: "", 
-    last: "", 
-    email: "", 
-    subject: "",
-    message: "", 
-    buttonText: "SUBMIT",
-    sent: false,
-    err: "",
-  })
+  const [buttonText, setButtonText] = useState("SUBMIT");
+  const { register, handleSubmit, errors, watch, reset } = useForm(defaultValues);
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "contact"]';
     const params = {};
 
     client.fetch(query, params).then(data => {
-      console.log(data[0]);
       setContent(data[0]);
     })
   }, [])
@@ -45,31 +45,9 @@ const Contact = () => {
     }
   `)
 
-  const resetForm = () => {
-    setFormData({
-        first: '',
-        last: '',
-        email: '',
-        message: '',
-        sent: false,
-        buttonText: 'SUBMIT',
-        err: ''
-    });
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormData({
-      ...formData,
-      buttonText: "SENDING..."
-    })
-
+  const onSubmit = (data) => {
     axios.post('/api/sendmail', {
-      first: formData.first,
-      last: formData.last,
-      email: formData.email,
-      subject: formData.subject,
-      message: formData.message,
+      ...data,
       user: process.env.GATSBY_CONTACT_USER,
       password: process.env.GATSBY_CONTACT_PASSWORD,
       host: process.env.GATSBY_SMTP_HOST,
@@ -77,41 +55,19 @@ const Contact = () => {
     })
       .then(res => {
         if (res.data.result !== "success") {
-          setFormData({
-            ...formData,
-            buttonText: "FAILED TO SEND",
-            sent: false,
-            err: "fail"
-          })
+          setButtonText("FAILED TO SEND");
           setTimeout(() => {
-            resetForm();
+            reset();
           }, 6000)
         } else {
-          setFormData({
-            ...formData,
-            sent: true,
-            buttonText: 'SENT',
-            err: 'success'
-          })
+          setButtonText("SENT");
           setTimeout(() => {
-              resetForm();
+            reset();
           }, 6000)
         }
       }).catch( (err) => {
-        setFormData({
-          ...formData,
-          buttonText: 'FAILED TO SEND',
-          err: 'fail'
-        })
+        setButtonText("FAILED TO SEND");
       })
-  }
-
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
   }
 
   return (
@@ -132,68 +88,118 @@ const Contact = () => {
           </div>
           <div className="contact-form-container">
             <h2 className="contact-header">{getData("forms") ? getData("forms")[0].formHeader : ""}</h2>
-            <form onSubmit={handleSubmit}>
-              <fieldset className="name-fields">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <fieldset className="two-fields">
                 <label>
                   <input 
-                    className="field-element" 
+                    className={errors.first ? "field-element field-error" : "field-element"} 
                     type="text" 
                     name="first"
-                    value={formData.first}
-                    onChange={handleChange} 
+                    ref={register({
+                      maxLength: {
+                        value: 255,
+                        message: "Input is too long."
+                      },
+                    })}
                   />
                   {getData("forms") ? getData("forms")[0].fieldLabels[0] : ""}
+                  <div className="error-message">{errors.first && errors.first.message}</div>
                 </label>
                 <label>
                   <input 
-                    className="field-element" 
+                    className={errors.last ? "field-element field-error" : "field-element"} 
                     type="text" 
                     name="last" 
-                    value={formData.last}
-                    onChange={handleChange} 
+                    ref={register({
+                      maxLength: {
+                        value: 255,
+                        message: "Input is too long."
+                      },
+                    })}
                   />
                   {getData("forms") ? getData("forms")[0].fieldLabels[1] : ""}
+                  <div className="error-message">{errors.last && errors.last.message}</div>
                 </label>
               </fieldset>
-              <fieldset className="single-field">
+              <fieldset className="two-fields">
                 <label>
                   <input 
-                    className="field-element" 
-                    type="text" 
-                    name="email" 
-                    value={formData.email}
-                    onChange={handleChange} 
+                    className={errors.email ? "field-element field-error" : "field-element"} 
+                    type="tel" 
+                    name="email"
+                    ref={register({
+                      required: "This field is required.",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Please enter a valid email."
+                      }
+                    })}
                   />
                   {getData("forms") ? getData("forms")[0].fieldLabels[2] : ""}*
+                  <div className="error-message">{errors.email && errors.email.message}</div>
                 </label>
-              </fieldset>
-              <br />
-              <fieldset className="single-field">
                 <label>
                   <input 
-                    className="field-element" 
-                    type="text" 
-                    name="subject" 
-                    value={formData.subject}
-                    onChange={handleChange} 
+                    className={errors.mobile ? "field-element field-error" : "field-element"} 
+                    type="tel" 
+                    name="mobile"
+                    ref={register({
+                      minLength: {
+                        value: 10,
+                        message: "Must be at least 10 digits.",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "Must be no more than 10 digits",
+                      },
+                      pattern: {
+                        value: /[0-9]/,
+                        message: "Must be all numbers."
+                      }
+                    })}
                   />
                   {getData("forms") ? getData("forms")[0].fieldLabels[3] : ""}
+                  <div className="error-message">{errors.mobile && errors.mobile.message}</div>
                 </label>
               </fieldset>
-              <fieldset className="single-field">
+              <div className="form-divider" />
+              <div className="single-field">
+                <label>
+                  <input 
+                    className={errors.subject ? "field-element field-error" : "field-element"} 
+                    type="text" 
+                    name="subject"
+                    ref={register({
+                      maxLength: {
+                        value: 255,
+                        message: "Input is too long."
+                      },
+                    })}
+                  />
+                  {getData("forms") ? getData("forms")[0].fieldLabels[4] : ""}
+                  <div className="error-message">{errors.subject && errors.subject.message}</div>
+                </label>
+              </div>
+              <div className="single-field">
                 <label>
                   <textarea 
-                    className="field-element" 
+                    className={errors.message ? "field-element field-error" : "field-element"}
                     type="text" 
                     name="message" 
-                    rows="4" 
-                    value={formData.message}
-                    onChange={handleChange} 
+                    rows="5"
+                    ref={register({
+                      required: "Field is required.",
+                      maxLength: {
+                        value: 1500,
+                        message: "Input is too long."
+                      },
+                    })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[4] : ""}*
+                  {getData("forms") ? getData("forms")[0].fieldLabels[5] : ""}*
+                  <div className="error-message">{errors.message && errors.message.message}</div>
                 </label>
-              </fieldset>
-              <input className="submit-btn" type="submit" value={formData.buttonText} />
+              </div>
+              <input className="submit-btn" type="submit" value={buttonText} />
             </form>
           </div>
         </div>
