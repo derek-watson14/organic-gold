@@ -2,12 +2,12 @@ const nodemailer = require('nodemailer');
 
 exports.handler = function(event, context, callback) {
      
-  let data = JSON.parse(event.body)
-  console.log(data);
+  const data = JSON.parse(event.body)
+  const fullName = `${data.first} ${data.last}`;
 
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: data.host,
-    port: 587,
+    port: data.port,
     auth: {
       user: data.user,
       pass: data.password,
@@ -20,20 +20,18 @@ exports.handler = function(event, context, callback) {
   transporter.sendMail({
     from: data.user,
     to: "contact@organicgoldmusic.com",
-    subject: `Contact form submission: ${data.subject}`,
+    subject: `Contact form submission: ${data.subject || "**No subject**"}`,
     html: `
-      <h2>Subject: ${data.subject}</h2>
-      <h3>Name: ${data.first} ${data.last}</h3>
+      <h2>Subject: ${data.subject || "**No subject**"}</h2>
+      <h3>Name: ${fullName || "**No name specified**"}</h3>
       <h3>Email: ${data.email}</h3>
-      <h3>Phone number: ${data.mobile}</h3>
+      <h3>Phone number: ${data.mobile || "**No phone number**"}</h3>
       <br />
       <br />
       <h3>Message</h3>
       <p>${data.message}<p>
     `,
   }, function(error, info) {
-    console.log("sendmail error: ", error);
-    console.log("sendmail info: ", info);
     if (error) {
       callback(error);
     } else {
