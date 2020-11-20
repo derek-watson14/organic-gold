@@ -8,18 +8,12 @@ exports.handler = function(event, context, callback) {
   let transporter = nodemailer.createTransport({
     host: data.host,
     port: 587,
-    secure: false,
     auth: {
       user: data.user,
       pass: data.password,
     },
     tls: { 
-      secure: false,
-      ignoreTLS: false,
-      requireTLS: true,
-      tls: {
-        minVersion: 'TLSv1',
-      }
+      secureProtocol: "TLSv1_method" 
     },
   });
 
