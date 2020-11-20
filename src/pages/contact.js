@@ -54,6 +54,7 @@ const Contact = () => {
       port: process.env.GATSBY_SMTP_PORT,
     })
       .then(res => {
+        console.log("axios post res: ", res);
         if (res.data.result !== "success") {
           setButtonText("FAILED TO SEND");
           setTimeout(() => {
@@ -68,6 +69,7 @@ const Contact = () => {
           }, 6000)
         }
       }).catch((err) => {
+        console.log("axios post err: ", err);
         setButtonText("FAILED TO SEND");
         setTimeout(() => {
           reset();

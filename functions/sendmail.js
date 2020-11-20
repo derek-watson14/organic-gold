@@ -38,6 +38,8 @@ exports.handler = function(event, context, callback) {
       <p>${data.message}<p>
     `,
   }, function(error, info) {
+    console.log("sendmail error: ", error);
+    console.log("sendmail info: ", info);
     if (error) {
       callback(error);
     } else {
