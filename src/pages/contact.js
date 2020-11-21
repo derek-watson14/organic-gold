@@ -20,6 +20,7 @@ const defaultValues = {
 const Contact = () => {
   const [content, setContent] = useState(null);
   const [buttonText, setButtonText] = useState("SUBMIT");
+  const [submitted, setSubmitted] = false;
   const { register, handleSubmit, errors, reset } = useForm(defaultValues);
 
   useEffect(() => {
@@ -46,34 +47,40 @@ const Contact = () => {
   `)
 
   const onSubmit = (data) => {
-    axios.post('/api/sendmail', {
-      ...data,
-      user: process.env.GATSBY_CONTACT_USER,
-      password: process.env.GATSBY_CONTACT_PASSWORD,
-      host: process.env.GATSBY_SMTP_HOST,
-      port: process.env.GATSBY_SMTP_PORT,
-    })
-      .then(res => {
-        if (res.data.result !== "success") {
+    if (!submitted) {
+      setSubmitted(true);
+      axios.post('/api/sendmail', {
+        ...data,
+        user: process.env.GATSBY_CONTACT_USER,
+        password: process.env.GATSBY_CONTACT_PASSWORD,
+        host: process.env.GATSBY_SMTP_HOST,
+        port: process.env.GATSBY_SMTP_PORT,
+      })
+        .then(res => {
+          if (res.data.result !== "success") {
+            setButtonText("FAILED TO SEND");
+            setTimeout(() => {
+              reset();
+              setButtonText("SUBMIT");
+              setSubmitted(false);
+            }, 6000)
+          } else {
+            setButtonText("SENT");
+            setTimeout(() => {
+              reset();
+              setButtonText("SUBMIT");
+              setSubmitted(false);
+            }, 6000)
+          }
+        }).catch((err) => {
           setButtonText("FAILED TO SEND");
           setTimeout(() => {
             reset();
             setButtonText("SUBMIT");
+            setSubmitted(false);
           }, 6000)
-        } else {
-          setButtonText("SENT");
-          setTimeout(() => {
-            reset();
-            setButtonText("SUBMIT");
-          }, 6000)
-        }
-      }).catch((err) => {
-        setButtonText("FAILED TO SEND");
-        setTimeout(() => {
-          reset();
-          setButtonText("SUBMIT");
-        }, 6000)
-      })
+        })
+    }
   }
 
   return (
