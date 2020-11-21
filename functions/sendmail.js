@@ -19,7 +19,7 @@ exports.handler = function(event, context, callback) {
 
   transporter.sendMail({
     from: data.user,
-    to: "contact@organicgoldmusic.com",
+    to: "organicgoldmusic@gmail.com",
     subject: `Contact form submission: ${data.subject || "**No subject**"}`,
     html: `
       <h2>Subject: ${data.subject || "**No subject**"}</h2>

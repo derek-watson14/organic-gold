@@ -15,28 +15,109 @@
 .av-media-container {
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: "youtube" "soundcloud";
-  column-gap: 20px;
-  row-gap: 0px;
+  grid-template-areas: 
+    "youtube soundcloud"
+    "instagram instagram";
+  grid-gap: 30px;
   margin: 30px 0 60px 0;
   .av-youtube-player {
-    height: 425px;
-    grid-area: "youtube";
-    width: 100%;
+    grid-area: youtube;
+    iframe {
+      height: 425px;
+      width: 100%;
+    }
   }
   .av-soundcloud-playlist {
-    grid-area: "soundcloud";
+    grid-area: soundcloud;
   }
+  .av-instagram {
+    width: 100%;
+    padding-bottom: 60px;
+    background-color: rgb(250, 250, 250);
+    grid-area: instagram;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    a {
+      text-decoration: none;
+      color: black;
+      transition: 200ms;
+      &:hover {
+        color: rgb(100, 100, 100);
+      }
+    }
+    hr {
+      width: 325px;
+      margin-bottom: 20px;
+      border-top: 2px solid black;
+      border-bottom: none;
+      border-left: none;
+      border-right: none;
+    }
+    .media-header {
+      margin: 20px 0 5px 0;
+    }
+    .insta-grid {
+      max-width: 935px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      grid-gap: 28px;
+      @include respond(1025px) {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      @include respond(720px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+    }
+    .post-container {
+      position: relative;
+      box-shadow: $box-shadow;
+      height: 293px;
+      width: 293px;
+      img {
+        height: 293px;
+        width: 293px;
+      }
+      video {
+        height: 293px;
+        width: 293px;
+      }
+      .hover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: $text-font;
+        h4 {
+          text-align: center;
+          width: 90%;
+        }
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .hover-overlay.video-o {
+        height: 75%;
+      }
+    }
+  }
+
   @include respond(1200px) {
-    grid-template-columns: auto;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 0px;
-    row-gap: 25px;
     grid-template-areas: 
       "youtube" 
-      "soundcloud";
+      "soundcloud"
+      "instagram";
   }
   @include respond(phone) {
     padding: 0px 10px 0px 10px;
