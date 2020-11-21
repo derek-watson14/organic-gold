@@ -138,7 +138,7 @@ const Contact = () => {
                 <label>
                   <input 
                     className={errors.email ? "field-element field-error" : "field-element"} 
-                    type="tel" 
+                    type="text" 
                     name="email"
                     ref={register({
                       required: "This field is required.",
