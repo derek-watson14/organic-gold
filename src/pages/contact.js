@@ -20,7 +20,7 @@ const defaultValues = {
 const Contact = () => {
   const [content, setContent] = useState(null);
   const [buttonText, setButtonText] = useState("SUBMIT");
-  const [submitted, setSubmitted] = false;
+  const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm(defaultValues);
 
   useEffect(() => {
