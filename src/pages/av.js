@@ -45,6 +45,14 @@ const AV = () => {
 
   const getData = (key, alt = "") => content ? content[key] : alt;
 
+  const concatCaption = (caption) => {
+    if (caption.length > 247) {
+      return `${caption.slice(0, 247)}...`;
+    } else {
+      return caption;
+    }
+  }
+
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "jonny.jpg" }) {
@@ -93,14 +101,14 @@ const AV = () => {
                 return (
                   <div key={post.id} className="post-container">
                     {post.isVideo 
-                      ? (<video controls playsInline preload="metadata" poster={post.imageUrl}>
+                      ? (<video controls poster={post.imageUrl}>
                           <source src={post.videoUrl} type="video/mp4" />
                           Your browser doesn't support this video display.
                          </video>)
                       : <img src={post.imageUrl} alt={post.caption} />
                     }
                     <div className={post.isVideo ? "hover-overlay video-o" : "hover-overlay"}>
-                      <h4 className="post-caption">{post.caption}</h4>
+                      <h4 className="post-caption">{post.isVideo ? concatCaption(post.caption) : post.caption}</h4>
                     </div>
                   </div>
                 )

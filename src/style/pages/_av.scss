@@ -106,6 +106,9 @@
         &:hover {
           opacity: 1;
         }
+        @include respond(phone) {
+          pointer-events: none;
+        }
       }
       .hover-overlay.video-o {
         height: 75%;
