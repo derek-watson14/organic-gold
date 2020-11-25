@@ -48,6 +48,7 @@ const Contact = () => {
 
   const onSubmit = (data) => {
     if (!submitted) {
+      setButtonText("SENDING...");
       setSubmitted(true);
       axios.post('/api/sendmail', {
         ...data,
@@ -70,6 +71,7 @@ const Contact = () => {
               reset();
               setButtonText("SUBMIT");
               setSubmitted(false);
+              alert("Your message has been recieved! Expect an email from us soon!")
             }, 6000)
           }
         }).catch((err) => {

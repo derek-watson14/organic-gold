@@ -21,6 +21,11 @@
     font-family: $text-font;
     font-weight: 500;
     font-size: 1.7em;
+    text-align: center;
+    padding: 0 10px;
+    @include respond(phone) {
+      padding: 0;
+    }
   }
   .contact-line {
     margin: 0 0 5px 0;
