@@ -28,11 +28,11 @@ exports.handler = function(event, context, callback) {
 
   const h1Style = "margin: 10px 0 5px 0; font-size: 1.5em;";
   const h2Style = "margin: 0 0 15px 0; font-size: 0.9em; font-weight: 200;"
-  const infoContainerStyle = "display: grid; grid-template-columns: 120px 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; margin-bottom: 15px;";
-  const keyStyle = "margin: 0; font-size: 1em;";
-  const valueStyle = "margin: 0; font-size: 1em; font-weight: normal;";
+  const infoContainerStyle = "display: grid !important; grid-template-columns: 120px 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; margin-bottom: 15px;";
+  const keyStyle = "margin: 0; font-size: 1.2em; font-weight: bold;";
+  const valueStyle = "margin: 0; font-size: 1.2em;";
   const messageHeaderStyle = "margin: 0 0 5px 0; font-size: 1em;";
-  const messageStyle = "margin: 0; font-size: 0.9em;";
+  const messageStyle = "margin: 0; font-size: 1em;";
 
   transporter.sendMail({
     from: data.user,
