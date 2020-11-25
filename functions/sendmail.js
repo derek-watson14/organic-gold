@@ -7,10 +7,10 @@ exports.handler = function(event, context, callback) {
 
   const submissionTimestamp = new Date();
 
-  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: "America/Los_Angeles" };
   const formattedDate = submissionTimestamp.toLocaleDateString("en-US", dateOptions);
 
-  const timeOptions = { hour: 'numeric', minute: 'numeric' };
+  const timeOptions = { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" };
   const formattedTime = submissionTimestamp.toLocaleTimeString("en-US", timeOptions);
 
 
@@ -29,29 +29,30 @@ exports.handler = function(event, context, callback) {
   const h1Style = "margin: 10px 0 5px 0; font-size: 1.5em;";
   const h2Style = "margin: 0 0 15px 0; font-size: 0.9em; font-weight: 200;"
   const infoContainerStyle = "display: grid; grid-template-columns: 120px 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; margin-bottom: 15px;";
-  const h3KeyStyle = "margin: 0; font-size: 1em;";
-  const h3ValueStyle = "margin: 0; font-size: 1em; font-weight: 200;";
-  const h3MessageStyle = "margin: 0 0 5px 0; font-size: 1em;";
+  const keyStyle = "margin: 0; font-size: 1em;";
+  const valueStyle = "margin: 0; font-size: 1em; font-weight: normal;";
+  const messageHeaderStyle = "margin: 0 0 5px 0; font-size: 1em;";
+  const messageStyle = "margin: 0; font-size: 0.9em;";
 
   transporter.sendMail({
     from: data.user,
     to: "organicgoldmusic@gmail.com",
-    subject: `Contact form: ${data.subject || "**No subject**"}`,
+    subject: `CONTACT FORM: ${data.subject || "**No subject**"}`,
     html: `
       <h1 style=${h1Style}>New contact form submission!</h1>
       <h2 style=${h2Style}>The following information was submitted on ${formattedDate} at ${formattedTime}.</h2>
       <div style=${infoContainerStyle}>
-        <h3 style=${h3KeyStyle}>Subject line: </h3>
-        <h3 style=${h3ValueStyle}>${data.subject || "**No subject**"}</h3>
-        <h3 style=${h3KeyStyle}>Name: </h3>
-        <h3 style=${h3ValueStyle}>${fullName || "**No name specified**"}</h3>
-        <h3 style=${h3KeyStyle}>Email: </h3>
-        <h3 style=${h3ValueStyle}>${data.email}</h3>
-        <h3 style=${h3KeyStyle}>Phone number: </h3>
-        <h3 style=${h3ValueStyle}>${data.mobile || "**No phone number**"}</h3>
+        <p style=${keyStyle}>Subject line: </p>
+        <p style=${valueStyle}>${data.subject || "**No subject**"}</p>
+        <p style=${keyStyle}>Name: </p>
+        <p style=${valueStyle}>${fullName || "**No name specified**"}</p>
+        <p style=${keyStyle}>Email: </p>
+        <p style=${valueStyle}>${data.email}</p>
+        <p style=${keyStyle}>Phone number: </p>
+        <p style=${valueStyle}>${data.mobile || "**No phone number**"}</p>
       </div>
-      <h3 style=${h3MessageStyle}>Message:</h3>
-      <p style="margin: 0;">${data.message}<p>
+      <h3 style=${messageHeaderStyle}>Message:</h3>
+      <p style=${messageStyle}>${data.message}<p>
     `,
   }, function(error, info) {
     if (error) {
