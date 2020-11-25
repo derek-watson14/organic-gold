@@ -67,8 +67,8 @@ const Contact = () => {
             }, 6000)
           } else {
             setButtonText("SENT");
+            alert("Your message has been recieved! Expect an email from us soon!");
             setTimeout(() => {
-              alert("Your message has been recieved! Expect an email from us soon!");
               setButtonText("SUBMIT");
               reset();
               setSubmitted(false);

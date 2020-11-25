@@ -93,7 +93,7 @@ const AV = () => {
                 return (
                   <div key={post.id} className="post-container">
                     {post.isVideo 
-                      ? (<video controls>
+                      ? (<video controls playsInline preload="metadata">
                           <source src={post.videoUrl} type="video/mp4" />
                           Your browser doesn't support this video display.
                          </video>)
