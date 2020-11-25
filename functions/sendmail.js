@@ -26,28 +26,25 @@ exports.handler = function(event, context, callback) {
     },
   });
 
-  const h1Style = "margin: 10px 0 5px 0; font-size: 1.5em;";
-  const h2Style = "margin: 0 0 15px 0; font-size: 0.9em; font-weight: 200;"
-  const infoContainerStyle = "margin-bottom: 15px;";
-  const keyStyle = "margin: 0; font-size: 1.2em;";
-  const messageHeaderStyle = "margin: 0 0 5px 0; font-size: 1em;";
-  const messageStyle = "margin: 0; font-size: 1em;";
-
   transporter.sendMail({
     from: data.user,
     to: "organicgoldmusic@gmail.com",
     subject: `CONTACT FORM: ${data.subject || "**No subject**"}`,
     html: `
-      <h1 style=${h1Style}>New contact form submission!</h1>
-      <h2 style=${h2Style}>The following information was submitted on ${formattedDate} at ${formattedTime}.</h2>
-      <div style=${infoContainerStyle}>
-        <h3 style="margin: 0; font-size: 1.2em;">Subject line: <span style="font-weight: 300;">${data.subject || "**No subject**"}</span></h3>
-        <h3 style=${keyStyle}>Name: <span style="font-weight: 300;">${fullName || "**No Name Specified**"}</span></h3>
-        <h3 style=${keyStyle}>Email: <span style="font-weight: 300;">${data.email}</span></h3>
-        <h3 style=${keyStyle}>Phone number: <span style="font-weight: 300;">${data.mobile || "**No Phone Number**"}</span></h3>  
+      <h1 style="margin: 10px 0 5px 0; font-size: 1.5em;">New contact form submission!</h1>
+      <h2 style="margin: 0 0 15px 0; font-size: 0.9em; font-weight: 200;">The following information was submitted on ${formattedDate} at ${formattedTime}.</h2>
+      <div style="display: grid !important; grid-template-columns: 120px 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.2em;">Subject line: </h3>
+        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
+        <h3 style="margin: 0; font-size: 1.2em;">Name: </h3>
+        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
+        <h3 style="margin: 0; font-size: 1.2em;">Email: </h3>
+        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
+        <h3 style="margin: 0; font-size: 1.2em;">Phone number: </h3>  
+        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
       </div>
       <h3 style="margin: 0 0 5px 0; font-size: 1em;">Message:</h3>
-      <p style=${messageStyle}>${data.message}<p>
+      <p style="margin: 0; font-size: 1em;">${data.message}<p>
     `,
   }, function(error, info) {
     if (error) {

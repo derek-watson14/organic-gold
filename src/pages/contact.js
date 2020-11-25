@@ -68,10 +68,10 @@ const Contact = () => {
           } else {
             setButtonText("SENT");
             setTimeout(() => {
-              reset();
+              alert("Your message has been recieved! Expect an email from us soon!");
               setButtonText("SUBMIT");
+              reset();
               setSubmitted(false);
-              alert("Your message has been recieved! Expect an email from us soon!")
             }, 6000)
           }
         }).catch((err) => {
