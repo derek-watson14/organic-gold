@@ -29,21 +29,17 @@ exports.handler = function(event, context, callback) {
   transporter.sendMail({
     from: data.user,
     to: "organicgoldmusic@gmail.com",
-    subject: `CONTACT FORM: ${data.subject || "**No subject**"}`,
+    subject: `NEW CONTACT FORM SUBMISSION`,
     html: `
       <h1 style="margin: 10px 0 5px 0; font-size: 1.5em;">New contact form submission!</h1>
       <h2 style="margin: 0 0 15px 0; font-size: 0.9em; font-weight: 200;">The following information was submitted on ${formattedDate} at ${formattedTime}.</h2>
-      <div style="display: grid !important; grid-template-columns: 120px 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; margin-bottom: 15px;">
-        <h3 style="margin: 0; font-size: 1.2em;">Subject line: </h3>
-        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
-        <h3 style="margin: 0; font-size: 1.2em;">Name: </h3>
-        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
-        <h3 style="margin: 0; font-size: 1.2em;">Email: </h3>
-        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
-        <h3 style="margin: 0; font-size: 1.2em;">Phone number: </h3>  
-        <h3 style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</h3>
+      <div style="margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.2em;">Subject line: <span style="margin: 0; font-weight: 300;">${data.subject || "**No subject**"}</span></h3>
+        <h3 style="margin: 0; font-size: 1.2em;">Name: <span style="margin: 0; font-weight: 300;">${fullName || "**No name provided**"}</span></h3>
+        <h3 style="margin: 0; font-size: 1.2em;">Email: <span style="margin: 0; font-weight: 300;">${data.email}</span></h3>
+        <h3 style="margin: 0; font-size: 1.2em;">Phone number: <span style="margin: 0; font-weight: 300;">${data.mobile || "**No phone number**"}</span></h3>  
       </div>
-      <h3 style="margin: 0 0 5px 0; font-size: 1em;">Message:</h3>
+      <h3 style="margin: 0 0 5px 0; font-size: 1.2em;">Message:</h3>
       <p style="margin: 0; font-size: 1em;">${data.message}<p>
     `,
   }, function(error, info) {
