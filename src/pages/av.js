@@ -85,7 +85,7 @@ const AV = () => {
           </div>
           <div className="av-instagram">
             <a href="https://www.instagram.com/organicgoldmusic/" target="_blank">
-              <h3 className="media-header">Organic Gold on Instagram</h3>
+              <h3 className="media-header">@organicgoldmusic on Instagram</h3>
             </a>
             <hr />
             <div className="insta-grid">
@@ -93,7 +93,10 @@ const AV = () => {
                 return (
                   <div key={post.id} className="post-container">
                     {post.isVideo 
-                      ? <video src={post.videoUrl} controls></video>
+                      ? (<video controls>
+                          <source src={post.videoUrl} type="video/mp4" />
+                          Your browser doesn't support this video display.
+                         </video>)
                       : <img src={post.imageUrl} alt={post.caption} />
                     }
                     <div className={post.isVideo ? "hover-overlay video-o" : "hover-overlay"}>

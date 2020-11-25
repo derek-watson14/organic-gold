@@ -30,7 +30,6 @@ exports.handler = function(event, context, callback) {
   const h2Style = "margin: 0 0 15px 0; font-size: 0.9em; font-weight: 200;"
   const infoContainerStyle = "margin-bottom: 15px;";
   const keyStyle = "margin: 0; font-size: 1.2em;";
-  const valueStyle = "margin: 0; font-weight: 300;";
   const messageHeaderStyle = "margin: 0 0 5px 0; font-size: 1em;";
   const messageStyle = "margin: 0; font-size: 1em;";
 
@@ -42,12 +41,12 @@ exports.handler = function(event, context, callback) {
       <h1 style=${h1Style}>New contact form submission!</h1>
       <h2 style=${h2Style}>The following information was submitted on ${formattedDate} at ${formattedTime}.</h2>
       <div style=${infoContainerStyle}>
-        <h3 style=${keyStyle}>Subject line: <span style=${valueStyle}>${data.subject || "**No subject**"}</span></h3>
-        <h3 style=${keyStyle}>Name: <span style=${valueStyle}>${fullName || "**No Name Specified**"}</span></h3>
-        <h3 style=${keyStyle}>Email: <span style=${valueStyle}>${data.email}</span></h3>
-        <h3 style=${keyStyle}>Phone number: <span style=${valueStyle}>${data.mobile || "**No Phone Number**"}</span></h3>  
+        <h3 style="margin: 0; font-size: 1.2em;">Subject line: <span style="font-weight: 300;">${data.subject || "**No subject**"}</span></h3>
+        <h3 style=${keyStyle}>Name: <span style="font-weight: 300;">${fullName || "**No Name Specified**"}</span></h3>
+        <h3 style=${keyStyle}>Email: <span style="font-weight: 300;">${data.email}</span></h3>
+        <h3 style=${keyStyle}>Phone number: <span style="font-weight: 300;">${data.mobile || "**No Phone Number**"}</span></h3>  
       </div>
-      <h3 style=${messageHeaderStyle}>Message:</h3>
+      <h3 style="margin: 0 0 5px 0; font-size: 1em;">Message:</h3>
       <p style=${messageStyle}>${data.message}<p>
     `,
   }, function(error, info) {
