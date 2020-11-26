@@ -1,0 +1,20 @@
+.nf-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+  p {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+}
+
+.nf-button-container {
+  width: 550px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  @include respond(550px) {
+    width: 100%;
+  }
+}
