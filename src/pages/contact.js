@@ -27,12 +27,13 @@ const Contact = () => {
   const [buttonText, setButtonText] = useState("SUBMIT");
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm(defaultValues);
-
+  console.log(content)
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "contact"]';
     const params = {};
 
     client.fetch(query, params).then(data => {
+      console.log(data);
       setContent(data[0]);
     })
   }, [])
@@ -115,7 +116,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].fieldLabels[0]}
+                  {content.forms[0].labels[0]}
                   <div className="error-message">{errors.first && errors.first.message}</div>
                 </label>
                 <label>
@@ -130,7 +131,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].fieldLabels[1]}
+                  {content.forms[0].labels[1]}
                   <div className="error-message">{errors.last && errors.last.message}</div>
                 </label>
               </fieldset>
@@ -148,7 +149,7 @@ const Contact = () => {
                       }
                     })}
                   />
-                  {content.forms[0].fieldLabels[2]}*
+                  {content.forms[0].labels[2]}*
                   <div className="error-message">{errors.email && errors.email.message}</div>
                 </label>
                 <label>
@@ -171,7 +172,7 @@ const Contact = () => {
                       }
                     })}
                   />
-                  {content.forms[0].fieldLabels[3]}
+                  {content.forms[0].labels[3]}
                   <div className="error-message">{errors.mobile && errors.mobile.message}</div>
                 </label>
               </fieldset>
@@ -189,7 +190,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].fieldLabels[4]}
+                  {content.forms[0].labels[4]}
                   <div className="error-message">{errors.subject && errors.subject.message}</div>
                 </label>
               </div>
@@ -208,7 +209,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].fieldLabels[5]}*
+                  {content.forms[0].labels[5]}*
                   <div className="error-message">{errors.message && errors.message.message}</div>
                 </label>
               </div>

@@ -19,9 +19,9 @@ const emptyContent = {
 export const emptyForm = (fieldCount) => {
   const emptyLabelAry = Array.from({length: fieldCount}, () => "");
   return {
-    formName: "",
-    formHeader: "",
-    fieldLabels: emptyLabelAry,
+    name: "",
+    header: "",
+    labels: emptyLabelAry,
   }
 }
 
