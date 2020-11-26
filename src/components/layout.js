@@ -25,7 +25,7 @@ const Layout = ({ children, navImage, fadeColor }) => {
     <>
       <FullPageNav navMenuOpen={navMenuOpen} setNavMenuOpen={setNavMenuOpen} />
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} fadeColor={fadeColor} />
-      <Navbar navImage={navImage} navMenuOpen={navMenuOpen} setNavMenuOpen={setNavMenuOpen} />
+      <Navbar navImage={navImage} navMenuOpen={navMenuOpen} setNavMenuOpen={setNavMenuOpen} fadeColor={fadeColor} />
       <main>{children}</main>
       <Footer />
     </>

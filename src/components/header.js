@@ -18,7 +18,7 @@ const Header = ({ fadeColor }) => {
       placeholderImage: file(relativePath: { eq: "banner-wide.png" }) {
         childImageSharp {
           fluid(maxWidth: 1920, quality: 100) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_noBase64
           }
         }
       }
@@ -28,7 +28,7 @@ const Header = ({ fadeColor }) => {
   return (
     <>
       <header className="header-container">
-        <Image data={data} classes="header-image" />
+        <Image data={data} classes="header-image" backgroundColor="#CA4874" />
       </header>
       <div style={headerFade(fadeColor)}></div>
     </>

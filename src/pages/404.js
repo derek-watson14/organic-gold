@@ -13,7 +13,7 @@ const NotFoundPage = () => {
       placeholderImage: file(relativePath: { eq: "pattern.png" }) {
         childImageSharp {
           fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_noBase64
           }
         }
       }
@@ -25,7 +25,7 @@ const NotFoundPage = () => {
       <SEO title="404: Not found" />
       <div className="container">
         <div className="nf-container">
-          <ColorTitle text={"404: Page Not Found"} marginBottom="25px" />
+          <ColorTitle text={"404: Page Not Found"} marginBottom="35px" />
           <p className="page-p">Something went wrong! The page you were searching for doesn't exist.</p>
           <div className="nf-button-container">
             <LinkButton text={"home"} to={"/home"} />

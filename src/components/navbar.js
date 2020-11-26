@@ -14,7 +14,7 @@ const parallax = (scrollY) => {
   }
 }
 
-const Navbar = ({ navImage, navMenuOpen, setNavMenuOpen }) => {
+const Navbar = ({ navImage, navMenuOpen, setNavMenuOpen, fadeColor }) => {
   const scrollY = useWindowScroll(60);
 
   const handleMenuBtnClick = () => {
@@ -38,7 +38,7 @@ const Navbar = ({ navImage, navMenuOpen, setNavMenuOpen }) => {
           <Link to="/contact">CONTACT</Link>
         </nav>
         <animated.div style={parallax(scrollY)}>
-          <Image data={navImage} classes="nav-image" />
+          <Image data={navImage} classes="nav-image" backgroundColor={fadeColor} />
         </animated.div>
       </div>
     </>

@@ -34,7 +34,7 @@ const Shows = () => {
       placeholderImage: file(relativePath: { eq: "mountain.jpg" }) {
         childImageSharp {
           fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_noBase64
           }
         }
       }
