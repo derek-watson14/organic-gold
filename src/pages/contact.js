@@ -7,7 +7,7 @@ import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
-import emptyContent, { emptyForm } from "../helpers/emptyContent"
+import emptyContent, { emptyForm, emptyList } from "../helpers/emptyContent"
 
 const defaultValues = {
   first: "",
@@ -21,19 +21,19 @@ const defaultValues = {
 const Contact = () => {
   const [content, setContent] = useState({
     ...emptyContent,
-    lists: [{name: "", items: []}],
+    lists: [emptyList(0)],
     forms: [emptyForm(6)],
   });
+
   const [buttonText, setButtonText] = useState("SUBMIT");
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm(defaultValues);
-  console.log(content)
+
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "contact"]';
     const params = {};
 
     client.fetch(query, params).then(data => {
-      console.log(data);
       setContent(data[0]);
     })
   }, [])

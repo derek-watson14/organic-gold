@@ -4,10 +4,14 @@ import { faBandcamp, faFacebookSquare, faInstagram, faSoundcloud } from '@fortaw
 import { Link } from "gatsby"
 
 import client from "../sanity/client"
+import emptyContent, { emptyList } from "../helpers/emptyContent"
 
 
 const Footer = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState({
+    ...emptyContent,
+    lists: [emptyList(4)],
+  });
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "footer"]';
@@ -15,20 +19,14 @@ const Footer = () => {
 
     client.fetch(query, params).then(data => {
       setContent(data[0]);
-      console.log(data)
     })
   }, [])
-
-  const getData = (key, alt = "") => content ? content[key] : alt;
 
   return (
     <footer className="footer-container">
       <div className="footer-connect text-font">
-        <h3 className="header-font">Stay Connected</h3>
-        <p>Jonny Cole</p>
-        <p>Organic Gold</p>
-        <p>(360) 516-9967</p>
-        <p>joncron@yahoo.com</p>
+        <h3 className="header-font">{content.pageHeader}</h3>
+        {content.lists[0].items.map((item, index) => <p key={index}>{item}</p>)}
         <div className="icon-container">
           <a href="hhttps://www.facebook.com/OrganicGoldMusic" rel="noreferrer" target="_blank" title="Facebook">
             <FontAwesomeIcon icon={faFacebookSquare} size="2x" className="social-icon" />

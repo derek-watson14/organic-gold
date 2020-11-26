@@ -25,4 +25,11 @@ export const emptyForm = (fieldCount) => {
   }
 }
 
+export const emptyList = (itemCount) => {
+  const emptyItemAry = Array.from({length: itemCount}, () => "");
+  return {
+    name: "",
+    items: emptyItemAry,
+  }
+}
 export default emptyContent;
