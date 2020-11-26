@@ -7,10 +7,11 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
 import ShowCard from "../components/showCard"
+import emptyContent from "../helpers/emptyContent"
 
 
 const Shows = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState(emptyContent);
   const [shows, setShows] = useState([]);
 
   useEffect(() => {
@@ -28,8 +29,6 @@ const Shows = () => {
     })
   }, [])
 
-  const getData = (key, alt = "") => content ? content[key] : alt;
-
   const navImage = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "mountain.jpg" }) {
@@ -42,22 +41,24 @@ const Shows = () => {
     }
   `)
 
-  const showCards = shows.map((show, i) => {
-    return <ShowCard key={i} showData={show} imageUrl={urlFor(show.image).url()} />
-  });
-
   return (
     <Layout navImage={navImage} fadeColor={"#1879AE"}>
-      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className="container">
-        <ColorTitle text={getData("pageHeader")} marginBottom="100px" />
+        <ColorTitle text={content.pageHeader} marginBottom="100px" />
         {shows.length === 0
           ? (
             <div className="message-container">
-              <h2 className="header-font">{getData("subheader")}</h2>
+              <h2 className="header-font">{content.subheader}</h2>
             </div>
           )
-          : <div className="show-card-container">{showCards}</div>
+          : (
+            <div className="show-card-container">
+              {shows.map((show, i) => {
+                return <ShowCard key={i} showData={show} imageUrl={urlFor(show.image).url()} />
+              })}
+            </div>
+          )
         }
       </div>
     </Layout>

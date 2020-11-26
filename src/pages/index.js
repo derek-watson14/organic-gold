@@ -6,9 +6,11 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import LinkButton from "../components/linkButton"
 import ColorTitle from "../components/colorTitle"
+import emptyContent from "../helpers/emptyContent"
+
 
 const IndexPage = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState(emptyContent);
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "home"]';
@@ -18,8 +20,6 @@ const IndexPage = () => {
       setContent(data[0]);
     })
   }, [])
-
-  const getData = (key, alt = "") => content ? content[key] : alt;
 
   const navImage = useStaticQuery(graphql`
     query {
@@ -35,14 +35,12 @@ const IndexPage = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#FC9D81"}>
-      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <SEO title={content.tabTitle} description={content.metaDescription} />
       <section className="container horz-center">
-        <ColorTitle text={getData("pageHeader")} marginBottom="75px" />
-        {getData("textContent", []).map((paragraph, i) => {
-          return <p key={i} className="home-text">{paragraph}</p>
-        })}
+        <ColorTitle text={content.pageHeader} marginBottom="75px" />
+        {content.textContent.map((paragraph, i) => <p key={i} className="home-text">{paragraph}</p>)}
         <div className="button-container-home">
-          {getData("buttonLinks", []).map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
+          {content.buttonLinks.map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
         </div>
       </section>
     </Layout >

@@ -6,9 +6,10 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
 import LinkButton from "../components/linkButton"
+import emptyContent from "../helpers/emptyContent"
 
 const Studio = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState(emptyContent);
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "studio"]';
@@ -21,8 +22,6 @@ const Studio = () => {
       });
     })
   }, [])
-
-  const getData = (key, alt = "") => content ? content[key] : alt;
 
   const navImage = useStaticQuery(graphql`
     query {
@@ -38,34 +37,30 @@ const Studio = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#F0843B"}>
-      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className="container">
 
         <div className="studio-content">
           <div className="studio-content--text">
-            <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
+            <ColorTitle text={content.pageHeader} marginBottom="50px" />
             <div className="studio-paragraphs">
-              {getData("textContent", []).map((paragraph, i) => {
-                return <p key={i}>{paragraph}</p>
-              })}
+              {content.textContent.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </div>
-            {getData("buttonLinks", []).map((btn, i) => {
+            {content.buttonLinks.map((btn, i) => {
               return <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />
             })}
           </div>
 
           <div className="studio-content--image">
-            <img src={getData("pageImageUrl")} />
+            <img src={content.pageImageUrl} />
           </div>
         </div>
       </div>
     
       <div className="container lists-container">
-        <h2 className="header-font">{getData("subheader")}</h2>
+        <h2 className="header-font">{content.subheader}</h2>
         <div className="equipment-lists">
-          {getData("lists", [])
-            .filter(list => list.name !== "Previous Projects")
-            .map((list, index) => {
+          {content.lists.map((list, index) => {
               return (
                 <div className="equipment-section" key={index}>
                   <h3>{list.name}</h3>
@@ -81,17 +76,10 @@ const Studio = () => {
       </div>
       <div className="container">
         <div className="projects-container">
-          {getData("lists", [])
-            .filter(list => list.listName === "Previous Projects")
-            .map((item, i) => <h2 key={i} className="projects-header">{item.listName.toUpperCase()}</h2>)
-          }
-          {getData("lists", [])
-            .filter(list => list.name === "Previous Projects")
-            .map((list) => {
-              return list.items.map((song, i) => {
-                const src = `https://w.soundcloud.com/player/?url=${song}&color=1B1C1D&show_artwork=true&liking=false&sharing=false&show_user=true`;
-                return <iframe key={i} className="soundcloud-player" scrolling="no" frameBorder="no" allow="autoplay" src={src}></iframe>;
-              })
+          <h2 className="projects-header">Previous Projects</h2>
+          {content.externalMedia.scSongList.map((song, i) => {
+              const src = `https://w.soundcloud.com/player/?url=${song}&color=1B1C1D&show_artwork=true&liking=false&sharing=false&show_user=true`;
+              return <iframe key={i} className="soundcloud-player" scrolling="no" frameBorder="no" allow="autoplay" src={src}></iframe>;
           })}
         </div>
       </div>

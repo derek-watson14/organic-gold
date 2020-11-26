@@ -7,6 +7,7 @@ import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
+import emptyContent, { emptyForm } from "../helpers/emptyContent"
 
 const defaultValues = {
   first: "",
@@ -18,7 +19,11 @@ const defaultValues = {
 };
 
 const Contact = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState({
+    ...emptyContent,
+    lists: [{name: "", items: []}],
+    forms: [emptyForm(6)],
+  });
   const [buttonText, setButtonText] = useState("SUBMIT");
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm(defaultValues);
@@ -31,8 +36,6 @@ const Contact = () => {
       setContent(data[0]);
     })
   }, [])
-
-  const getData = (key, alt = "") => content ? content[key] : alt;
 
   const navImage = useStaticQuery(graphql`
     query {
@@ -87,22 +90,17 @@ const Contact = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#B0C0A5"}>
-      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className="container">
         <div className="contact-container">
           <div className="contact-text-container">
-            <ColorTitle text={getData("pageHeader")} marginBottom="30px" />
-            <h2 className="contact-header">{getData("subheader")}</h2>
+            <ColorTitle text={content.pageHeader} marginBottom="30px" />
+            <h2 className="contact-header">{content.subheader}</h2>
             <h2 className="contact-header">&#8211;</h2>
-            {getData("lists") 
-              ? getData("lists")[0].items.map((item, i) => {
-                  return <p key={i} className="contact-line">{item}</p>
-                })
-              : ""
-            }
+            {content.lists[0].items.map((item, i) => <p key={i} className="contact-line">{item}</p>)}
           </div>
           <div className="contact-form-container">
-            <h2 className="contact-header">{getData("forms") ? getData("forms")[0].formHeader : ""}</h2>
+            <h2 className="contact-header">{content.forms[0].header}</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <fieldset className="two-fields">
                 <label>
@@ -117,7 +115,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[0] : ""}
+                  {content.forms[0].fieldLabels[0]}
                   <div className="error-message">{errors.first && errors.first.message}</div>
                 </label>
                 <label>
@@ -132,7 +130,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[1] : ""}
+                  {content.forms[0].fieldLabels[1]}
                   <div className="error-message">{errors.last && errors.last.message}</div>
                 </label>
               </fieldset>
@@ -150,7 +148,7 @@ const Contact = () => {
                       }
                     })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[2] : ""}*
+                  {content.forms[0].fieldLabels[2]}*
                   <div className="error-message">{errors.email && errors.email.message}</div>
                 </label>
                 <label>
@@ -173,7 +171,7 @@ const Contact = () => {
                       }
                     })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[3] : ""}
+                  {content.forms[0].fieldLabels[3]}
                   <div className="error-message">{errors.mobile && errors.mobile.message}</div>
                 </label>
               </fieldset>
@@ -191,7 +189,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[4] : ""}
+                  {content.forms[0].fieldLabels[4]}
                   <div className="error-message">{errors.subject && errors.subject.message}</div>
                 </label>
               </div>
@@ -210,7 +208,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {getData("forms") ? getData("forms")[0].fieldLabels[5] : ""}*
+                  {content.forms[0].fieldLabels[5]}*
                   <div className="error-message">{errors.message && errors.message.message}</div>
                 </label>
               </div>

@@ -6,9 +6,11 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import LinkButton from "../components/linkButton"
 import ColorTitle from "../components/colorTitle"
+import emptyContent from "../helpers/emptyContent"
+
 
 const Band = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState(emptyContent);
 
   useEffect(() => {
     const query = '*[_type == "pages" && pageName == "band"]';
@@ -21,8 +23,6 @@ const Band = () => {
       });
     })
   }, [])
-
-  const getData = (key, alt = "") => content ? content[key] : alt;
 
   const navImage = useStaticQuery(graphql`
     query {
@@ -38,26 +38,26 @@ const Band = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#722A42"}>
-      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className="container">
         <div className="band-content">
 
           <div className="band-content--image">
-            <img src={getData("pageImageUrl")} />
+            <img src={content.pageImageUrl} />
           </div>
 
           <div className="band-content--text">
             <div className="band-text--text">
-              <ColorTitle text={getData("pageHeader")} marginBottom="50px" />
-              {getData("textContent", []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+              <ColorTitle text={content.pageHeader} marginBottom="50px" />
+              {content.textContent.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </div>
             <div className="band-text--buttons">
-              {getData("buttonLinks", []).map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
+              {content.buttonLinks.map((btn, i) => <LinkButton key={i} text={btn.buttonText} to={btn.toPage} />)}
             </div>
           </div>
         </div>
       </div>
-    </Layout >
+    </Layout>
   )
 }
 

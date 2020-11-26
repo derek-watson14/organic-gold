@@ -7,10 +7,11 @@ import client from "../sanity/client"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ColorTitle from "../components/colorTitle"
+import emptyContent from "../helpers/emptyContent"
 
 
 const AV = () => {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState(emptyContent);
   const [instaPosts, setInstaPosts] = useState([]);
 
   useEffect(() => {
@@ -43,8 +44,6 @@ const AV = () => {
       })
   }, [])
 
-  const getData = (key, alt = "") => content ? content[key] : alt;
-
   const concatCaption = (caption) => {
     if (caption.length > 247) {
       return `${caption.slice(0, 247)}...`;
@@ -67,26 +66,26 @@ const AV = () => {
 
   return (
     <Layout navImage={navImage} fadeColor={"#F8E100"}>
-      <SEO title={getData("tabTitle")} description={getData("metaDescription")} />
+      <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className="container">
         <div className="av-text-container">
-          <ColorTitle text={getData("pageHeader")} marginBottom="10px" />
-          {getData("textContent", []).map((para, i) => <p key={i} className="page-p av-p">{para}</p>)}
+          <ColorTitle text={content.pageHeader} marginBottom="10px" />
+          {content.textContent.map((para, i) => <p key={i} className="page-p av-p">{para}</p>)}
         </div>
         <div className="av-media-container">
           <div className="av-youtube-player">
-            <h3 className="media-header">{getData("lists") ? getData("lists")[0].items[0] : ""}</h3>
+            <h3 className="media-header">{content.externalMedia.youTubeVideo.header}</h3>
             <iframe 
-              src={getData("lists") ? getData("lists")[0].items[1] : ""}
+              src={content.externalMedia.youTubeVideo.link}
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen 
             />
           </div>
           <div className="av-soundcloud-playlist">
-            <h3 className="media-header">{getData("lists") ? getData("lists")[1].items[0] : ""}</h3>
+            <h3 className="media-header">{content.externalMedia.scPlayer.header}</h3>
             <ReactPlayer
-              url={getData("lists") ? getData("lists")[1].items[1] : ""}
+              url={content.externalMedia.scPlayer.link}
               width={"100%"}
               height={425}
             />
