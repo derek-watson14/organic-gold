@@ -43,7 +43,7 @@ const Band = () => {
         <div className="band-content">
 
           <div className="band-content--image">
-            <img src={content.pageImageUrl} />
+            <img src={content.pageImageUrl} alt={content.pageImageAlt ? content.pageImageAlt : "Organic Gold band live"} />
           </div>
 
           <div className="band-content--text">

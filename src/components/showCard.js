@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import defaultShowImage from '../images/live-music.jpg'
 
 const Show = ({showData, imageUrl}) => {
-  const {name, about, showDate, showTime, venue, bands} = showData;
+  const {name, about, showDate, showTime, venue, bands, imageAlt} = showData;
   const date = format(new Date(showDate), "MMMM do y");
   const venueDisplay = venue.link 
     ? <a href={venue.link} target="_blank" rel="noopener noreferrer" className="hover-flip plain-link">{venue.name}</a>
@@ -29,7 +29,7 @@ const Show = ({showData, imageUrl}) => {
   return (
     <div className="show-container">
       <div className="show-image-container">
-        <img className="show-image" src={imageUrl ? imageUrl : defaultShowImage} />
+        <img className="show-image" src={imageUrl ? imageUrl : defaultShowImage} alt={imageAlt ? imageAlt : `${name}`} />
       </div>
       <hr className="card-divider" />
       <div className="text-container">

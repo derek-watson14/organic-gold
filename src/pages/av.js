@@ -80,6 +80,7 @@ const AV = () => {
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen 
+              title="YouTubePlayer"
             />
           </div>
           <div className="av-soundcloud-playlist">
@@ -91,7 +92,7 @@ const AV = () => {
             />
           </div>
           <div className="av-instagram">
-            <a href="https://www.instagram.com/organicgoldmusic/" target="_blank">
+            <a href="https://www.instagram.com/organicgoldmusic/" target="_blank" rel="noreferrer">
               <h3 className="media-header">@organicgoldmusic on Instagram</h3>
             </a>
             <hr />

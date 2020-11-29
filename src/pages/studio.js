@@ -52,7 +52,7 @@ const Studio = () => {
           </div>
 
           <div className="studio-content--image">
-            <img src={content.pageImageUrl} />
+            <img src={content.pageImageUrl} alt={content.pageImageAlt ? content.pageImageAlt : "The Organic gold studio"} />
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@ const Studio = () => {
           <h2 className="projects-header">Previous Projects</h2>
           {content.externalMedia.scSongList.map((song, i) => {
               const src = `https://w.soundcloud.com/player/?url=${song}&color=1B1C1D&show_artwork=true&liking=false&sharing=false&show_user=true`;
-              return <iframe key={i} className="soundcloud-player" scrolling="no" frameBorder="no" allow="autoplay" src={src}></iframe>;
+              return <iframe key={i} title={`soundcloud-song-${i}`} className="soundcloud-player" scrolling="no" frameBorder="no" allow="autoplay" src={src}></iframe>;
           })}
         </div>
       </div>
