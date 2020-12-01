@@ -24,13 +24,14 @@ const AV = () => {
     const params = {};
 
     client.fetch(query, params).then((data) => {
+      console.log(data[0]);
       setContent(data[0]);
     });
   }, []);
 
   useEffect(() => {
-    const igQueryString =
-      'https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:6}';
+    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${content.externalMedia.instagram.postCount}}`;
+    console.log({ igQueryString });
     axios.get(igQueryString).then((res) => {
       const postArray = res.data.data.user.edge_owner_to_timeline_media.edges;
       console.log(postArray);
@@ -86,7 +87,7 @@ const AV = () => {
         <div className='av-media-container'>
           <div className='av-youtube-player'>
             <a
-              href='https://www.youtube.com/channel/UCxH2v_DVDTZD_mGCvlz-b3g/'
+              href={content.externalMedia.youTubeVideo.channel}
               target='_blank'
               rel='noreferrer'
             >
@@ -109,7 +110,7 @@ const AV = () => {
           </div>
           <div className='av-soundcloud-playlist'>
             <a
-              href='https://soundcloud.com/user-66808316/'
+              href={content.externalMedia.scPlayer.user}
               target='_blank'
               rel='noreferrer'
             >
@@ -130,13 +131,15 @@ const AV = () => {
           </div>
           <div className='av-instagram'>
             <a
-              href='https://www.instagram.com/organicgoldmusic/'
+              href={content.externalMedia.instagram.profile}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
-                <span className='ig-username'>@organicgoldmusic</span> on
-                Instagram
+                <span className='ig-username'>
+                  {content.externalMedia.instagram.username}
+                </span>{' '}
+                on Instagram
                 <FontAwesomeIcon
                   icon={faInstagram}
                   size='1x'

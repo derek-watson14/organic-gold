@@ -7,8 +7,9 @@ const emptyContent = {
   textContent: [],
   pageImageUrl: '',
   externalMedia: {
-    youTubeVideo: { header: '', link: '' },
-    scPlayer: { header: '', link: '' },
+    youTubeVideo: { header: '', link: '', channel: '' },
+    scPlayer: { header: '', link: '', user: '' },
+    instagram: { postCount: 6, profile: '', username: '' },
     scSongList: [],
   },
   lists: [],
