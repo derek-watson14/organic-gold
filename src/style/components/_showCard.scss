@@ -2,7 +2,7 @@
   display: flex;
   max-width: 600px;
   margin: 0 7px 20px 5px;
-  padding: 7px;
+  padding: 16px 7px;
   box-shadow: $box-shadow;
   border-radius: 6px;
   @include respond(phone) {
@@ -20,7 +20,7 @@
   .show-image {
     max-width: 225px;
     border-radius: 6px;
-    margin-right: 8px;
+    margin-right: 10px;
     object-fit: contain;
   }
   .text-container {
