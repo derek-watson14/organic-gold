@@ -23,6 +23,7 @@
     "gatsby-plugin-sass": "^2.3.13",
     "gatsby-plugin-sharp": "^2.6.36",
     "gatsby-source-filesystem": "^2.3.30",
+    "gatsby-source-sanity": "^6.0.4",
     "gatsby-transformer-sharp": "^2.5.15",
     "node-sass": "^4.14.1",
     "nodemailer": "^6.4.16",
@@ -37,21 +38,22 @@
     "react-spring": "^8.0.27"
   },
   "devDependencies": {
-    "prettier": "2.1.1"
+    "prettier": "2.1.1",
+    "eslint": "^7.8.1",
+    "cross-env": "^7.0.2",
+    "esm": "^3.2.25"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "0BSD",
   "scripts": {
-    "build": "gatsby build",
-    "dev": "npm run clean-cache && gatsby develop",
-    "develop": "gatsby develop",
+    "build": "cross-env NODE_OPTIONS=\"-r esm\" gatsby build",
+    "develop": "cross-env NODE_OPTIONS=\"-r esm\" gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
-    "serve": "gatsby serve",
+    "serve": "cross-env NODE_OPTIONS=\"-r esm\" gatsby serve",
     "clean": "gatsby clean",
-    "clean-cache": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {

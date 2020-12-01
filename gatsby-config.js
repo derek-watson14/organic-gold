@@ -1,10 +1,13 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV || 'development'}`
-})
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+console.log(process.env.SANITY_TOKEN);
 
 module.exports = {
   siteMetadata: {
-    title: `Organic Gold`,
+    title: `Organic Gold Music`,
+    siteUrl: 'https://organicgoldmusic.com/',
     description: `A professional recording studio and band based in Bainbridge Island, WA.`,
     author: `Derek Watson`,
   },
@@ -32,8 +35,14 @@ module.exports = {
         icon: `src/images/favicon-single.png`, // This path is relative to the root of the site.
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: 'gatsby-source-sanity',
+      options: {
+        projectId: 'ujvu50xg',
+        dataset: 'prod',
+        watchMode: true,
+        token: process.env.GATSBY_SANITY_TOKEN,
+      },
+    },
   ],
-}
+};

@@ -68,7 +68,7 @@ yarn.lock
 .yarn-integrity
 
 # Secrets
-.env.development
+.env
 
 # Local Netlify folder
 .netlify
