@@ -20,8 +20,18 @@
     "instagram instagram";
   grid-gap: 30px;
   margin: 30px 0 60px 0;
+  a {
+    text-decoration: none;
+    color: black;
+    transition: 200ms;
+    &:hover {
+      color: rgba(0, 0, 0, 0.75);
+      filter: brightness(115%);
+    }
+  }
   .av-youtube-player {
     grid-area: youtube;
+    position: relative;
     iframe {
       height: 425px;
       width: 100%;
@@ -29,22 +39,47 @@
   }
   .av-soundcloud-playlist {
     grid-area: soundcloud;
+    position: relative;
+  }
+  .media-head-icon {
+    position: absolute;
+    top: 3px;
+    margin-left: 7px;
   }
   .av-instagram {
+    $ig-gradient: linear-gradient(
+      45deg, 
+    #405DE6,
+    #5851DB,
+    #833AB4, 
+    #C13584, 
+    #E1306C,
+    #FD1D1D, 
+    #F56040, 
+    #F77737,
+    #FCAF45,
+    #FFDC80
+    );
+    $ig-bg-color: rgb(250, 250, 250);
     width: 100%;
     padding-bottom: 60px;
-    background-color: rgb(250, 250, 250);
+    background-color: $ig-bg-color;
     grid-area: instagram;
     display: flex;
     flex-direction: column;
     align-items: center;
-    a {
-      text-decoration: none;
-      color: black;
-      transition: 200ms;
-      &:hover {
-        color: rgb(100, 100, 100);
-      }
+    .ig-username {
+      background-color: #833AB4;
+      background-image: $ig-gradient;
+      background-size: 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent; 
+      -moz-text-fill-color: transparent;
+    }
+    .ig-icon {
+      margin-left: 6px;
     }
     hr {
       width: 325px;
@@ -58,42 +93,46 @@
       margin: 20px 0 5px 0;
     }
     .insta-grid {
-      max-width: 935px;
+      max-width: 965px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows: auto;
       grid-gap: 28px;
-      @include respond(1025px) {
+      @include respond(1100px) {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
       }
       @include respond(720px) {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
       }
     }
     .post-container {
       position: relative;
       box-shadow: $box-shadow;
-      height: 293px;
-      width: 293px;
+      border-radius: 7px;
+      background-color: white;
+      padding: 5px;
+      height: 333px;
+      width: 303px;
       img {
         height: 293px;
         width: 293px;
+        border-radius: 7px;
       }
       video {
         height: 293px;
         width: 293px;
+        border-radius: 7px;
       }
       .hover-overlay {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 5px;
+        left: 5px;
         z-index: 3;
         background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 7px;
         opacity: 0;
-        height: 100%;
-        width: 100%;
+        height: 293px;
+        width: calc(100% - 10px);
         color: white;
         display: flex;
         justify-content: center;
@@ -108,9 +147,30 @@
         }
       }
       .hover-overlay.video-o {
-        height: 75%;
+        height: 225px;
         @include respond(phone) {
           pointer-events: none;
+        }
+      }
+      .ig-post-link {
+        width: 225px;
+        height: 20px;
+        padding-left: 4px;
+        margin: 5px 0;
+        font-family: $header-font;
+        // color: $link-blue;
+        transition: 200ms;
+        font-size: 0.95em;
+        background-color: #833AB4;
+        background-image: $ig-gradient;
+        background-size: 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -webkit-text-fill-color: transparent; 
+        -moz-text-fill-color: transparent;
+        &:hover {
+          filter: brightness(120%);
         }
       }
     }

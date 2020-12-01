@@ -41,12 +41,12 @@
     flex-wrap: wrap;
     a {
       text-decoration: none;
-      color: #3192C8; 
+      color: $link-blue; 
       margin-bottom: 5px;
       width: 110px;
       padding-right: 15px;
       &:hover {
-        color: #4AABE1;
+        color: $link-blue-hover;
       }
     }
   }
