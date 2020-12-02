@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import client, { urlFor } from '../sanity/client';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import LinkButton from '../components/linkButton';
-import emptyContent from '../helpers/emptyContent';
 
 export const query = graphql`
   query StudioPageQuery {

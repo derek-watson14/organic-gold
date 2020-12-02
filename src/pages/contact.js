@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React, { useState } from 'react';
+import { graphql } from 'gatsby';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-import client from '../sanity/client';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
-import emptyContent, { emptyForm, emptyList } from '../helpers/emptyContent';
 
 export const query = graphql`
   query ContactPageQuery {
