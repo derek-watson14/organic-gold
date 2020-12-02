@@ -59,7 +59,7 @@
   width: 60px;
   padding: 5px;
   border-radius: 50%;
-  box-shadow: 0px 0px 20px -1px rgba(0, 0, 0, 0.9);
+  box-shadow: $box-shadow;
   transition: 250ms;
   display: none;
   color: white;
@@ -113,7 +113,7 @@
   width: 60px;
   padding: 5px;
   border-radius: 50%;
-  box-shadow: 0px 0px 20px -1px rgba(0, 0, 0, 0.9);
+  box-shadow: $box-shadow;
   transition: 250ms;
   color: white;
   &:hover {

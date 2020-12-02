@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,27 +9,50 @@ import {
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 
-import client from '../sanity/client';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
-import emptyContent from '../helpers/emptyContent';
 
-const AV = () => {
-  const [content, setContent] = useState(emptyContent);
+export const query = graphql`
+  query AvPageQuery {
+    placeholderImage: file(relativePath: { eq: "jonny.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1200, quality: 100) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    sanityPages(pageName: { eq: "av" }) {
+      tabTitle
+      metaDescription
+      pageHeader
+      textContent
+      externalMedia {
+        youTubeVideo {
+          header
+          link
+          channel
+        }
+        scPlayer {
+          user
+          header
+          link
+        }
+        instagram {
+          profile
+          username
+          postCount
+        }
+      }
+    }
+  }
+`;
+
+const AV = ({ data }) => {
   const [instaPosts, setInstaPosts] = useState([]);
 
   useEffect(() => {
-    const query = '*[_type == "pages" && pageName == "av"]';
-    const params = {};
-
-    client.fetch(query, params).then((data) => {
-      setContent(data[0]);
-    });
-  }, []);
-
-  useEffect(() => {
-    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${content.externalMedia.instagram.postCount}}`;
+    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${data.sanityPages.externalMedia.instagram.postCount}}`;
     axios.get(igQueryString).then((res) => {
       const postArray = res.data.data.user.edge_owner_to_timeline_media.edges;
       const posts = postArray.map(({ node }) => {
@@ -46,7 +69,7 @@ const AV = () => {
       });
       setInstaPosts(posts);
     });
-  }, []);
+  }, [data.sanityPages.externalMedia.instagram.postCount]);
 
   const concatCaption = (caption) => {
     if (caption.length > 247) {
@@ -56,25 +79,16 @@ const AV = () => {
     }
   };
 
-  const navImage = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "jonny.jpg" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
-        }
-      }
-    }
-  `);
-
   return (
-    <Layout navImage={navImage.placeholderImage} fadeColor={'#F8E100'}>
-      <SEO title={content.tabTitle} description={content.metaDescription} />
+    <Layout navImage={data.placeholderImage} fadeColor={'#F8E100'}>
+      <SEO
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
+      />
       <div className='container'>
         <div className='av-text-container'>
-          <ColorTitle text={content.pageHeader} marginBottom='10px' />
-          {content.textContent.map((para, i) => (
+          <ColorTitle text={data.sanityPages.pageHeader} marginBottom='10px' />
+          {data.sanityPages.textContent.map((para, i) => (
             <p key={i} className='page-p av-p'>
               {para}
             </p>
@@ -83,12 +97,12 @@ const AV = () => {
         <div className='av-media-container'>
           <div className='av-youtube-player'>
             <a
-              href={content.externalMedia.youTubeVideo.channel}
+              href={data.sanityPages.externalMedia.youTubeVideo.channel}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
-                {content.externalMedia.youTubeVideo.header}
+                {data.sanityPages.externalMedia.youTubeVideo.header}
                 <FontAwesomeIcon
                   icon={faYoutube}
                   size='lg'
@@ -97,7 +111,7 @@ const AV = () => {
               </h3>
             </a>
             <iframe
-              src={content.externalMedia.youTubeVideo.link}
+              src={data.sanityPages.externalMedia.youTubeVideo.link}
               frameBorder='0'
               allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
               allowFullScreen
@@ -106,12 +120,12 @@ const AV = () => {
           </div>
           <div className='av-soundcloud-playlist'>
             <a
-              href={content.externalMedia.scPlayer.user}
+              href={data.sanityPages.externalMedia.scPlayer.user}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
-                {content.externalMedia.scPlayer.header}
+                {data.sanityPages.externalMedia.scPlayer.header}
                 <FontAwesomeIcon
                   icon={faSoundcloud}
                   size='lg'
@@ -120,20 +134,20 @@ const AV = () => {
               </h3>
             </a>
             <ReactPlayer
-              url={content.externalMedia.scPlayer.link}
+              url={data.sanityPages.externalMedia.scPlayer.link}
               width={'100%'}
               height={425}
             />
           </div>
           <div className='av-instagram'>
             <a
-              href={content.externalMedia.instagram.profile}
+              href={data.sanityPages.externalMedia.instagram.profile}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
                 <span className='ig-username'>
-                  {content.externalMedia.instagram.username}
+                  {data.sanityPages.externalMedia.instagram.username}
                 </span>{' '}
                 on Instagram
                 <FontAwesomeIcon

@@ -1,64 +1,89 @@
-import React, { useState, useEffect } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import { formatISO } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { graphql } from 'gatsby';
 
-import client, { urlFor } from '../sanity/client';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import ShowCard from '../components/showCard';
-import emptyContent from '../helpers/emptyContent';
 
-const Shows = () => {
-  const [content, setContent] = useState(emptyContent);
-  const [shows, setShows] = useState([]);
-
-  useEffect(() => {
-    const today = formatISO(new Date(), { representation: 'date' });
-    const contentQuery = '*[_type == "pages" && pageName == "shows"]';
-    const showQuery = `*[_type == "shows" && showDate >= $today] | order(showDate asc)`;
-    const showParams = { today };
-
-    client.fetch(contentQuery, {}).then((data) => {
-      setContent(data[0]);
-    });
-
-    client.fetch(showQuery, showParams).then((data) => {
-      setShows(data);
-    });
-  }, []);
-
-  const navImage = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "mountain.jpg" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+export const query = graphql`
+  query ShowsPageQuery {
+    placeholderImage: file(relativePath: { eq: "mountain.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1200, quality: 100) {
+          ...GatsbyImageSharpFluid_noBase64
         }
       }
     }
-  `);
+    sanityPages(pageName: { eq: "shows" }) {
+      tabTitle
+      metaDescription
+      pageHeader
+      subheader
+    }
+    allSanityShows {
+      nodes {
+        _id
+        name
+        about
+        showDate
+        showTime
+        venue {
+          link
+          name
+          address {
+            street
+            city
+            state
+          }
+        }
+        bands {
+          _key
+          name
+          link
+        }
+        image {
+          asset {
+            url
+          }
+        }
+        imageAlt
+      }
+    }
+  }
+`;
+
+const Shows = ({ data }) => {
+  const [sortedShows, setSortedShows] = useState([]);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    const sorted = data.allSanityShows.nodes
+      .filter((show) => show.showDate >= today)
+      .sort((a, b) => {
+        if (a.showDate > b.showDate) return 1;
+        else if (a.showDate < b.showDate) return -1;
+        else return 0;
+      });
+    setSortedShows(sorted);
+  }, [data.allSanityShows.nodes]);
 
   return (
-    <Layout navImage={navImage.placeholderImage} fadeColor={'#1879AE'}>
-      <SEO title={content.tabTitle} description={content.metaDescription} />
+    <Layout navImage={data.placeholderImage} fadeColor={'#1879AE'}>
+      <SEO
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
+      />
       <div className='container'>
-        <ColorTitle text={content.pageHeader} marginBottom='100px' />
-        {shows.length === 0 ? (
+        <ColorTitle text={data.sanityPages.pageHeader} marginBottom='100px' />
+        {sortedShows.length === 0 ? (
           <div className='message-container'>
-            <h2 className='header-font'>{content.subheader}</h2>
+            <h2 className='header-font'>{data.sanityPages.subheader}</h2>
           </div>
         ) : (
           <div className='show-card-container'>
-            {shows.map((show, i) => {
-              return (
-                <ShowCard
-                  key={i}
-                  showData={show}
-                  imageUrl={urlFor(show.image).url()}
-                />
-              );
+            {sortedShows.map((show) => {
+              return <ShowCard key={show._id} show={show} />;
             })}
           </div>
         )}

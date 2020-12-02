@@ -172,6 +172,7 @@
         -moz-text-fill-color: transparent;
         &:hover {
           filter: brightness(120%);
+          transform: rotate(-1deg) translateY(-1px);
         }
       }
     }

@@ -1,71 +1,84 @@
+
 .show-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  width: 100%;
   max-width: 600px;
-  margin: 0 7px 20px 5px;
-  padding: 16px 7px;
+  padding: 15px 10px;
   box-shadow: $box-shadow;
   border-radius: 6px;
-  @include respond(phone) {
-    flex-wrap: wrap;
+  @include respond(1275px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
   }
-  .card-divider {
-    width: 100%;
-    margin: 2px 0 2px 0;
-    display: none;
-    @include respond(phone) {
-      display: block;
-      margin: 5px 0 5px 0;
-    }
-  }
+}
+
+.show-image-container {
   .show-image {
-    max-width: 225px;
+    max-width: 250px;
     border-radius: 6px;
     margin-right: 10px;
     object-fit: contain;
   }
-  .text-container {
-    display: flex;
-    flex-direction: column;
-    h1, h2, h3, h4, p {
-      margin: 0;
+  @include respond(1275px) {
+    justify-self: center;
+  }
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  h1, h2, h3, h4, p {
+    margin: 0;
+  }
+  .show-title {
+    font-family: $title-font;
+    margin-bottom: 3px;
+  }
+  .show-date {
+    font-family: $header-font;
+    font-weight: 600;
+    font-size: 0.85rem;
+    vertical-align: bottom;
+    margin-bottom: 10px;
+  }
+  .who-where {
+    margin-bottom: 6px;
+  }
+  .hover-flip {
+    transition: 200ms;
+    text-decoration: underline;
+    &:hover {
+      color: white;
+      background-color: $footer-black;
+      cursor: pointer;
+      padding-left: 2px;
+      padding-right: 2px;
+      transform: rotate(5deg);
     }
+  }
+  .venue-address {
+    font-family: $header-font;
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-left: 58.5px;
+    margin-bottom: 9px;
+  }
+  @include respond(1275px) {
     .show-title {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      font-family: $title-font;
-      margin-bottom: 3px;
+      text-align: center;
+    }
+    .show-date {
+      text-align: center;
+      margin-bottom: 15px;
     }
     .who-where {
-      margin-bottom: 5px;
+      margin-bottom: 12px;
     }
   }
 }
 
-.hover-flip {
-  transition: 200ms;
-  &:hover {
-    color: white;
-    background-color: $footer-black;
-    cursor: pointer;
-    padding-left: 2px;
-    padding-right: 2px;
-  }
-}
 
-.show-date {
-  font-family: $header-font;
-  font-weight: 600;
-  font-size: 0.85rem;
-  vertical-align: bottom;
-  margin-bottom: 9px;
-}
-
-.venue-address {
-  font-family: $header-font;
-  font-weight: 400;
-  font-size: 0.85rem;
-  margin-left: 58.5px;
-  margin-bottom: 9px;
-}
 

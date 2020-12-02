@@ -1,36 +1,51 @@
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import LinkButton from '../components/linkButton';
 
-const NotFoundPage = () => {
-  const navImage = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "pattern.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+export const query = graphql`
+  query NotFoundPageQuery {
+    placeholderImage: file(relativePath: { eq: "pattern.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1200, quality: 100) {
+          ...GatsbyImageSharpFluid_noBase64
         }
       }
     }
-  `);
+    sanityPages(pageName: { eq: "404" }) {
+      tabTitle
+      metaDescription
+      pageHeader
+      subheader
+      buttonLinkList {
+        buttonText
+        toPage
+        _key
+      }
+    }
+  }
+`;
 
+const NotFoundPage = ({ data }) => {
   return (
-    <Layout navImage={navImage.placeholderImage} fadeColor={'#B0C0A5'}>
-      <SEO title='404: Not found' />
+    <Layout navImage={data.placeholderImage} fadeColor={'#B0C0A5'}>
+      <SEO
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
+      />
       <div className='container'>
         <div className='nf-container'>
-          <ColorTitle text={'404: Page Not Found'} marginBottom='35px' />
-          <p className='page-p'>
-            Something went wrong! The page you were searching for doesn't exist.
-          </p>
+          <ColorTitle text={data.sanityPages.pageHeader} marginBottom='35px' />
+          <p className='page-p'>{data.sanityPages.subheader}</p>
           <div className='nf-button-container'>
-            <LinkButton text={'home'} to={'/home'} />
-            <LinkButton text={'contact'} to={'/contact'} />
+            {data.sanityPages.buttonLinkList.map(
+              ({ buttonText, toPage, _key }) => {
+                return <LinkButton key={_key} text={buttonText} to={toPage} />;
+              },
+            )}
           </div>
         </div>
       </div>

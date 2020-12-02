@@ -23,6 +23,7 @@ export const query = graphql`
       buttonLinkList {
         buttonText
         toPage
+        _key
       }
     }
   }
@@ -43,9 +44,11 @@ const IndexPage = ({ data }) => {
           </p>
         ))}
         <div className='button-container-home'>
-          {data.sanityPages.buttonLinkList.map((btn, i) => (
-            <LinkButton key={i} text={btn.buttonText} to={`/${btn.toPage}`} />
-          ))}
+          {data.sanityPages.buttonLinkList.map(
+            ({ _key, buttonText, toPage }) => (
+              <LinkButton key={_key} text={buttonText} to={`/${toPage}`} />
+            ),
+          )}
         </div>
       </section>
     </Layout>
