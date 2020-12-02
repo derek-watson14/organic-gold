@@ -36,7 +36,7 @@ const Studio = () => {
   `);
 
   return (
-    <Layout navImage={navImage} fadeColor={'#F0843B'}>
+    <Layout navImage={navImage.placeholderImage} fadeColor={'#F0843B'}>
       <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className='container'>
         <div className='studio-content'>

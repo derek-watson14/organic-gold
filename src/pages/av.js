@@ -24,28 +24,24 @@ const AV = () => {
     const params = {};
 
     client.fetch(query, params).then((data) => {
-      console.log(data[0]);
       setContent(data[0]);
     });
   }, []);
 
   useEffect(() => {
     const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${content.externalMedia.instagram.postCount}}`;
-    console.log({ igQueryString });
     axios.get(igQueryString).then((res) => {
       const postArray = res.data.data.user.edge_owner_to_timeline_media.edges;
-      console.log(postArray);
-      const posts = postArray.map((postData) => {
-        const post = postData.node;
+      const posts = postArray.map(({ node }) => {
         return {
-          id: post.id,
-          imageUrl: post.display_url,
-          caption: post.edge_media_to_caption.edges[0].node.text,
-          location: post.location,
-          likes: post.edge_media_preview_like.count,
-          isVideo: post.is_video,
-          videoUrl: post.is_video && post.video_url,
-          postUrl: `https://www.instagram.com/p/${post.shortcode}/`,
+          id: node.id,
+          imageUrl: node.display_url,
+          caption: node.edge_media_to_caption.edges[0].node.text,
+          location: node.location,
+          likes: node.edge_media_preview_like.count,
+          isVideo: node.is_video,
+          videoUrl: node.is_video && node.video_url,
+          postUrl: `https://www.instagram.com/p/${node.shortcode}/`,
         };
       });
       setInstaPosts(posts);
@@ -73,7 +69,7 @@ const AV = () => {
   `);
 
   return (
-    <Layout navImage={navImage} fadeColor={'#F8E100'}>
+    <Layout navImage={navImage.placeholderImage} fadeColor={'#F8E100'}>
       <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className='container'>
         <div className='av-text-container'>

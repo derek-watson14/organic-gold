@@ -1,12 +1,18 @@
-import React from "react"
-import Img from "gatsby-image"
+import React from 'react';
+import Img from 'gatsby-image';
 
 const Image = ({ data, classes, backgroundColor }) => {
-  if (!data?.placeholderImage?.childImageSharp?.fluid) {
-    return <div>Picture not found</div>
+  if (!data?.childImageSharp?.fluid) {
+    return <div>Picture not found</div>;
   }
 
-  return <Img backgroundColor={backgroundColor} className={classes} fluid={data.placeholderImage.childImageSharp.fluid} />
-}
+  return (
+    <Img
+      backgroundColor={backgroundColor}
+      className={classes}
+      fluid={data.childImageSharp.fluid}
+    />
+  );
+};
 
-export default Image
+export default Image;

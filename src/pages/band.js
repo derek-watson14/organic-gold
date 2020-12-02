@@ -36,7 +36,7 @@ const Band = () => {
   `);
 
   return (
-    <Layout navImage={navImage} fadeColor={'#722A42'}>
+    <Layout navImage={navImage.placeholderImage} fadeColor={'#722A42'}>
       <SEO title={content.tabTitle} description={content.metaDescription} />
       <div className='container'>
         <div className='band-content'>
