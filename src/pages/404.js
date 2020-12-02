@@ -30,22 +30,22 @@ export const query = graphql`
 `;
 
 const NotFoundPage = ({ data }) => {
+  const { placeholderImage, sanityPages } = data;
+
   return (
-    <Layout navImage={data.placeholderImage} fadeColor={'#B0C0A5'}>
+    <Layout navImage={placeholderImage} fadeColor={'#B0C0A5'}>
       <SEO
-        title={data.sanityPages.tabTitle}
-        description={data.sanityPages.metaDescription}
+        title={sanityPages.tabTitle}
+        description={sanityPages.metaDescription}
       />
       <div className='container'>
         <div className='nf-container'>
-          <ColorTitle text={data.sanityPages.pageHeader} marginBottom='35px' />
-          <p className='page-p'>{data.sanityPages.subheader}</p>
+          <ColorTitle text={sanityPages.pageHeader} marginBottom='35px' />
+          <p className='page-p'>{sanityPages.subheader}</p>
           <div className='nf-button-container'>
-            {data.sanityPages.buttonLinkList.map(
-              ({ buttonText, toPage, _key }) => {
-                return <LinkButton key={_key} text={buttonText} to={toPage} />;
-              },
-            )}
+            {sanityPages.buttonLinkList.map(({ buttonText, toPage, _key }) => {
+              return <LinkButton key={_key} text={buttonText} to={toPage} />;
+            })}
           </div>
         </div>
       </div>

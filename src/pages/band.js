@@ -37,20 +37,21 @@ export const query = graphql`
 `;
 
 const Band = ({ data }) => {
+  const { placeholderImage, sanityPages } = data;
   return (
-    <Layout navImage={data.placeholderImage} fadeColor={'#722A42'}>
+    <Layout navImage={placeholderImage} fadeColor={'#722A42'}>
       <SEO
-        title={data.sanityPages.tabTitle}
-        description={data.sanityPages.metaDescription}
+        title={sanityPages.tabTitle}
+        description={sanityPages.metaDescription}
       />
       <div className='container'>
         <div className='band-content'>
           <div className='band-content--image'>
             <img
-              src={data.sanityPages.pageImage.asset.url}
+              src={sanityPages.pageImage.asset.url}
               alt={
-                data.sanityPages.pageImageAlt
-                  ? data.sanityPages.pageImageAlt
+                sanityPages.pageImageAlt
+                  ? sanityPages.pageImageAlt
                   : 'Organic Gold band live'
               }
             />
@@ -58,16 +59,13 @@ const Band = ({ data }) => {
 
           <div className='band-content--text'>
             <div className='band-text--text'>
-              <ColorTitle
-                text={data.sanityPages.pageHeader}
-                marginBottom='50px'
-              />
-              {data.sanityPages.textContent.map((paragraph, i) => (
+              <ColorTitle text={sanityPages.pageHeader} marginBottom='50px' />
+              {sanityPages.textContent.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
             <div className='band-text--buttons'>
-              {data.sanityPages.buttonLinkList.map(
+              {sanityPages.buttonLinkList.map(
                 ({ _key, buttonText, toPage }) => (
                   <LinkButton key={_key} text={buttonText} to={`/${toPage}`} />
                 ),
