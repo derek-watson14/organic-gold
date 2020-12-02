@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBandcamp,
@@ -6,31 +6,31 @@ import {
   faInstagram,
   faSoundcloud,
 } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'gatsby';
-
-import client from '../sanity/client';
-import emptyContent, { emptyList } from '../helpers/emptyContent';
+import { graphql, Link, useStaticQuery } from 'gatsby';
 
 const Footer = () => {
-  const [content, setContent] = useState({
-    ...emptyContent,
-    lists: [emptyList(4)],
-  });
+  const { sanityPages } = useStaticQuery(graphql`
+    query FooterQuery {
+      sanityPages(pageName: { eq: "footer" }) {
+        pageHeader
+        subheader
+        lists {
+          name
+          items
+          _key
+        }
+      }
+    }
+  `);
 
-  useEffect(() => {
-    const query = '*[_type == "pages" && pageName == "footer"]';
-    const params = {};
-
-    client.fetch(query, params).then((data) => {
-      setContent(data[0]);
-    });
-  }, []);
+  const { pageHeader, subheader, lists } = sanityPages;
+  const contactInfo = lists.filter((list) => list.name === 'Contact Info')[0];
 
   return (
     <footer className='footer-container'>
       <div className='footer-connect text-font'>
-        <h3 className='header-font'>{content.pageHeader}</h3>
-        {content.lists[0].items.map((item, index) => (
+        <h3 className='header-font'>{pageHeader}</h3>
+        {contactInfo.items.map((item, index) => (
           <p key={index}>{item}</p>
         ))}
         <div className='icon-container'>
@@ -87,7 +87,7 @@ const Footer = () => {
       </div>
       <div className='footer-spacer'></div>
       <div className='footer-navigate'>
-        <h3 className='header-font'>Navigate</h3>
+        <h3 className='header-font'>{subheader}</h3>
         <div className='footer-link-container text-font'>
           <Link to='/'>Home &gt;</Link>
           <Link to='/band'>The Band &gt;</Link>

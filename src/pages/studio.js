@@ -8,49 +8,65 @@ import ColorTitle from '../components/colorTitle';
 import LinkButton from '../components/linkButton';
 import emptyContent from '../helpers/emptyContent';
 
-const Studio = () => {
-  const [content, setContent] = useState(emptyContent);
-
-  useEffect(() => {
-    const query = '*[_type == "pages" && pageName == "studio"]';
-    const params = {};
-
-    client.fetch(query, params).then((data) => {
-      setContent({
-        ...data[0],
-        pageImageUrl: urlFor(data[0].pageImage).url(),
-      });
-    });
-  }, []);
-
-  const navImage = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "mandarin.jpg" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+export const query = graphql`
+  query StudioPageQuery {
+    placeholderImage: file(relativePath: { eq: "mandarin.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1200, quality: 100) {
+          ...GatsbyImageSharpFluid_noBase64
         }
       }
     }
-  `);
+    sanityPages(pageName: { eq: "studio" }) {
+      tabTitle
+      metaDescription
+      pageHeader
+      textContent
+      buttonLinkList {
+        buttonText
+        toPage
+        _key
+      }
+      pageImage {
+        asset {
+          url
+        }
+      }
+      pageImageAlt
+      subheader
+      lists {
+        name
+        items
+        _key
+      }
+      externalMedia {
+        scSongList
+      }
+    }
+  }
+`;
 
+const Studio = ({ data }) => {
+  const { placeholderImage, sanityPages } = data;
   return (
-    <Layout navImage={navImage.placeholderImage} fadeColor={'#F0843B'}>
-      <SEO title={content.tabTitle} description={content.metaDescription} />
+    <Layout navImage={placeholderImage} fadeColor={'#F0843B'}>
+      <SEO
+        title={sanityPages.tabTitle}
+        description={sanityPages.metaDescription}
+      />
       <div className='container'>
         <div className='studio-content'>
           <div className='studio-content--text'>
-            <ColorTitle text={content.pageHeader} marginBottom='50px' />
+            <ColorTitle text={sanityPages.pageHeader} marginBottom='50px' />
             <div className='studio-paragraphs'>
-              {content.textContent.map((paragraph, i) => (
+              {sanityPages.textContent.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
-            {content.buttonLinkList.map((btn, i) => {
+            {sanityPages.buttonLinkList.map((btn) => {
               return (
                 <LinkButton
-                  key={i}
+                  key={btn._key}
                   text={btn.buttonText}
                   to={`/${btn.toPage}`}
                 />
@@ -60,10 +76,10 @@ const Studio = () => {
 
           <div className='studio-content--image'>
             <img
-              src={content.pageImageUrl}
+              src={sanityPages.pageImage.asset.url}
               alt={
-                content.pageImageAlt
-                  ? content.pageImageAlt
+                sanityPages.pageImageAlt
+                  ? sanityPages.pageImageAlt
                   : 'The Organic gold studio'
               }
             />
@@ -72,11 +88,11 @@ const Studio = () => {
       </div>
 
       <div className='container lists-container'>
-        <h2 className='header-font'>{content.subheader}</h2>
+        <h2 className='header-font'>{sanityPages.subheader}</h2>
         <div className='equipment-lists'>
-          {content.lists.map((list, index) => {
+          {sanityPages.lists.map((list) => {
             return (
-              <div className='equipment-section' key={index}>
+              <div className='equipment-section' key={list._key}>
                 <h3>{list.name}</h3>
                 <ul>
                   {list.items.map((item, index) => {
@@ -91,7 +107,7 @@ const Studio = () => {
       <div className='container'>
         <div className='projects-container'>
           <h2 className='projects-header'>Previous Projects</h2>
-          {content.externalMedia.scSongList.map((song, i) => {
+          {sanityPages.externalMedia.scSongList.map((song, i) => {
             const src = `https://w.soundcloud.com/player/?url=${song}&color=1B1C1D&show_artwork=true&liking=false&sharing=false&show_user=true`;
             return (
               <iframe

@@ -9,6 +9,34 @@ import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import emptyContent, { emptyForm, emptyList } from '../helpers/emptyContent';
 
+export const query = graphql`
+  query ContactPageQuery {
+    placeholderImage: file(relativePath: { eq: "pattern.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1200, quality: 100) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    sanityPages(pageName: { eq: "contact" }) {
+      tabTitle
+      metaDescription
+      pageHeader
+      subheader
+      lists {
+        name
+        items
+        _key
+      }
+      forms {
+        name
+        header
+        labels
+      }
+    }
+  }
+`;
+
 const defaultValues = {
   first: '',
   last: '',
@@ -18,37 +46,18 @@ const defaultValues = {
   message: '',
 };
 
-const Contact = () => {
-  const [content, setContent] = useState({
-    ...emptyContent,
-    lists: [emptyList(0)],
-    forms: [emptyForm(6)],
-  });
+const Contact = ({ data }) => {
+  const { placeholderImage, sanityPages } = data;
+  const contactForm = sanityPages.forms.filter(
+    (form) => form.name === 'contact',
+  )[0];
+  const contactInfo = sanityPages.lists.filter(
+    (list) => list.name === 'Contact Info',
+  )[0];
 
   const [buttonText, setButtonText] = useState('SUBMIT');
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm(defaultValues);
-
-  useEffect(() => {
-    const query = '*[_type == "pages" && pageName == "contact"]';
-    const params = {};
-
-    client.fetch(query, params).then((data) => {
-      setContent(data[0]);
-    });
-  }, []);
-
-  const navImage = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "pattern.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 1200, quality: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
-        }
-      }
-    }
-  `);
 
   const onSubmit = (data) => {
     if (!submitted) {
@@ -94,22 +103,25 @@ const Contact = () => {
   };
 
   return (
-    <Layout navImage={navImage.placeholderImage} fadeColor={'#B0C0A5'}>
-      <SEO title={content.tabTitle} description={content.metaDescription} />
+    <Layout navImage={placeholderImage} fadeColor={'#B0C0A5'}>
+      <SEO
+        title={sanityPages.tabTitle}
+        description={sanityPages.metaDescription}
+      />
       <div className='container'>
         <div className='contact-container'>
           <div className='contact-text-container'>
-            <ColorTitle text={content.pageHeader} marginBottom='30px' />
-            <h2 className='contact-header'>{content.subheader}</h2>
+            <ColorTitle text={sanityPages.pageHeader} marginBottom='30px' />
+            <h2 className='contact-header'>{sanityPages.subheader}</h2>
             <h2 className='contact-header'>&#8211;</h2>
-            {content.lists[0].items.map((item, i) => (
-              <p key={i} className='contact-line'>
+            {contactInfo.items.map((item) => (
+              <p key={item._key} className='contact-line'>
                 {item}
               </p>
             ))}
           </div>
           <div className='contact-form-container'>
-            <h2 className='contact-header'>{content.forms[0].header}</h2>
+            <h2 className='contact-header'>{contactForm.header}</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <fieldset className='two-fields'>
                 <label>
@@ -128,7 +140,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].labels[0]}
+                  {contactForm.labels[0]}
                   <div className='error-message'>
                     {errors.first && errors.first.message}
                   </div>
@@ -149,7 +161,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].labels[1]}
+                  {contactForm.labels[1]}
                   <div className='error-message'>
                     {errors.last && errors.last.message}
                   </div>
@@ -173,7 +185,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].labels[2]}*
+                  {contactForm.labels[2]}*
                   <div className='error-message'>
                     {errors.email && errors.email.message}
                   </div>
@@ -202,7 +214,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].labels[3]}
+                  {contactForm.labels[3]}
                   <div className='error-message'>
                     {errors.mobile && errors.mobile.message}
                   </div>
@@ -226,7 +238,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].labels[4]}
+                  {contactForm.labels[4]}
                   <div className='error-message'>
                     {errors.subject && errors.subject.message}
                   </div>
@@ -251,7 +263,7 @@ const Contact = () => {
                       },
                     })}
                   />
-                  {content.forms[0].labels[5]}*
+                  {contactForm.labels[5]}*
                   <div className='error-message'>
                     {errors.message && errors.message.message}
                   </div>
