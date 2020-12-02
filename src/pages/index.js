@@ -30,24 +30,25 @@ export const query = graphql`
 `;
 
 const IndexPage = ({ data }) => {
-  const { placeholderImage, sanityPages } = data;
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#FC9D81'}>
+    <Layout navImage={data.placeholderImage} fadeColor={'#FC9D81'}>
       <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
       />
       <section className='container horz-center'>
-        <ColorTitle text={sanityPages.pageHeader} marginBottom='75px' />
-        {sanityPages.textContent.map((paragraph, i) => (
+        <ColorTitle text={data.sanityPages.pageHeader} marginBottom='75px' />
+        {data.sanityPages.textContent.map((paragraph, i) => (
           <p key={i} className='home-text'>
             {paragraph}
           </p>
         ))}
         <div className='button-container-home'>
-          {sanityPages.buttonLinkList.map(({ _key, buttonText, toPage }) => (
-            <LinkButton key={_key} text={buttonText} to={`/${toPage}`} />
-          ))}
+          {data.sanityPages.buttonLinkList.map(
+            ({ _key, buttonText, toPage }) => (
+              <LinkButton key={_key} text={buttonText} to={`/${toPage}`} />
+            ),
+          )}
         </div>
       </section>
     </Layout>

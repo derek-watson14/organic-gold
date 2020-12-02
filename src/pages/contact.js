@@ -45,11 +45,10 @@ const defaultValues = {
 };
 
 const Contact = ({ data }) => {
-  const { placeholderImage, sanityPages } = data;
-  const contactForm = sanityPages.forms.filter(
+  const contactForm = data.sanityPages.forms.filter(
     (form) => form.name === 'contact',
   )[0];
-  const contactInfo = sanityPages.lists.filter(
+  const contactInfo = data.sanityPages.lists.filter(
     (list) => list.name === 'Contact Info',
   )[0];
 
@@ -101,16 +100,19 @@ const Contact = ({ data }) => {
   };
 
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#B0C0A5'}>
+    <Layout navImage={data.placeholderImage} fadeColor={'#B0C0A5'}>
       <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
       />
       <div className='container'>
         <div className='contact-container'>
           <div className='contact-text-container'>
-            <ColorTitle text={sanityPages.pageHeader} marginBottom='30px' />
-            <h2 className='contact-header'>{sanityPages.subheader}</h2>
+            <ColorTitle
+              text={data.sanityPages.pageHeader}
+              marginBottom='30px'
+            />
+            <h2 className='contact-header'>{data.sanityPages.subheader}</h2>
             <h2 className='contact-header'>&#8211;</h2>
             {contactInfo.items.map((item) => (
               <p key={item._key} className='contact-line'>

@@ -54,12 +54,11 @@ export const query = graphql`
 `;
 
 const Shows = ({ data }) => {
-  const { placeholderImage, sanityPages, allSanityShows } = data;
   const [sortedShows, setSortedShows] = useState([]);
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
-    const sorted = allSanityShows.nodes
+    const sorted = data.allSanityShows.nodes
       .filter((show) => show.showDate >= today)
       .sort((a, b) => {
         if (a.showDate > b.showDate) return 1;
@@ -67,19 +66,19 @@ const Shows = ({ data }) => {
         else return 0;
       });
     setSortedShows(sorted);
-  }, [allSanityShows.nodes]);
+  }, [data.allSanityShows.nodes]);
 
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#1879AE'}>
+    <Layout navImage={data.placeholderImage} fadeColor={'#1879AE'}>
       <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
       />
       <div className='container'>
-        <ColorTitle text={sanityPages.pageHeader} marginBottom='100px' />
+        <ColorTitle text={data.sanityPages.pageHeader} marginBottom='100px' />
         {sortedShows.length === 0 ? (
           <div className='message-container'>
-            <h2 className='header-font'>{sanityPages.subheader}</h2>
+            <h2 className='header-font'>{data.sanityPages.subheader}</h2>
           </div>
         ) : (
           <div className='show-card-container'>

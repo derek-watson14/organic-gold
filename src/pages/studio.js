@@ -45,23 +45,25 @@ export const query = graphql`
 `;
 
 const Studio = ({ data }) => {
-  const { placeholderImage, sanityPages } = data;
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#F0843B'}>
+    <Layout navImage={data.placeholderImage} fadeColor={'#F0843B'}>
       <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
+        title={data.sanityPages.tabTitle}
+        description={data.sanityPages.metaDescription}
       />
       <div className='container'>
         <div className='studio-content'>
           <div className='studio-content--text'>
-            <ColorTitle text={sanityPages.pageHeader} marginBottom='50px' />
+            <ColorTitle
+              text={data.sanityPages.pageHeader}
+              marginBottom='50px'
+            />
             <div className='studio-paragraphs'>
-              {sanityPages.textContent.map((paragraph, i) => (
+              {data.sanityPages.textContent.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
-            {sanityPages.buttonLinkList.map((btn) => {
+            {data.sanityPages.buttonLinkList.map((btn) => {
               return (
                 <LinkButton
                   key={btn._key}
@@ -74,10 +76,10 @@ const Studio = ({ data }) => {
 
           <div className='studio-content--image'>
             <img
-              src={sanityPages.pageImage.asset.url}
+              src={data.sanityPages.pageImage.asset.url}
               alt={
-                sanityPages.pageImageAlt
-                  ? sanityPages.pageImageAlt
+                data.sanityPages.pageImageAlt
+                  ? data.sanityPages.pageImageAlt
                   : 'The Organic gold studio'
               }
             />
@@ -86,9 +88,9 @@ const Studio = ({ data }) => {
       </div>
 
       <div className='container lists-container'>
-        <h2 className='header-font'>{sanityPages.subheader}</h2>
+        <h2 className='header-font'>{data.sanityPages.subheader}</h2>
         <div className='equipment-lists'>
-          {sanityPages.lists.map((list) => {
+          {data.sanityPages.lists.map((list) => {
             return (
               <div className='equipment-section' key={list._key}>
                 <h3>{list.name}</h3>
@@ -105,7 +107,7 @@ const Studio = ({ data }) => {
       <div className='container'>
         <div className='projects-container'>
           <h2 className='projects-header'>Previous Projects</h2>
-          {sanityPages.externalMedia.scSongList.map((song, i) => {
+          {data.sanityPages.externalMedia.scSongList.map((song, i) => {
             const src = `https://w.soundcloud.com/player/?url=${song}&color=1B1C1D&show_artwork=true&liking=false&sharing=false&show_user=true`;
             return (
               <iframe
