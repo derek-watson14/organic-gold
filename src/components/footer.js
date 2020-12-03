@@ -96,7 +96,6 @@ const Footer = () => {
         </div>
         <p>&copy; Organic Gold {new Date().getFullYear()}</p>
       </div>
-      <div className='footer-spacer'></div>
       <div className='footer-navigate'>
         <h3 className='header-font'>{content.subheader}</h3>
         <div className='footer-link-container text-font'>

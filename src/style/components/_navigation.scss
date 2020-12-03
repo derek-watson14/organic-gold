@@ -48,6 +48,7 @@
 }
 
 // Nav Button
+$nav-btn-shadow: 0 0 30px -5px hsla(0,0%,40%,0.75);
 .menu-btn-container {
   position: fixed;
   bottom: 45px;
@@ -59,7 +60,7 @@
   width: 60px;
   padding: 5px;
   border-radius: 50%;
-  box-shadow: $box-shadow;
+  box-shadow: $nav-btn-shadow;
   transition: 250ms;
   display: none;
   color: white;
@@ -113,7 +114,7 @@
   width: 60px;
   padding: 5px;
   border-radius: 50%;
-  box-shadow: $box-shadow;
+  box-shadow: $nav-btn-shadow;
   transition: 250ms;
   color: white;
   &:hover {
