@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
@@ -6,71 +6,77 @@ import SEO from '../components/seo';
 import LinkButton from '../components/linkButton';
 import ColorTitle from '../components/colorTitle';
 
+import getLatestData from '../utils/getLatestData';
+import emptyContent from '../utils/emptyContent';
+
 export const query = graphql`
   query BandPageQuery {
-    placeholderImage: file(relativePath: { eq: "alien.jpg" }) {
+    image: file(relativePath: { eq: "alien.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 1200, quality: 100) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
     }
-    sanityPages(pageName: { eq: "band" }) {
-      tabTitle
-      metaDescription
-      pageHeader
-      pageImage {
-        asset {
-          url
-        }
-      }
-      pageImageAlt
-      pageHeader
-      textContent
-      buttonLinkList {
-        buttonText
-        toPage
-        _key
-      }
-    }
   }
 `;
 
 const Band = ({ data }) => {
-  const { placeholderImage, sanityPages } = data;
+  const [page, setPage] = useState(emptyContent);
+  const { image } = data;
+
+  useEffect(() => {
+    getLatestData(String.raw`
+      query {
+        allPages(where: { pageName: { eq: "band" } }) {
+          pageHeader
+          pageImage {
+            asset {
+              url
+            }
+          }
+          pageImageAlt
+          pageHeader
+          textContent
+          buttonLinkList {
+            buttonText
+            toPage
+            _key
+          }
+        }
+      }
+    `)
+      .then((data) => setPage(data.allPages[0]))
+      .catch((err) => {
+        console.log('An error has occurred: ', err);
+      });
+  }, []);
 
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#722A42'}>
-      <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
-      />
+    <Layout navImage={image} fadeColor={'#722A42'}>
+      <SEO title='The Band' description='About the Organic Gold band.' />
       <div className='container'>
         <div className='band-content'>
           <div className='band-content--image'>
             <img
-              src={sanityPages.pageImage.asset.url}
+              src={page.pageImage.asset.url}
               alt={
-                sanityPages.pageImageAlt
-                  ? sanityPages.pageImageAlt
-                  : 'Organic Gold band live'
+                page.pageImageAlt ? page.pageImageAlt : 'Organic Gold band live'
               }
             />
           </div>
 
           <div className='band-content--text'>
             <div className='band-text--text'>
-              <ColorTitle text={sanityPages.pageHeader} marginBottom='50px' />
-              {sanityPages.textContent.map((paragraph, i) => (
+              <ColorTitle text={page.pageHeader} marginBottom='50px' />
+              {page.textContent.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
             <div className='band-text--buttons'>
-              {sanityPages.buttonLinkList.map(
-                ({ _key, buttonText, toPage }) => (
-                  <LinkButton key={_key} text={buttonText} to={`/${toPage}`} />
-                ),
-              )}
+              {page.buttonLinkList.map(({ _key, buttonText, toPage }) => (
+                <LinkButton key={_key} text={buttonText} to={toPage} />
+              ))}
             </div>
           </div>
         </div>

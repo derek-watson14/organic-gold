@@ -6,81 +6,95 @@ import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import ShowCard from '../components/showCard';
 
+import getLatestData from '../utils/getLatestData';
+import emptyContent from '../utils/emptyContent';
+
 export const query = graphql`
   query ShowsPageQuery {
-    placeholderImage: file(relativePath: { eq: "mountain.jpg" }) {
+    image: file(relativePath: { eq: "mountain.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 1200, quality: 100) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
     }
-    sanityPages(pageName: { eq: "shows" }) {
-      tabTitle
-      metaDescription
-      pageHeader
-      subheader
-    }
-    allSanityShows {
-      nodes {
-        _id
-        name
-        about
-        showDate
-        showTime
-        venue {
-          link
-          name
-          address {
-            street
-            city
-            state
-          }
-        }
-        bands {
-          _key
-          name
-          link
-        }
-        image {
-          asset {
-            url
-          }
-        }
-        imageAlt
-      }
-    }
   }
 `;
 
 const Shows = ({ data }) => {
-  const { placeholderImage, sanityPages, allSanityShows } = data;
-
+  const [page, setPage] = useState(emptyContent);
   const [sortedShows, setSortedShows] = useState([]);
 
+  const { image } = data;
+
   useEffect(() => {
+    getLatestData(String.raw`
+      query {
+        allPages(where: { pageName: { eq: "shows" } }) {
+          pageHeader
+          subheader
+        }
+        allShows {
+          _id
+          name
+          about
+          showDate
+          showTime
+          venue {
+            link
+            name
+            address {
+              street
+              city
+              state
+            }
+          }
+          bands {
+            _key
+            name
+            link
+          }
+          image {
+            asset {
+              url
+            }
+          }
+          imageAlt
+        }
+      }
+    `)
+      .then((data) => {
+        setPage(data.allPages[0]);
+        setSortedShows(sortFilterShows(data.allShows));
+      })
+      .catch((err) => {
+        console.log('An error has occurred: ', err);
+      });
+  }, []);
+
+  const sortFilterShows = (shows) => {
     const today = new Date().toISOString().split('T')[0];
-    const sorted = allSanityShows.nodes
+    const sorted = shows
       .filter((show) => show.showDate >= today)
       .sort((a, b) => {
         if (a.showDate > b.showDate) return 1;
         else if (a.showDate < b.showDate) return -1;
         else return 0;
       });
-    setSortedShows(sorted);
-  }, [allSanityShows.nodes]);
+    return sorted;
+  };
 
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#1879AE'}>
+    <Layout navImage={image} fadeColor={'#1879AE'}>
       <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
+        title='Shows'
+        description='Calendar of shows featuring Organic Gold and other acts!'
       />
       <div className='container'>
-        <ColorTitle text={sanityPages.pageHeader} marginBottom='100px' />
+        <ColorTitle text={page.pageHeader} marginBottom='100px' />
         {sortedShows.length === 0 ? (
           <div className='message-container'>
-            <h2 className='header-font'>{sanityPages.subheader}</h2>
+            <h2 className='header-font'>{page.subheader}</h2>
           </div>
         ) : (
           <div className='show-card-container'>

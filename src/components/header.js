@@ -14,7 +14,7 @@ const headerFade = (fadeColor) => {
 const Header = ({ fadeColor }) => {
   const data = useStaticQuery(graphql`
     query {
-      placeholderImage: file(relativePath: { eq: "banner-wide.png" }) {
+      image: file(relativePath: { eq: "banner-wide.png" }) {
         childImageSharp {
           fluid(maxWidth: 1920, quality: 100) {
             ...GatsbyImageSharpFluid_noBase64
@@ -28,7 +28,7 @@ const Header = ({ fadeColor }) => {
     <>
       <header className='header-container'>
         <Image
-          data={data.placeholderImage}
+          data={data.image}
           classes='header-image'
           backgroundColor='#CA4874'
         />

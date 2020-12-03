@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBandcamp,
@@ -6,31 +6,42 @@ import {
   faInstagram,
   faSoundcloud,
 } from '@fortawesome/free-brands-svg-icons';
-import { graphql, Link, useStaticQuery } from 'gatsby';
+import { Link } from 'gatsby';
+
+import getLatestData from '../utils/getLatestData';
+import emptyContent, { emptyList } from '../utils/emptyContent';
 
 const Footer = () => {
-  const { sanityPages } = useStaticQuery(graphql`
-    query FooterQuery {
-      sanityPages(pageName: { eq: "footer" }) {
-        pageHeader
-        subheader
-        lists {
-          name
-          items
-          _key
+  const [content, setContent] = useState({
+    ...emptyContent,
+    lists: [emptyList()],
+  });
+
+  useEffect(() => {
+    getLatestData(String.raw`
+      query {
+        allPages(where: { pageName: { eq: "footer" } }) {
+          pageHeader
+          subheader
+          lists {
+            name
+            items
+            _key
+          }
         }
       }
-    }
-  `);
-
-  const { pageHeader, subheader, lists } = sanityPages;
-  const contactInfo = lists.filter((list) => list.name === 'Contact Info')[0];
+    `)
+      .then((data) => setContent(data.allPages[0]))
+      .catch((err) => {
+        console.log('An error has occurred: ', err);
+      });
+  }, []);
 
   return (
     <footer className='footer-container'>
       <div className='footer-connect text-font'>
-        <h3 className='header-font'>{pageHeader}</h3>
-        {contactInfo.items.map((item, index) => (
+        <h3 className='header-font'>{content.pageHeader}</h3>
+        {content.lists[0].items.map((item, index) => (
           <p key={index}>{item}</p>
         ))}
         <div className='icon-container'>
@@ -87,7 +98,7 @@ const Footer = () => {
       </div>
       <div className='footer-spacer'></div>
       <div className='footer-navigate'>
-        <h3 className='header-font'>{subheader}</h3>
+        <h3 className='header-font'>{content.subheader}</h3>
         <div className='footer-link-container text-font'>
           <Link to='/'>Home &gt;</Link>
           <Link to='/band'>The Band &gt;</Link>

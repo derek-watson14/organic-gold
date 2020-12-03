@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
@@ -6,48 +6,61 @@ import SEO from '../components/seo';
 import LinkButton from '../components/linkButton';
 import ColorTitle from '../components/colorTitle';
 
+import getLatestData from '../utils/getLatestData';
+import emptyContent from '../utils/emptyContent';
+
 export const query = graphql`
   query IndexPageQuery {
-    placeholderImage: file(relativePath: { eq: "dog.jpg" }) {
+    image: file(relativePath: { eq: "dog.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 1200, quality: 100) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
     }
-    sanityPages(pageName: { eq: "home" }) {
-      tabTitle
-      metaDescription
-      pageHeader
-      textContent
-      buttonLinkList {
-        buttonText
-        toPage
-        _key
-      }
-    }
   }
 `;
 
 const IndexPage = ({ data }) => {
-  const { placeholderImage, sanityPages } = data;
+  const [page, setPage] = useState(emptyContent);
+  const { image } = data;
+
+  useEffect(() => {
+    getLatestData(String.raw`
+      query {
+        allPages(where: { pageName: { eq: "home" } }) {
+          pageHeader
+          textContent
+          buttonLinkList {
+            buttonText
+            toPage
+            _key
+          }
+        }
+      }
+    `)
+      .then((data) => setPage(data.allPages[0]))
+      .catch((err) => {
+        console.log('An error has occurred: ', err);
+      });
+  }, []);
 
   return (
-    <Layout navImage={placeholderImage} fadeColor={'#FC9D81'}>
+    <Layout navImage={image} fadeColor={'#FC9D81'}>
       <SEO
-        title={sanityPages.tabTitle}
-        description={sanityPages.metaDescription}
+        title='Home'
+        description='Organic Gold is a professional recording studio and band based on Bainbridge Island, WA.'
       />
       <section className='container horz-center'>
-        <ColorTitle text={sanityPages.pageHeader} marginBottom='75px' />
-        {sanityPages.textContent.map((paragraph, i) => (
+        <ColorTitle text={page.pageHeader} marginBottom='75px' />
+        {page.textContent.map((paragraph, i) => (
           <p key={i} className='home-text'>
             {paragraph}
           </p>
         ))}
         <div className='button-container-home'>
-          {sanityPages.buttonLinkList.map(({ _key, buttonText, toPage }) => (
-            <LinkButton key={_key} text={buttonText} to={`/${toPage}`} />
+          {page.buttonLinkList.map(({ _key, buttonText, toPage }) => (
+            <LinkButton key={_key} text={buttonText} to={toPage} />
           ))}
         </div>
       </section>

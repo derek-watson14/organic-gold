@@ -2,7 +2,7 @@ import React from 'react';
 import { format } from 'date-fns';
 
 import defaultShowImage from '../images/live-music.jpg';
-import adjustTimezone from '../helpers/adjustTimezone';
+import adjustTimezone from '../utils/adjustTimezone';
 
 const Show = ({ show }) => {
   const date = format(adjustTimezone(show.showDate), 'MMMM do y');
