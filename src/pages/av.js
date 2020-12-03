@@ -49,10 +49,12 @@ export const query = graphql`
 `;
 
 const AV = ({ data }) => {
+  const { placeholderImage, sanityPages } = data;
+
   const [instaPosts, setInstaPosts] = useState([]);
 
   useEffect(() => {
-    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${data.sanityPages.externalMedia.instagram.postCount}}`;
+    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${sanityPages.externalMedia.instagram.postCount}}`;
     axios.get(igQueryString).then((res) => {
       const postArray = res.data.data.user.edge_owner_to_timeline_media.edges;
       const posts = postArray.map(({ node }) => {
@@ -69,7 +71,7 @@ const AV = ({ data }) => {
       });
       setInstaPosts(posts);
     });
-  }, [data.sanityPages.externalMedia.instagram.postCount]);
+  }, [sanityPages.externalMedia.instagram.postCount]);
 
   const concatCaption = (caption) => {
     if (caption.length > 247) {
@@ -80,15 +82,15 @@ const AV = ({ data }) => {
   };
 
   return (
-    <Layout navImage={data.placeholderImage} fadeColor={'#F8E100'}>
+    <Layout navImage={placeholderImage} fadeColor={'#F8E100'}>
       <SEO
-        title={data.sanityPages.tabTitle}
-        description={data.sanityPages.metaDescription}
+        title={sanityPages.tabTitle}
+        description={sanityPages.metaDescription}
       />
       <div className='container'>
         <div className='av-text-container'>
-          <ColorTitle text={data.sanityPages.pageHeader} marginBottom='10px' />
-          {data.sanityPages.textContent.map((para, i) => (
+          <ColorTitle text={sanityPages.pageHeader} marginBottom='10px' />
+          {sanityPages.textContent.map((para, i) => (
             <p key={i} className='page-p av-p'>
               {para}
             </p>
@@ -97,12 +99,12 @@ const AV = ({ data }) => {
         <div className='av-media-container'>
           <div className='av-youtube-player'>
             <a
-              href={data.sanityPages.externalMedia.youTubeVideo.channel}
+              href={sanityPages.externalMedia.youTubeVideo.channel}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
-                {data.sanityPages.externalMedia.youTubeVideo.header}
+                {sanityPages.externalMedia.youTubeVideo.header}
                 <FontAwesomeIcon
                   icon={faYoutube}
                   size='lg'
@@ -111,7 +113,7 @@ const AV = ({ data }) => {
               </h3>
             </a>
             <iframe
-              src={data.sanityPages.externalMedia.youTubeVideo.link}
+              src={sanityPages.externalMedia.youTubeVideo.link}
               frameBorder='0'
               allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
               allowFullScreen
@@ -120,12 +122,12 @@ const AV = ({ data }) => {
           </div>
           <div className='av-soundcloud-playlist'>
             <a
-              href={data.sanityPages.externalMedia.scPlayer.user}
+              href={sanityPages.externalMedia.scPlayer.user}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
-                {data.sanityPages.externalMedia.scPlayer.header}
+                {sanityPages.externalMedia.scPlayer.header}
                 <FontAwesomeIcon
                   icon={faSoundcloud}
                   size='lg'
@@ -134,20 +136,20 @@ const AV = ({ data }) => {
               </h3>
             </a>
             <ReactPlayer
-              url={data.sanityPages.externalMedia.scPlayer.link}
+              url={sanityPages.externalMedia.scPlayer.link}
               width={'100%'}
               height={425}
             />
           </div>
           <div className='av-instagram'>
             <a
-              href={data.sanityPages.externalMedia.instagram.profile}
+              href={sanityPages.externalMedia.instagram.profile}
               target='_blank'
               rel='noreferrer'
             >
               <h3 className='media-header'>
                 <span className='ig-username'>
-                  {data.sanityPages.externalMedia.instagram.username}
+                  {sanityPages.externalMedia.instagram.username}
                 </span>{' '}
                 on Instagram
                 <FontAwesomeIcon

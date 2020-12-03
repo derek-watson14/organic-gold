@@ -40,7 +40,7 @@ module.exports = {
       options: {
         projectId: 'ujvu50xg',
         dataset: 'prod',
-        watchMode: false,
+        watchMode: true,
         token: process.env.GATSBY_SANITY_TOKEN,
       },
     },
