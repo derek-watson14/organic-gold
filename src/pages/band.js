@@ -13,7 +13,7 @@ export const query = graphql`
   query BandPageQuery {
     image: file(relativePath: { eq: "alien.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1200, quality: 100) {
+        fluid(maxWidth: 1600, quality: 50) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

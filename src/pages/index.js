@@ -13,7 +13,7 @@ export const query = graphql`
   query IndexPageQuery {
     image: file(relativePath: { eq: "dog.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1200, quality: 100) {
+        fluid(maxWidth: 1600, quality: 55) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
