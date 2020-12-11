@@ -13,7 +13,7 @@ export const query = graphql`
   query ShowsPageQuery {
     image: file(relativePath: { eq: "mountain.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1600, quality: 50) {
+        fluid(maxWidth: 1600, quality: 45) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
