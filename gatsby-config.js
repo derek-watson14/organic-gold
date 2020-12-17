@@ -2,8 +2,6 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: '.env' });
 
-console.log(process.env.SANITY_TOKEN);
-
 module.exports = {
   siteMetadata: {
     title: `Organic Gold Music`,

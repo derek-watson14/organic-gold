@@ -248,7 +248,7 @@ export const query = graphql`
   query ContactPageQuery {
     image: file(relativePath: { eq: "pattern.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 800, quality: 50) {
+        fluid(maxWidth: 1080, quality: 55) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

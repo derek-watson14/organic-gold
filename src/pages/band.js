@@ -9,7 +9,6 @@ import ColorTitle from '../components/colorTitle';
 
 const Band = ({ data }) => {
   const { image, page } = data;
-  console.log(page.pageImage.asset);
 
   return (
     <Layout navImage={image} fadeColor={'#722A42'}>
