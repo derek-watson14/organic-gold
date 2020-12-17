@@ -16,7 +16,7 @@ const Header = ({ fadeColor }) => {
     query {
       image: file(relativePath: { eq: "banner-wide.png" }) {
         childImageSharp {
-          fluid(maxWidth: 450, quality: 65) {
+          fluid(maxWidth: 1080, quality: 60) {
             ...GatsbyImageSharpFluid_noBase64
           }
         }
