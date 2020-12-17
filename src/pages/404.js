@@ -36,7 +36,7 @@ export const query = graphql`
   query NotFoundPageQuery {
     image: file(relativePath: { eq: "pattern.png" }) {
       childImageSharp {
-        fluid(maxWidth: 1080, quality: 45) {
+        fluid(maxWidth: 800, quality: 50) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

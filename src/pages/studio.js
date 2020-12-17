@@ -83,7 +83,7 @@ export const query = graphql`
   query StudioPageQuery {
     image: file(relativePath: { eq: "mandarin.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1600, quality: 50) {
+        fluid(maxWidth: 1080, quality: 50) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

@@ -170,7 +170,7 @@ export const query = graphql`
   query AvPageQuery {
     image: file(relativePath: { eq: "jonny.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1080, quality: 50) {
+        fluid(maxWidth: 1000, quality: 50) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
