@@ -1,9 +1,7 @@
 .header-container {
-  object-fit: cover;
-  overflow-x: hidden;
   .header-image {
-    min-height: 110px;
-    max-height: 200px;
+    max-height: 325px;
+    min-height: 120px;
     filter: saturate(80%);
   }
 }
