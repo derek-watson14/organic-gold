@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -6,21 +6,6 @@ import { useForm } from 'react-hook-form';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
-
-import getLatestData from '../utils/getLatestData';
-import emptyContent, { emptyForm, emptyList } from '../utils/emptyContent';
-
-export const query = graphql`
-  query ContactPageQuery {
-    image: file(relativePath: { eq: "pattern.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 1600, quality: 45) {
-          ...GatsbyImageSharpFluid_noBase64
-        }
-      }
-    }
-  }
-`;
 
 const defaultValues = {
   first: '',
@@ -32,37 +17,7 @@ const defaultValues = {
 };
 
 const Contact = ({ data }) => {
-  const [page, setPage] = useState({
-    ...emptyContent,
-    forms: [emptyForm(6)],
-    lists: [emptyList()],
-  });
-  const { image } = data;
-
-  useEffect(() => {
-    getLatestData(String.raw`
-      query {
-        allPages(where: { pageName: { eq: "contact" } }) {
-          pageHeader
-          subheader
-          lists {
-            name
-            items
-            _key
-          }
-          forms {
-            name
-            header
-            labels
-          }
-        }
-      }
-    `)
-      .then((data) => setPage(data.allPages[0]))
-      .catch((err) => {
-        console.log('An error has occurred: ', err);
-      });
-  }, []);
+  const { image, page } = data;
 
   const [buttonText, setButtonText] = useState('SUBMIT');
   const [submitted, setSubmitted] = useState(false);
@@ -288,3 +243,29 @@ const Contact = ({ data }) => {
 };
 
 export default Contact;
+
+export const query = graphql`
+  query ContactPageQuery {
+    image: file(relativePath: { eq: "pattern.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1080, quality: 45) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    page: sanityPages(pageName: { eq: "contact" }) {
+      pageHeader
+      subheader
+      lists {
+        name
+        items
+        _key
+      }
+      forms {
+        name
+        header
+        labels
+      }
+    }
+  }
+`;

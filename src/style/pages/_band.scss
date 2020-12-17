@@ -5,14 +5,14 @@
   p {
     font-family: $text-font;
     font-size: 17px;
-    letter-spacing: .01em;
+    letter-spacing: 0.01em;
     line-height: 1.67em;
     font-weight: bold;
   }
   .band-content--image {
     flex: 1;
     padding: 10px;
-    min-width: 425px;
+    min-width: 600px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
       max-width: 600px;
       margin: 0;
     }
-    @include respond(936px) {
+    @include respond(1136px) {
       order: 2;
     }
     @include respond(phone) {

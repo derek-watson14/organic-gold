@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
@@ -6,44 +6,8 @@ import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import LinkButton from '../components/linkButton';
 
-import getLatestData from '../utils/getLatestData';
-import emptyContent from '../utils/emptyContent';
-
-export const query = graphql`
-  query NotFoundPageQuery {
-    image: file(relativePath: { eq: "pattern.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 1600, quality: 45) {
-          ...GatsbyImageSharpFluid_noBase64
-        }
-      }
-    }
-  }
-`;
-
 const NotFoundPage = ({ data }) => {
-  const [page, setPage] = useState(emptyContent);
-  const { image } = data;
-
-  useEffect(() => {
-    getLatestData(String.raw`
-      query {
-        allPages(where: { pageName: { eq: "404" } }) {
-          pageHeader
-          subheader
-          buttonLinkList {
-            buttonText
-            toPage
-            _key
-          }
-        }
-      }
-    `)
-      .then((data) => setPage(data.allPages[0]))
-      .catch((err) => {
-        console.log('An error has occurred: ', err);
-      });
-  }, []);
+  const { image, page } = data;
 
   return (
     <Layout navImage={image} fadeColor={'#B0C0A5'}>
@@ -65,4 +29,26 @@ const NotFoundPage = ({ data }) => {
     </Layout>
   );
 };
+
 export default NotFoundPage;
+
+export const query = graphql`
+  query NotFoundPageQuery {
+    image: file(relativePath: { eq: "pattern.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1080, quality: 45) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    page: sanityPages(pageName: { eq: "404" }) {
+      pageHeader
+      subheader
+      buttonLinkList {
+        buttonText
+        toPage
+        _key
+      }
+    }
+  }
+`;

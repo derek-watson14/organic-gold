@@ -1,10 +1,10 @@
 import React from 'react';
 import { format } from 'date-fns';
+import Img from 'gatsby-image'
 
-import defaultShowImage from '../images/live-music.jpg';
 import adjustTimezone from '../utils/adjustTimezone';
 
-const Show = ({ show }) => {
+const Show = ({ show, defaultShowImage }) => {
   const date = format(adjustTimezone(show.showDate), 'MMMM do y');
 
   const venueDisplay = show.venue.link ? (
@@ -56,16 +56,13 @@ const Show = ({ show }) => {
     );
   });
 
-  const imageUrl = show.image?.asset?.url;
+  const showImage = show.image ? show.image.asset.fixed : defaultShowImage;
+  const imageAlt = show.imageAlt ? show.imageAlt : "Live music";
 
   return (
     <div className='show-container'>
       <div className='show-image-container'>
-        <img
-          className='show-image'
-          src={imageUrl ? imageUrl : defaultShowImage}
-          alt={show.imageAlt ? show.imageAlt : `${show.name}`}
-        />
+        <Img fixed={showImage} className="show-image" alt={imageAlt} />
       </div>
       <div className='text-container'>
         <h2 className='show-title'>{show.name}</h2>

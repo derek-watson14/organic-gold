@@ -6,36 +6,24 @@ import {
   faInstagram,
   faSoundcloud,
 } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'gatsby';
-
-import getLatestData from '../utils/getLatestData';
-import emptyContent, { emptyList } from '../utils/emptyContent';
+import { Link, useStaticQuery, graphql } from 'gatsby';
 
 const Footer = () => {
-  const [content, setContent] = useState({
-    ...emptyContent,
-    lists: [emptyList()],
-  });
-
-  useEffect(() => {
-    getLatestData(String.raw`
-      query {
-        allPages(where: { pageName: { eq: "footer" } }) {
-          pageHeader
-          subheader
-          lists {
-            name
-            items
-            _key
-          }
+  const footerData = useStaticQuery(graphql`
+    query FooterQuery {
+      sanityPages(pageName: {eq: "footer"}) {
+        pageHeader
+        subheader
+        lists {
+          name
+          items
+          _key
         }
       }
-    `)
-      .then((data) => setContent(data.allPages[0]))
-      .catch((err) => {
-        console.log('An error has occurred: ', err);
-      });
-  }, []);
+    }
+  `)
+
+  const content = footerData.sanityPages;
 
   return (
     <footer className='footer-container'>

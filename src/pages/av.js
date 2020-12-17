@@ -13,56 +13,8 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 
-import getLatestData from '../utils/getLatestData';
-import emptyContent from '../utils/emptyContent';
-
-export const query = graphql`
-  query AvPageQuery {
-    image: file(relativePath: { eq: "jonny.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 1600, quality: 50) {
-          ...GatsbyImageSharpFluid_noBase64
-        }
-      }
-    }
-  }
-`;
-
 const AV = ({ data }) => {
-  const [page, setPage] = useState(emptyContent);
-  const { image } = data;
-
-  useEffect(() => {
-    getLatestData(String.raw`
-      query {
-        allPages(where: { pageName: { eq: "av" } }) {
-          pageHeader
-          textContent
-          externalMedia {
-            youTubeVideo {
-              header
-              link
-              channel
-            }
-            scPlayer {
-              user
-              header
-              link
-            }
-            instagram {
-              profile
-              username
-              postCount
-            }
-          }
-        }
-      }
-    `)
-      .then((data) => setPage(data.allPages[0]))
-      .catch((err) => {
-        console.log('An error has occurred: ', err);
-      });
-  }, []);
+  const { image, page } = data;
 
   const [instaPosts, setInstaPosts] = useState([]);
 
@@ -213,3 +165,36 @@ const AV = ({ data }) => {
 };
 
 export default AV;
+
+export const query = graphql`
+  query AvPageQuery {
+    image: file(relativePath: { eq: "jonny.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1080, quality: 50) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    page: sanityPages(pageName: { eq: "av" }) {
+      pageHeader
+      textContent
+      externalMedia {
+        youTubeVideo {
+          header
+          link
+          channel
+        }
+        scPlayer {
+          user
+          header
+          link
+        }
+        instagram {
+          profile
+          username
+          postCount
+        }
+      }
+    }
+  }
+`;

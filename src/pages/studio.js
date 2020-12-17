@@ -1,64 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
+import Img from 'gatsby-image';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import LinkButton from '../components/linkButton';
 
-import getLatestData from '../utils/getLatestData';
-import emptyContent from '../utils/emptyContent';
-
-export const query = graphql`
-  query StudioPageQuery {
-    image: file(relativePath: { eq: "mandarin.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 1600, quality: 50) {
-          ...GatsbyImageSharpFluid_noBase64
-        }
-      }
-    }
-  }
-`;
 
 const Studio = ({ data }) => {
-  const [page, setPage] = useState(emptyContent);
-  const { image } = data;
-
-  useEffect(() => {
-    getLatestData(String.raw`
-      query {
-        allPages(where: { pageName: { eq: "studio" } }) {
-          pageHeader
-          textContent
-          buttonLinkList {
-            buttonText
-            toPage
-            _key
-          }
-          pageImage {
-            asset {
-              url
-            }
-          }
-          pageImageAlt
-          subheader
-          lists {
-            name
-            items
-            _key
-          }
-          externalMedia {
-            scSongList
-          }
-        }
-      }
-    `)
-      .then((data) => setPage(data.allPages[0]))
-      .catch((err) => {
-        console.log('An error has occurred: ', err);
-      });
-  }, []);
+  const { image, page } = data;
 
   return (
     <Layout navImage={image} fadeColor={'#F0843B'}>
@@ -81,14 +32,7 @@ const Studio = ({ data }) => {
           </div>
 
           <div className='studio-content--image'>
-            <img
-              src={page.pageImage.asset.url}
-              alt={
-                page.pageImageAlt
-                  ? page.pageImageAlt
-                  : 'The Organic gold studio'
-              }
-            />
+            <Img fixed={page.pageImage.asset.fixed} alt={page.pageImageAlt} />
           </div>
         </div>
       </div>
@@ -134,3 +78,42 @@ const Studio = ({ data }) => {
 };
 
 export default Studio;
+
+export const query = graphql`
+  query StudioPageQuery {
+    image: file(relativePath: { eq: "mandarin.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1600, quality: 50) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    page: sanityPages(pageName: { eq: "studio" }) {
+      pageHeader
+      textContent
+      buttonLinkList {
+        buttonText
+        toPage
+        _key
+      }
+      pageImage {
+        asset {
+          url
+          fixed(width: 600, height: 600) {
+            ...GatsbySanityImageFixed
+          }
+        }
+      }
+      pageImageAlt
+      subheader
+      lists {
+        name
+        items
+        _key
+      }
+      externalMedia {
+        scSongList
+      }
+    }
+  }
+`;

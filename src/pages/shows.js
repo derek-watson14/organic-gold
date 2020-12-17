@@ -6,71 +6,17 @@ import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
 import ShowCard from '../components/showCard';
 
-import getLatestData from '../utils/getLatestData';
-import emptyContent from '../utils/emptyContent';
-
-export const query = graphql`
-  query ShowsPageQuery {
-    image: file(relativePath: { eq: "mountain.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 1600, quality: 45) {
-          ...GatsbyImageSharpFluid_noBase64
-        }
-      }
-    }
-  }
-`;
-
 const Shows = ({ data }) => {
-  const [page, setPage] = useState(emptyContent);
   const [sortedShows, setSortedShows] = useState([]);
 
-  const { image } = data;
+  const { image, showImage, page, shows } = data;
+
+  const defaultShowImage = showImage.childImageSharp.fixed;
 
   useEffect(() => {
-    getLatestData(String.raw`
-      query {
-        allPages(where: { pageName: { eq: "shows" } }) {
-          pageHeader
-          subheader
-        }
-        allShows {
-          _id
-          name
-          about
-          showDate
-          showTime
-          venue {
-            link
-            name
-            address {
-              street
-              city
-              state
-            }
-          }
-          bands {
-            _key
-            name
-            link
-          }
-          image {
-            asset {
-              url
-            }
-          }
-          imageAlt
-        }
-      }
-    `)
-      .then((data) => {
-        setPage(data.allPages[0]);
-        setSortedShows(sortFilterShows(data.allShows));
-      })
-      .catch((err) => {
-        console.log('An error has occurred: ', err);
-      });
-  }, []);
+    const sorted = sortFilterShows(shows.nodes)
+    setSortedShows(sorted)
+  }, [shows.nodes])
 
   const sortFilterShows = (shows) => {
     const today = new Date().toISOString().split('T')[0];
@@ -99,7 +45,7 @@ const Shows = ({ data }) => {
         ) : (
           <div className='show-card-container'>
             {sortedShows.map((show) => {
-              return <ShowCard key={show._id} show={show} />;
+              return <ShowCard key={show._id} show={show} defaultShowImage={defaultShowImage} />;
             })}
           </div>
         )}
@@ -109,3 +55,58 @@ const Shows = ({ data }) => {
 };
 
 export default Shows;
+
+export const query = graphql`
+  query ShowsPageQuery {
+    image: file(relativePath: { eq: "mountain.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1080, quality: 45) {
+          ...GatsbyImageSharpFluid_noBase64
+        }
+      }
+    }
+    showImage: file(relativePath: { eq: "live-music.jpg"}) {
+      childImageSharp {
+        fixed(width: 250, quality: 55) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    page: sanityPages(pageName: { eq: "shows" }) {
+      pageHeader
+      subheader
+    }
+    shows: allSanityShows {
+      nodes {
+        _id
+        name
+        about
+        showDate
+        showTime
+        venue {
+          link
+          name
+          address {
+            street
+            city
+            state
+          }
+        }
+        bands {
+          _key
+          name
+          link
+        }
+        image {
+          asset {
+            url
+            fixed(width: 250) {
+              ...GatsbySanityImageFixed
+            }
+          }
+        }
+        imageAlt
+      }
+    }
+  }
+`;
