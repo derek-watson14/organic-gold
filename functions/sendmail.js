@@ -55,8 +55,8 @@ exports.handler = function (event, context, callback) {
       subject: `WEBSITE: New Contact Form Submission!`,
       html: `
       <h1 style="margin: 10px 0 5px 0; font-size: 1.5em;">New contact form submission!</h1>
-      <p style="margin: 0 0 15px 0;">The following information was submitted on ${formattedDate} at ${formattedTime}.</p>
-      <p style="margin: 0 0 15px 0;">Do not reply directly to this email, but to the email address below.</p>
+      <p style="margin: 0 0 5px 0; font-size: 1.05em;">The following information was submitted on ${formattedDate} at ${formattedTime}.</p>
+      <p style="margin: 0 0 15px 0; font-size: 1em; font-style: italic;">Do not reply to this email directly, but to the email address below.</p>
       <div style="margin-bottom: 15px;">
         <h3 style="margin: 0; font-size: 1.1em;">Subject line: <span style="margin: 0; font-weight: 300;">${
           data.subject || '**No subject**'
@@ -74,7 +74,7 @@ exports.handler = function (event, context, callback) {
         </h3>  
       </div>
       <h3 style="margin: 0 0 5px 0; font-size: 1.2em;">Message:</h3>
-      <p style="margin: 0; font-size: 1em;">${data.message}<p>
+      <h3 style="margin: 0; font-size: 1.1em; font-weight: 300;">${data.message}<h3>
     `,
     },
     function (error, info) {
