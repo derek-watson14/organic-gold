@@ -128,7 +128,7 @@
         position: absolute;
         top: 5px;
         left: 5px;
-        z-index: 3;
+        z-index: 1;
         background-color: rgba(0, 0, 0, 0.5);
         border-radius: 7px;
         opacity: 0;
@@ -184,12 +184,12 @@
       "soundcloud"
       "instagram";
   }
-  @include respond(phone) {
-    padding: 0px 10px 0px 10px;
-  }
 }
 
 .media-header {
   font-family: $header-font;
   margin: 5px 0 10px 0;
+  @include respond(phone) {
+    padding-left: 10px;
+  }
 }
