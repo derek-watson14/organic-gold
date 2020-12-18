@@ -1,9 +1,9 @@
 // Navbar
 .navbar-container {
-  height: 350px;
+  height: 335px;
   overflow: hidden;
   position: relative;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   @include respond(phone) {
     height: 200px;
     margin-bottom: 55px;

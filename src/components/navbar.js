@@ -10,7 +10,7 @@ import Img from 'gatsby-image';
 
 const parallax = (scrollY) => {
   return {
-    transform: `translateY(-${(scrollY / 175) * 9}%)`,
+    transform: `translateY(-${scrollY / 20}%)`,
   }
 }
 
