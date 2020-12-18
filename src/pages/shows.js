@@ -37,7 +37,7 @@ const Shows = ({ data }) => {
         description='Calendar of shows featuring Organic Gold and other acts!'
       />
       <div className='container'>
-        <ColorTitle text={page.pageHeader} marginBottom='100px' />
+        <ColorTitle text={page.pageHeader} marginBottom='60px' />
         {sortedShows.length === 0 ? (
           <div className='message-container'>
             <h2 className='header-font'>{page.subheader}</h2>
@@ -60,7 +60,7 @@ export const query = graphql`
   query ShowsPageQuery {
     image: file(relativePath: { eq: "mountain.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1080, quality: 50) {
+        fluid(maxWidth: 1920, quality: 75) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

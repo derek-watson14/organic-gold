@@ -3,16 +3,25 @@
   height: 350px;
   overflow: hidden;
   position: relative;
-  margin-bottom: 110px;
+  margin-bottom: 100px;
   @include respond(phone) {
     height: 200px;
-    margin-bottom: 75px;
+    margin-bottom: 55px;
   }
 }
 
+.nav-head-fade {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background-image: linear-gradient(rgba(40,40,40, 0.8), rgba(0, 0, 0, 0));
+  z-index: 1;
+}
+
+
 .link-container {
   position: absolute;
-  top: 12%;
+  top: 20%;
   left: 50%;
   z-index: 1;
   width: 620px;
@@ -23,7 +32,7 @@
   font-size: 16px;
   font-weight: 300;
   letter-spacing: .02em;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.55);
   padding: 10px 0;
   border-radius: 15px;
   margin-left: -310px;
@@ -34,14 +43,16 @@
     font-family: $header-font;
     color: white;
     text-decoration: none;
+    transition: 200ms;
     &:hover {
-      opacity: 0.7;
+      transform: scale(1.1) rotate(-2deg);
     }
   }
 }
 
 .nav-image {
-  height: 500px;
+  height: 450px;
+  width: 100%;
   @include respond(phone) {
     height: 275px;
   }

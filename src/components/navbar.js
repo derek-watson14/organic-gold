@@ -1,21 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 import { animated } from "react-spring"
 import useWindowScroll from "@react-hook/window-scroll"
 import { Link } from "gatsby"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
-import Image from "../components/image"
+import Img from 'gatsby-image';
+
 
 const parallax = (scrollY) => {
   return {
-    transform: `translateY(-${(scrollY / 175) * 10}%)`,
-    objectFit: "cover",
+    transform: `translateY(-${(scrollY / 175) * 9}%)`,
   }
 }
 
 const Navbar = ({ navImage, navMenuOpen, setNavMenuOpen, fadeColor }) => {
   const scrollY = useWindowScroll(60);
+  const [shadowClasses, setShadowClasses] = useState("nav-head-fade d-none");
 
   const handleMenuBtnClick = () => {
     setNavMenuOpen(true);
@@ -23,9 +24,14 @@ const Navbar = ({ navImage, navMenuOpen, setNavMenuOpen, fadeColor }) => {
 
   const buttonClasses = `menu-btn-container ${navMenuOpen ? "hide-btn" : ""}`;
 
+  const imageLoaded = () => {
+    setShadowClasses("nav-head-fade");
+  }
+
   return (
     <>
       <div className="navbar-container">
+        <div className={shadowClasses}></div>
         <div className={buttonClasses}>
           <FontAwesomeIcon icon={faBars} size="2x" onClick={handleMenuBtnClick} />
         </div>
@@ -38,7 +44,13 @@ const Navbar = ({ navImage, navMenuOpen, setNavMenuOpen, fadeColor }) => {
           <Link to="/contact">CONTACT</Link>
         </nav>
         <animated.div style={parallax(scrollY)}>
-          <Image data={navImage} classes="nav-image" backgroundColor={fadeColor} />
+          <Img 
+            fluid={navImage.childImageSharp.fluid} 
+            className="nav-image" 
+            fadeIn={false}
+            backgroundColor={fadeColor} 
+            onLoad={imageLoaded}
+          />
         </animated.div>
       </div>
     </>

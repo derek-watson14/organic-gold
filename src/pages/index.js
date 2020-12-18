@@ -16,7 +16,7 @@ const IndexPage = ({ data }) => {
         description='Organic Gold is a professional recording studio and band based on Bainbridge Island, WA.'
       />
       <section className='container horz-center'>
-        <ColorTitle text={page.pageHeader} marginBottom='75px' />
+        <ColorTitle text={page.pageHeader} marginBottom='50px' />
         {page.textContent.map((paragraph, i) => (
           <p key={i} className='home-text'>
             {paragraph}
@@ -38,7 +38,7 @@ export const query = graphql`
   query IndexPageQuery {
     image: file(relativePath: { eq: "dog.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1080, quality: 60) {
+        fluid(maxWidth: 1920, quality: 75) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

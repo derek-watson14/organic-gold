@@ -47,7 +47,7 @@ const AV = ({ data }) => {
   };
 
   return (
-    <Layout navImage={image} fadeColor={'#F8E100'}>
+    <Layout navImage={image} fadeColor={'#E34077'}>
       <SEO
         title='Audiovisual'
         description='A selection of music recorded and played by Organic Gold.'
@@ -170,7 +170,7 @@ export const query = graphql`
   query AvPageQuery {
     image: file(relativePath: { eq: "jonny.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 1000, quality: 50) {
+        fluid(maxWidth: 1920, quality: 75) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }
