@@ -19,7 +19,7 @@ const AV = ({ data }) => {
   const [instaPosts, setInstaPosts] = useState([]);
 
   useEffect(() => {
-    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:%2222186333894%22,%22first%22:${page.externalMedia.instagram.postCount}}`;
+    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:22186333894,%22first%22:12}`;
     axios.get(igQueryString).then((res) => {
       const postArray = res.data.data.user.edge_owner_to_timeline_media.edges;
       const posts = postArray.map(({ node }) => {
