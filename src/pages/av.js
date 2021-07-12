@@ -12,7 +12,6 @@ import ColorTitle from '../components/colorTitle';
 const AV = ({ data }) => {
   const { image, page } = data;
 
-  console.log(page.externalMedia.scPlayer.link);
   return (
     <Layout navImage={image} fadeColor={'#E34077'}>
       <SEO
