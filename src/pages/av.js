@@ -1,51 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
 import ReactPlayer from 'react-player';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faYoutube,
-  faSoundcloud,
-  faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
+import { faYoutube, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import ColorTitle from '../components/colorTitle';
+// import InstagramSection from '../components/instagramSection';
 
 const AV = ({ data }) => {
   const { image, page } = data;
 
-  const [instaPosts, setInstaPosts] = useState([]);
-
-  useEffect(() => {
-    const igQueryString = `https://www.instagram.com/graphql/query/?query_hash=e769aa130647d2354c40ea6a439bfc08&variables={%22id%22:22186333894,%22first%22:12}`;
-    axios.get(igQueryString).then((res) => {
-      const postArray = res.data.data.user.edge_owner_to_timeline_media.edges;
-      const posts = postArray.map(({ node }) => {
-        return {
-          id: node.id,
-          imageUrl: node.display_url,
-          caption: node.edge_media_to_caption.edges[0].node.text,
-          location: node.location,
-          likes: node.edge_media_preview_like.count,
-          isVideo: node.is_video,
-          videoUrl: node.is_video && node.video_url,
-          postUrl: `https://www.instagram.com/p/${node.shortcode}/`,
-        };
-      });
-      setInstaPosts(posts);
-    });
-  }, [page.externalMedia.instagram.postCount]);
-
-  const concatCaption = (caption) => {
-    if (caption.length > 247) {
-      return `${caption.slice(0, 247)}...`;
-    } else {
-      return caption;
-    }
-  };
-
+  console.log(page.externalMedia.scPlayer.link);
   return (
     <Layout navImage={image} fadeColor={'#E34077'}>
       <SEO
@@ -106,58 +73,12 @@ const AV = ({ data }) => {
               height={425}
             />
           </div>
-          <div className='av-instagram'>
-            <a
-              href={page.externalMedia.instagram.profile}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <h3 className='media-header'>
-                <span className='ig-username'>
-                  {page.externalMedia.instagram.username}
-                </span>{' '}
-                on Instagram
-                <FontAwesomeIcon
-                  icon={faInstagram}
-                  size='1x'
-                  className='ig-icon'
-                />
-              </h3>
-            </a>
-            <hr />
-            <div className='insta-grid'>
-              {instaPosts.map((post) => {
-                return (
-                  <div key={post.id} className='post-container'>
-                    {post.isVideo ? (
-                      <video controls poster={post.imageUrl}>
-                        <source src={post.videoUrl} type='video/mp4' />
-                        Your browser doesn't support this video display.
-                      </video>
-                    ) : (
-                      <img src={post.imageUrl} alt={post.caption} />
-                    )}
-                    <div
-                      className={
-                        post.isVideo ? 'hover-overlay video-o' : 'hover-overlay'
-                      }
-                    >
-                      <h4 className='post-caption'>
-                        {post.isVideo
-                          ? concatCaption(post.caption)
-                          : post.caption}
-                      </h4>
-                    </div>
-                    <a href={post.postUrl} target='_blank' rel='noreferrer'>
-                      <h3 className='ig-post-link'>
-                        View on Instagram &gt;&gt;
-                      </h3>
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {/* This section has been blocked by instagram without key:
+          <InstagramSection
+            username={page.externalMedia.instagram.username}
+            profile={page.externalMedia.instagram.profile}
+          /> 
+          */}
         </div>
       </div>
     </Layout>
